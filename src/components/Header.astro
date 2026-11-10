@@ -51,13 +51,14 @@ const isCurrent = (path: string) => pathname === path || pathname === `${path}/`
       <li>
         <button 
           id="side-mode-toggle"
-          class="nav-icon-link mode-btn"
+          class="nav-icon-link nav-mode-btn"
           aria-label="Toggle Theme Mode"
           title="Toggle Mode"
           type="button"
         >
           <span class="mode-icon">🎨</span>
-          <span class="tooltip mode-text">CREATIVE</span>
+          <span class="mode-badge">DEV</span>
+          <span class="tooltip mode-text">SWITCH TO CREATIVE</span>
         </button>
       </li>
     </ul>
@@ -70,9 +71,15 @@ const isCurrent = (path: string) => pathname === path || pathname === `${path}/`
     const toggleBtn = document.getElementById('side-mode-toggle');
     const updateThemeUI = (mode: string) => {
       const icon = toggleBtn?.querySelector('.mode-icon');
+      const badge = toggleBtn?.querySelector('.mode-badge');
       const text = toggleBtn?.querySelector('.mode-text');
-      if (icon) icon.textContent = mode === 'creative' ? '💻' : '🎨';
-      if (text) text.textContent = mode === 'creative' ? 'DEV' : 'CREATIVE';
+      const isCreative = mode === 'creative';
+
+      if (icon) icon.textContent = isCreative ? '💻' : '🎨';
+      if (badge) badge.textContent = isCreative ? 'CRT' : 'DEV';
+      if (text) text.textContent = isCreative ? 'SWITCH TO DEV' : 'SWITCH TO CREATIVE';
+      toggleBtn?.setAttribute('title', isCreative ? 'Theme: Creative (Click for Developer)' : 'Theme: Developer (Click for Creative)');
+      toggleBtn?.setAttribute('aria-label', isCreative ? 'Theme: Creative (Click for Developer)' : 'Theme: Developer (Click for Creative)');
     };
 
     const currentMode = document.documentElement.getAttribute('data-mode') || 
@@ -89,6 +96,13 @@ const isCurrent = (path: string) => pathname === path || pathname === `${path}/`
       updateThemeUI(nextMode);
       window.dispatchEvent(new CustomEvent('hzb-theme-change', { detail: { mode: nextMode } }));
     });
+
+    // Listen to theme changes from other components (such as Hero toggle on Home)
+    window.addEventListener('hzb-theme-change', ((e: Event) => {
+      const customEvent = e as CustomEvent<{ mode?: string }>;
+      const mode = customEvent.detail?.mode || document.documentElement.getAttribute('data-mode') || 'developer';
+      updateThemeUI(mode);
+    }) as EventListener);
 
     // 2. Contact Trigger
     document.querySelectorAll('.contact-trigger').forEach((el) => {
@@ -203,9 +217,28 @@ const isCurrent = (path: string) => pathname === path || pathname === `${path}/`
     box-shadow: 2px 2px 0 var(--accent-primary);
   }
 
+  .nav-mode-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    padding: 2px 0;
+  }
+
   .mode-icon {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     line-height: 1;
+  }
+
+  .mode-badge {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.45rem;
+    color: var(--accent-primary);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-weight: bold;
+    user-select: none;
   }
 
   /* Retro Tooltip */
@@ -233,31 +266,61 @@ const isCurrent = (path: string) => pathname === path || pathname === `${path}/`
     transform: translateX(0);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .side-nav-container {
-      left: 0.75rem;
-      bottom: 0.75rem;
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: auto;
+      flex-direction: row;
+      align-items: center;
       gap: 0.5rem;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border-color);
+      padding: 0.4rem 0.75rem;
+      box-shadow: 4px 4px 0 var(--border-color);
+      z-index: 1000;
     }
 
     .logo-box {
-      width: 36px;
-      height: 36px;
-      padding: 4px;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      background: transparent;
     }
 
-    .logo-svg {
-      width: 22px;
-      height: 22px;
+    .logo-box:hover,
+    .logo-box.active {
+      transform: none;
+      box-shadow: none;
     }
 
     .side-nav {
-      padding: 0.35rem;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    .nav-list {
+      flex-direction: row;
+      gap: 0.4rem;
     }
 
     .nav-icon-link {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .nav-mode-btn .mode-icon {
+      font-size: 0.85rem;
+    }
+
+    .nav-mode-btn .mode-badge {
+      font-size: 0.38rem;
     }
 
     .tooltip {

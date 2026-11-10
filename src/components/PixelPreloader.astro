@@ -1,0 +1,409 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div id="pixel-preloader" class={`pixel-preloader ${className}`} role="status" aria-live="polite" aria-label="Loading portfolio">
+  <div class="preloader-content">
+    <!-- Morphing Pixel Icon Frame -->
+    <div class="morphing-icon-container" id="morphing-icon">
+      <!-- Icons injected by JS -->
+    </div>
+
+    <!-- Segmented 8-Bit Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-segmented" id="progress-bar-segmented">
+        <!-- 20 pixel blocks inserted by JS -->
+      </div>
+      <div class="progress-text" id="progress-text">00%</div>
+    </div>
+
+    <!-- Dynamic System Boot Log -->
+    <div class="boot-log" id="boot-log">
+      BOOTING HZB_BIOS v2.6...
+    </div>
+
+    <button id="preloader-skip-btn" class="preloader-skip-btn" type="button" aria-label="Skip preloader">SKIP [ESC]</button>
+  </div>
+
+  <!-- Pixel Grid Shutter Overlay (hidden initially) -->
+  <div class="pixel-shutter-overlay" id="pixel-shutter-overlay" aria-hidden="true">
+    <!-- Grid blocks injected by JS -->
+  </div>
+</div>
+
+<script>
+  // Preloader logic runs immediately, before DOMContentLoaded
+  (function() {
+    const preloader = document.getElementById('pixel-preloader');
+    if (!preloader) return;
+    const preloaderElement = preloader;
+
+    // Immediately lock scrolling while booting
+    document.documentElement.classList.add('scroll-locked');
+    document.body.classList.add('scroll-locked');
+
+    // Morphing icon sequence
+    const morphIcons = [
+      { name: 'pacman', color: '#ffde00' },
+      { name: 'brain', color: '#00ff66' },
+      { name: 'dna', color: '#38bdf8' },
+      { name: 'heart', color: '#ff4d00' },
+      { name: 'globe', color: '#7c3aed' },
+    ];
+
+    // Boot log messages by progress range
+    const bootLogs = [
+      { max: 25, text: 'BOOTING HZB_BIOS v2.6...' },
+      { max: 55, text: 'LOADING 8-BIT PIXEL ENGINE.EXE...' },
+      { max: 85, text: 'SYNCING DEVELOPER + CREATIVE MODES...' },
+      { max: 99, text: 'ASSEMBLING SCROLL STORYLINE...' },
+      { max: 100, text: 'SYSTEM_READY // WELCOME' },
+    ];
+
+    // Initialize morphing icon container
+    const morphContainer = document.getElementById('morphing-icon');
+    if (morphContainer) {
+      morphContainer.innerHTML = `
+        <svg width="80" height="80" viewBox="0 0 16 16" fill="none" shape-rendering="crispEdges" class="morph-svg" aria-hidden="true">
+          <g fill="#ffde00" class="morph-group"></g>
+        </svg>
+      `;
+    }
+
+    // Initialize segmented progress bar (20 blocks)
+    const progressBar = document.getElementById('progress-bar-segmented');
+    if (progressBar) {
+      progressBar.innerHTML = Array.from({ length: 20 }, (_, i) =>
+        `<div class="progress-block" data-index="${i}" style="transition-delay: ${i * 20}ms"></div>`
+      ).join('');
+    }
+
+    // Initialize pixel shutter grid (15x10 = 150 blocks)
+    const shutterOverlay = document.getElementById('pixel-shutter-overlay');
+    if (shutterOverlay) {
+      const cols = 15;
+      const rows = 10;
+      shutterOverlay.style.cssText = `
+        --shutter-cols: ${cols};
+        --shutter-rows: ${rows};
+        display: grid;
+        grid-template-columns: repeat(${cols}, 1fr);
+        grid-template-rows: repeat(${rows}, 1fr);
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        pointer-events: none;
+      `;
+      shutterOverlay.innerHTML = Array.from({ length: cols * rows }, (_, i) =>
+        `<div class="shutter-block" style="--delay: ${Math.random() * 0.45}s; background: var(--accent-primary)"></div>`
+      ).join('');
+    }
+
+    let progress = 0;
+    let morphIndex = 0;
+    const duration = sessionStorage.getItem('hzb-booted') ? 600 : 2200;
+    const startTime = performance.now();
+    let frameId: number | null = null;
+    let preloaderCompleted = false;
+
+    function completePreloaderImmediate() {
+      if (preloaderCompleted) return;
+      preloaderCompleted = true;
+      completePreloader();
+    }
+
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        completePreloaderImmediate();
+      }
+    }
+    window.addEventListener('keydown', handleEscape);
+
+    window.addEventListener('pagehide', () => {
+      window.removeEventListener('keydown', handleEscape);
+    }, { once: true });
+
+    function updateMorphIcon() {
+      const icon = morphIcons[morphIndex % morphIcons.length];
+      const morphGroup = document.querySelector('.morph-group') as SVGGElement | null;
+      if (morphGroup) {
+        morphGroup.innerHTML = getIconPath(icon.name);
+        morphGroup.style.fill = icon.color;
+      }
+      morphIndex++;
+    }
+
+    function getIconPath(name: string) {
+      const paths: Record<string, string> = {
+        pacman: `<rect x="5" y="1" width="6" height="1"/><rect x="3" y="2" width="10" height="1"/><rect x="2" y="3" width="12" height="1"/><rect x="1" y="5" width="14" height="2"/><rect x="1" y="7" width="10" height="2"/><rect x="1" y="9" width="12" height="2"/><rect x="2" y="11" width="12" height="1"/><rect x="3" y="13" width="10" height="1"/><rect x="5" y="14" width="6" height="1"/><rect x="8" y="3" width="2" height="2" fill="#0b0d10"/>`,
+        brain: `<rect x="4" y="2" width="8" height="2"/><rect x="2" y="4" width="12" height="8"/><rect x="3" y="12" width="10" height="2"/><rect x="7" y="3" width="2" height="10" fill="#0b0d10"/><rect x="4" y="6" width="2" height="1" fill="#0b0d10"/><rect x="3" y="9" width="3" height="1" fill="#0b0d10"/><rect x="10" y="6" width="2" height="1" fill="#0b0d10"/><rect x="10" y="9" width="3" height="1" fill="#0b0d10"/>`,
+        dna: `<rect x="2" y="1" width="3" height="2"/><rect x="11" y="1" width="3" height="2"/><rect x="5" y="2" width="6" height="1"/><rect x="4" y="4" width="3" height="2"/><rect x="9" y="4" width="3" height="2"/><rect x="6" y="5" width="4" height="1"/><rect x="7" y="7" width="2" height="2"/><rect x="4" y="10" width="3" height="2"/><rect x="9" y="10" width="3" height="2"/><rect x="6" y="10" width="4" height="1"/><rect x="2" y="13" width="3" height="2"/><rect x="11" y="13" width="3" height="2"/><rect x="5" y="13" width="6" height="1"/>`,
+        heart: `<rect x="2" y="3" width="4" height="4"/><rect x="10" y="3" width="4" height="4"/><rect x="4" y="2" width="3" height="1"/><rect x="9" y="2" width="3" height="1"/><rect x="1" y="5" width="14" height="4"/><rect x="2" y="9" width="12" height="2"/><rect x="4" y="11" width="8" height="2"/><rect x="6" y="13" width="4" height="2"/><rect x="7" y="15" width="2" height="1"/><rect x="3" y="4" width="2" height="2" fill="#ffffff" fill-opacity="0.8"/>`,
+        globe: `<rect x="4" y="2" width="8" height="12"/><rect x="2" y="4" width="12" height="8"/><rect x="3" y="12" width="10" height="2"/><rect x="7" y="5" width="2" height="6" fill="#0b0d10"/><rect x="3" y="7" width="2" height="2"/><rect x="11" y="7" width="2" height="2"/><rect x="3" y="10" width="3" height="1"/><rect x="10" y="10" width="3" height="1"/>`
+      };
+      return paths[name] || paths.pacman;
+    }
+
+    function updateProgressBar(p: number) {
+      const blocks = document.querySelectorAll('.progress-block') as NodeListOf<HTMLElement>;
+      const filledCount = Math.floor((p / 100) * 20);
+      blocks.forEach((block, i) => {
+        if (i < filledCount) block.classList.add('filled');
+        else block.classList.remove('filled');
+      });
+      const progressText = document.getElementById('progress-text');
+      if (progressText) progressText.textContent = `${Math.floor(p).toString().padStart(2, '0')}%`;
+    }
+
+    function updateBootLog(p: number) {
+      const logEl = document.getElementById('boot-log');
+      if (!logEl) return;
+      for (const log of bootLogs) {
+        if (p <= log.max) {
+          logEl.textContent = log.text;
+          break;
+        }
+      }
+    }
+
+    function animate() {
+      const elapsed = performance.now() - startTime;
+      const p = Math.min(100, (elapsed / duration) * 100);
+      progress = p;
+
+      updateProgressBar(p);
+      updateBootLog(p);
+
+      // Morph icon every ~250ms
+      if (elapsed % 250 < 16) {
+        updateMorphIcon();
+      }
+
+      if (p < 100) {
+        frameId = requestAnimationFrame(animate);
+      } else if (!preloaderCompleted) {
+        completePreloader();
+      }
+    }
+
+    function completePreloader() {
+      if (preloaderCompleted) return;
+      preloaderCompleted = true;
+      if (frameId !== null) cancelAnimationFrame(frameId);
+      window.removeEventListener('keydown', handleEscape);
+
+      // Lock scroll during shutter animation
+      document.body.style.overflow = 'hidden';
+
+      // Show shutter overlay
+      const shutterOverlay = document.getElementById('pixel-shutter-overlay');
+      if (shutterOverlay) {
+        shutterOverlay.style.opacity = '1';
+        shutterOverlay.style.visibility = 'visible';
+      }
+
+      // Animate shutter blocks with GSAP-like stagger (CSS-based for zero dep)
+      const blocks = document.querySelectorAll('.shutter-block') as NodeListOf<HTMLElement>;
+      blocks.forEach((block, i) => {
+        block.style.animation = `shutterFall 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.003}s forwards`;
+      });
+
+      // After shutter completes
+      setTimeout(() => {
+        preloaderElement.style.opacity = '0';
+        preloaderElement.style.pointerEvents = 'none';
+        setTimeout(() => {
+          preloaderElement.remove();
+          document.body.style.overflow = '';
+          sessionStorage.setItem('hzb-booted', 'true');
+
+          // If NOT on the home page, unlock scroll now.
+          // On the home page ('/' or ''), index.astro will unlock scroll once its entrance animation finishes!
+          const isHome = window.location.pathname === '/' || window.location.pathname === '' || window.location.pathname.endsWith('/index.html');
+          if (!isHome) {
+            document.documentElement.classList.remove('scroll-locked');
+            document.body.classList.remove('scroll-locked');
+          }
+
+          // Dispatch completion event for scroll storytelling to begin
+          window.dispatchEvent(new CustomEvent('preloader:complete', { detail: { timestamp: Date.now() } }));
+
+          // Refresh ScrollTrigger after DOM settles
+          if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+          }
+        }, 500);
+      }, 500);
+    }
+
+    // Start animation
+    updateMorphIcon();
+    frameId = requestAnimationFrame(animate);
+
+    // Wire up SKIP button
+    const skipBtn = document.getElementById('preloader-skip-btn');
+    const handleSkip = () => completePreloaderImmediate();
+    skipBtn?.addEventListener('click', handleSkip);
+
+    // Reduced motion: complete instantly (no animation lock)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      completePreloaderImmediate();
+    }
+
+    // Cleanup on page hide
+    window.addEventListener('pagehide', () => {
+      if (frameId !== null) cancelAnimationFrame(frameId);
+      window.removeEventListener('keydown', handleEscape);
+      skipBtn?.removeEventListener('click', handleSkip);
+    }, { once: true });
+  })();
+</script>
+
+<style>
+  .pixel-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: opacity 0.5s ease, pointer-events 0.5s ease;
+  }
+
+  .preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+    z-index: 5;
+  }
+
+  .morphing-icon-container {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .morph-svg {
+    width: 80px;
+    height: 80px;
+    animation: morphPulse 1.2s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  @keyframes morphPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .progress-bar-container {
+    position: relative;
+    width: 320px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .progress-bar-segmented {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .progress-block {
+    flex: 1;
+    height: 100%;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 0 1px var(--accent-primary)40;
+    transition: background 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s;
+    position: relative;
+  }
+
+  .progress-block.filled {
+    background: var(--accent-primary);
+    box-shadow: inset 0 0 0 1px var(--bg-primary);
+    animation: blockFill 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes blockFill {
+    0% { transform: scaleY(0); transform-origin: bottom; }
+    100% { transform: scaleY(1); }
+  }
+
+  .progress-text {
+    position: absolute;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+  }
+
+  .preloader-skip-btn {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    color: var(--accent-primary);
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.6rem;
+    padding: 0.5rem 1rem;
+    box-shadow: 4px 4px 0 var(--border-color);
+    cursor: pointer;
+    transition: all 0.1s;
+    margin-top: 0.5rem;
+  }
+
+  .preloader-skip-btn:hover {
+    background: var(--accent-primary);
+    color: #0b0d10;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--border-color);
+  }
+
+  .boot-log {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    min-height: 1.2em;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .pixel-shutter-overlay {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s, visibility 0.1s;
+  }
+
+  .shutter-block {
+    width: 100%;
+    height: 100%;
+    transform-origin: bottom;
+    transform: scaleY(1);
+    opacity: 1;
+  }
+
+  @keyframes shutterFall {
+    0% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(0); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pixel-preloader {
+      display: none !important;
+    }
+    .morph-svg { animation: none; }
+    .progress-block.filled { animation: none; }
+    .shutter-block { animation: none !important; }
+  }
+</style>

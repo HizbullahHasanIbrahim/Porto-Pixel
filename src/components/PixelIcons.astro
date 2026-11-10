@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  name?: 'pacman' | 'heart' | 'brain' | 'dna' | 'trophy' | 'claw' | 'terminal' | 'star' | 'coffee' | 'home' | 'github' | 'linkedin' | 'twitter';
+  name?: 'pacman' | 'heart' | 'brain' | 'dna' | 'hands' | 'trophy' | 'claw' | 'terminal' | 'star' | 'coffee' | 'home' | 'github' | 'linkedin' | 'twitter' | 'globe';
   size?: number;
   color?: string;
   class?: string;
@@ -35,7 +35,7 @@ const {
       <rect x="2" y="11" width="12" height="1" />
       <rect x="3" y="13" width="10" height="1" />
       <rect x="5" y="14" width="6" height="1" />
-      <rect x="8" y="3" width="2" height="2" fill="#0b0d10" />
+      <rect x="8" y="3" width="2" height="2" fill="var(--bg-primary)" />
     </g>
   )}
 
@@ -50,7 +50,7 @@ const {
       <rect x="4" y="11" width="8" height="2" />
       <rect x="6" y="13" width="4" height="2" />
       <rect x="7" y="15" width="2" height="1" />
-      <rect x="3" y="4" width="2" height="2" fill="#ffffff" fill-opacity="0.8" />
+      <rect x="3" y="4" width="2" height="2" fill="var(--bg-elevated)" fill-opacity="0.8" />
     </g>
   )}
 
@@ -59,11 +59,11 @@ const {
       <rect x="4" y="2" width="8" height="2" />
       <rect x="2" y="4" width="12" height="8" />
       <rect x="3" y="12" width="10" height="2" />
-      <rect x="7" y="3" width="2" height="10" fill="#0b0d10" />
-      <rect x="4" y="6" width="2" height="1" fill="#0b0d10" />
-      <rect x="3" y="9" width="3" height="1" fill="#0b0d10" />
-      <rect x="10" y="6" width="2" height="1" fill="#0b0d10" />
-      <rect x="10" y="9" width="3" height="1" fill="#0b0d10" />
+      <rect x="7" y="3" width="2" height="10" fill="var(--bg-primary)" />
+      <rect x="4" y="6" width="2" height="1" fill="var(--bg-primary)" />
+      <rect x="3" y="9" width="3" height="1" fill="var(--bg-primary)" />
+      <rect x="10" y="6" width="2" height="1" fill="var(--bg-primary)" />
+      <rect x="10" y="9" width="3" height="1" fill="var(--bg-primary)" />
     </g>
   )}
 
@@ -97,7 +97,7 @@ const {
       <rect x="5" y="8" width="6" height="2" />
       <rect x="7" y="10" width="2" height="3" />
       <rect x="4" y="13" width="8" height="2" />
-      <rect x="7" y="4" width="2" height="2" fill="#0b0d10" />
+      <rect x="7" y="4" width="2" height="2" fill="var(--bg-primary)" />
     </g>
   )}
 
@@ -115,7 +115,7 @@ const {
   {name === 'terminal' && (
     <g fill={color}>
       <rect x="2" y="2" width="12" height="12" />
-      <rect x="4" y="4" width="8" height="8" fill="#0b0d10" />
+      <rect x="4" y="4" width="8" height="8" fill="var(--bg-primary)" />
       <rect x="5" y="6" width="3" height="1" />
       <rect x="6" y="7" width="2" height="1" />
       <rect x="5" y="8" width="3" height="1" />
@@ -139,7 +139,7 @@ const {
     <g fill={color}>
       <rect x="3" y="4" width="8" height="9" />
       <rect x="11" y="5" width="3" height="5" />
-      <rect x="12" y="6" width="1" height="3" fill="#0b0d10" />
+      <rect x="12" y="6" width="1" height="3" fill="var(--bg-primary)" />
       <rect x="2" y="13" width="10" height="2" />
       <rect x="4" y="1" width="2" height="2" />
       <rect x="7" y="1" width="2" height="2" />
@@ -153,7 +153,7 @@ const {
       <rect x="4" y="6" width="8" height="2" />
       <rect x="2" y="8" width="12" height="2" />
       <rect x="3" y="10" width="10" height="4" />
-      <rect x="7" y="11" width="2" height="3" fill="#0b0d10" />
+      <rect x="7" y="11" width="2" height="3" fill="var(--bg-primary)" />
     </g>
   )}
 
@@ -165,19 +165,19 @@ const {
       <rect x="12" y="6" width="1" height="4" />
       <rect x="6" y="12" width="1" height="2" />
       <rect x="9" y="12" width="1" height="2" />
-      <rect x="6" y="6" width="1" height="2" fill="#0b0d10" />
-      <rect x="9" y="6" width="1" height="2" fill="#0b0d10" />
+      <rect x="6" y="6" width="1" height="2" fill="var(--bg-primary)" />
+      <rect x="9" y="6" width="1" height="2" fill="var(--bg-primary)" />
     </g>
   )}
 
   {name === 'linkedin' && (
     <g fill={color}>
       <rect x="2" y="2" width="12" height="12" />
-      <rect x="4" y="4" width="2" height="2" fill="#0b0d10" />
-      <rect x="4" y="7" width="2" height="5" fill="#0b0d10" />
-      <rect x="7" y="7" width="2" height="5" fill="#0b0d10" />
-      <rect x="9" y="7" width="2" height="1" fill="#0b0d10" />
-      <rect x="10" y="8" width="1" height="4" fill="#0b0d10" />
+      <rect x="4" y="4" width="2" height="2" fill="var(--bg-primary)" />
+      <rect x="4" y="7" width="2" height="5" fill="var(--bg-primary)" />
+      <rect x="7" y="7" width="2" height="5" fill="var(--bg-primary)" />
+      <rect x="9" y="7" width="2" height="1" fill="var(--bg-primary)" />
+      <rect x="10" y="8" width="1" height="4" fill="var(--bg-primary)" />
     </g>
   )}
 
@@ -190,6 +190,30 @@ const {
       <rect x="12" y="3" width="2" height="2" />
       <rect x="2" y="11" width="2" height="2" />
       <rect x="12" y="11" width="2" height="2" />
+    </g>
+  )}
+
+  {name === 'hands' && (
+    <g fill={color}>
+      <rect x="1" y="3" width="4" height="8" />
+      <rect x="0" y="5" width="2" height="4" />
+      <rect x="11" y="3" width="4" height="8" />
+      <rect x="14" y="5" width="2" height="4" />
+      <rect x="6" y="7" width="4" height="2" />
+      <rect x="7" y="9" width="2" height="2" />
+    </g>
+  )}
+
+  {name === 'globe' && (
+    <g fill={color}>
+      <rect x="4" y="2" width="8" height="12" />
+      <rect x="2" y="4" width="12" height="8" />
+      <rect x="3" y="12" width="10" height="2" />
+      <rect x="7" y="5" width="2" height="6" fill="var(--bg-primary)" />
+      <rect x="3" y="7" width="2" height="2" />
+      <rect x="11" y="7" width="2" height="2" />
+      <rect x="3" y="10" width="3" height="1" />
+      <rect x="10" y="10" width="3" height="1" />
     </g>
   )}
 </svg>

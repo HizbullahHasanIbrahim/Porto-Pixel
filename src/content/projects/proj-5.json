@@ -1,0 +1,12 @@
+{
+  "id": "proj-5",
+  "title": "Dashboard Analytics \"PIXEL-INSIGHTS\"",
+  "year": 2023,
+  "client": "SaaS Analytics Startup",
+  "role": "Development",
+  "techStack": ["Next.js", "D3.js", "ClickHouse", "TypeScript", "Tailwind"],
+  "description": "Dashboard real-time memproses 1M+ events/hari. Visualisasi custom dengan D3.js, query sub-second via ClickHouse, dan fitur export PDF/CSV. Meningkatkan kecepatan pengambilan keputusan klien 40%.",
+  "posterSVG": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\"><rect width=\"64\" height=\"64\" fill=\"#141820\"/><rect x=\"8\" y=\"8\" width=\"48\" height=\"48\" fill=\"#0b0d10\" stroke=\"#00ff66\" stroke-width=\"2\"/><rect x=\"12\" y=\"12\" width=\"8\" height=\"30\" fill=\"#00ff66\"/><rect x=\"24\" y=\"18\" width=\"8\" height=\"24\" fill=\"#38bdf8\"/><rect x=\"36\" y=\"10\" width=\"8\" height=\"32\" fill=\"#00ff66\"/><rect x=\"48\" y=\"22\" width=\"8\" height=\"20\" fill=\"#38bdf8\"/><polyline points=\"12,42 24,36 36,30 48,22\" fill=\"none\" stroke=\"#ff4d00\" stroke-width=\"2\"/></svg>",
+  "featured": true,
+  "liveUrl": "https://pixel-insights.demo"
+}

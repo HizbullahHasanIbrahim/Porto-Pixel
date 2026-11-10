@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RetroWindow from '../components/RetroWindow.astro';
-import { projects } from '../data/projects';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).map(({ data }) => data);
 ---
 
 <BaseLayout title="PROJECTS // ARCADE CLAW MACHINE | HZB Portfolio">
@@ -65,6 +67,7 @@ import { projects } from '../data/projects';
                 width="480" 
                 height="320"
                 class="claw-canvas"
+                role="img"
                 aria-label="Claw Machine Game"
               ></canvas>
             </div>
@@ -133,11 +136,15 @@ import { projects } from '../data/projects';
         </div>
       </div>
     </dialog>
+    <script id="projects-data" type="application/json" set:html={JSON.stringify(projects)}></script>
   </main>
 </BaseLayout>
 
 <script>
-  import { projects, type Project } from '../data/projects';
+  import type { CollectionEntry } from 'astro:content';
+  type Project = CollectionEntry<'projects'>['data'];
+
+  const projects = JSON.parse(document.getElementById('projects-data')?.textContent || '[]') as Project[];
 
   function initClawMachine() {
     const canvas = document.getElementById('claw-canvas') as HTMLCanvasElement | null;
@@ -158,6 +165,8 @@ import { projects } from '../data/projects';
     let grabbedProjectId: string | null = null;
     let moveLeftInterval: number | null = null;
     let moveRightInterval: number | null = null;
+    let rafId: number | null = null;
+    let running = false;
 
     const CLAW_SPEED = 7;
     const DROP_SPEED = 5;
@@ -265,8 +274,22 @@ import { projects } from '../data/projects';
       `;
     }
 
+    function start() {
+      if (running) return;
+      running = true;
+      if (!rafId) rafId = requestAnimationFrame(animate);
+    }
+
+    function stop() {
+      running = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
     function animate() {
-      if (!ctx || !canvas) return;
+      if (!running || !ctx || !canvas) return;
 
       drawBackground();
       drawClawCable();
@@ -301,7 +324,7 @@ import { projects } from '../data/projects';
       }
 
       updateStatus();
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     }
 
     function moveLeft() {
@@ -365,8 +388,18 @@ import { projects } from '../data/projects';
     });
 
     // Keyboard support
-    window.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+    const handleKeydown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const card = target.closest('.project-card') as HTMLElement | null;
+      if (card && card.dataset.projectId && (e.key === ' ' || e.key === 'Enter')) {
+        e.preventDefault();
+        openProjectDialog(card.dataset.projectId);
+        return;
+      }
+
+      if (target.matches('input, textarea, button, a, [contenteditable], select')) return;
 
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
         e.preventDefault();
@@ -378,7 +411,8 @@ import { projects } from '../data/projects';
         e.preventDefault();
         dropClaw();
       }
-    });
+    };
+    window.addEventListener('keydown', handleKeydown);
 
     // Dialog logic
     function openProjectDialog(id: string) {
@@ -418,7 +452,7 @@ import { projects } from '../data/projects';
       if (e.target === dialog) dialog.close();
     });
 
-    // Card click
+    // Card click & keyboard Enter/Space
     projectsGrid?.addEventListener('click', (e) => {
       const target = e.target as HTMLElement | null;
       const card = target?.closest('.project-card') as HTMLElement | null;
@@ -427,7 +461,47 @@ import { projects } from '../data/projects';
       }
     });
 
-    requestAnimationFrame(animate);
+    projectsGrid?.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const target = e.target as HTMLElement | null;
+        const card = target?.closest('.project-card') as HTMLElement | null;
+        if (card && card.dataset.projectId) {
+          e.preventDefault();
+          openProjectDialog(card.dataset.projectId);
+        }
+      }
+    });
+
+    // Lifecycle cleanup & viewport visibility management
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          start();
+        } else {
+          stop();
+        }
+      }
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stop();
+      } else {
+        start();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    const handlePageHide = () => {
+      stop();
+      observer.disconnect();
+      window.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+    window.addEventListener('pagehide', handlePageHide, { once: true });
+
+    start();
   }
 
   if (document.readyState === 'loading') {

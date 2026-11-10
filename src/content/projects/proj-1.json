@@ -1,0 +1,13 @@
+{
+  "id": "proj-1",
+  "title": "E-Commerce Platform \"PIXELMART\"",
+  "year": 2024,
+  "client": "Startup Retail Indonesia",
+  "role": "Development",
+  "techStack": ["Astro", "React", "Tailwind", "PostgreSQL", "Redis"],
+  "description": "Platform e-commerce full-stack dengan arsitektur mikro-layanan, sistem keranjang real-time, dan pembayaran terintegrasi Midtrans. Menggunakan Astro untuk performa SSR optimal dan React untuk interaktivitas keranjang.",
+  "posterSVG": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\"><rect width=\"64\" height=\"64\" fill=\"#141820\"/><rect x=\"8\" y=\"8\" width=\"48\" height=\"48\" fill=\"#0b0d10\" stroke=\"#00ff66\" stroke-width=\"2\"/><text x=\"32\" y=\"20\" font-family=\"monospace\" font-size=\"6\" fill=\"#00ff66\" text-anchor=\"middle\">🛒</text><rect x=\"16\" y=\"28\" width=\"32\" height=\"4\" fill=\"#00ff66\"/><rect x=\"16\" y=\"36\" width=\"20\" height=\"3\" fill=\"#38bdf8\"/><rect x=\"16\" y=\"42\" width=\"28\" height=\"3\" fill=\"#38bdf8\"/><rect x=\"24\" y=\"50\" width=\"16\" height=\"4\" fill=\"#00ff66\" rx=\"2\"/></svg>",
+  "featured": true,
+  "liveUrl": "https://pixelmart.demo",
+  "repoUrl": "https://github.com/hzb/pixelmart"
+}

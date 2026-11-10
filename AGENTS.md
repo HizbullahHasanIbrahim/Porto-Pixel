@@ -2,7 +2,7 @@
 
 ## 1. Project Overview
 Proyek ini adalah website portofolio interaktif bergaya **Retro-Pixel 8-Bit & Classic OS** milik **Hizbullah Hasan Ibrahim (HZB)**, seorang mahasiswa Sistem Informasi & Creative Web Developer.
-Arsitektur dan pengalaman pengguna mengadaptasi konsep **jld2nd.dev** (Awwwards Nominee): menggabungkan *scroll-driven storytelling* 8-bit, sistem *dual-mode* (**Developer Mode** & **Creative Mode**), jendela pop-up ala sistem operasi klasik (`.exe`, `.sys`, `.dll`), mesin capit (*Claw Machine*) di halaman proyek, dan *mini-game Endless Runner* di halaman `/game`.
+Arsitektur dan pengalaman pengguna mengadaptasi konsep **jld2nd.dev** (Awwwards Nominee): menggabungkan **8-Bit Preloader Boot Sequence**, *pinned scroll-driven storytelling* 8-bit, sistem *dual-mode* (**Developer Mode** & **Creative Mode**), 10 jendela pop-up ala sistem operasi klasik (`.exe`, `.sys`, `.dll`), mesin capit (*Claw Machine*) di halaman proyek, dan *mini-game Endless Runner* di halaman `/game`.
 
 ## 2. Tech Stack & Dependencies
 - **Core Framework:** Astro (Static Site Generation / Multi-Page Architecture)
@@ -36,23 +36,24 @@ Website wajib mendukung **Dual-Mode Theme** yang tersimpan secara persisten di `
 
 3. **UI Rules:**
    - **Dilarang menggunakan blur shadow** pada komponen utama; selalu gunakan *hard-edge pixel shadow* (`var(--pixel-shadow)`) dan `border: 2px solid var(--border-color)`.
-   - **Zero Broken Images:** Seluruh ikon 8-bit (Pac-Man dot, hati, karakter pixel, trofi, kursor, blok Tetris) WAJIB dibuat menggunakan **Inline SVG (`viewBox` berbasis grid pixel)** atau **CSS Pixel Art / Canvas**, bukan memanggil file gambar eksternal yang tidak ada.
+   - **Zero Broken Images:** Seluruh ikon 8-bit (Pac-Man dot, hati, otak, DNA, tangan pixel, karakter pixel, trofi, kursor, blok Tetris, bola dunia) WAJIB dibuat menggunakan **Inline SVG (`viewBox` berbasis grid pixel)** atau **CSS Pixel Art / Canvas**, bukan memanggil file gambar eksternal yang tidak ada.
 
 ## 4. Target Directory Structure
 ```text
 src/
 ├── components/
+│   ├── PixelPreloader.astro  # Fullscreen 8-Bit Boot Loader (0-100%, Morphing Icons & Pixel Grid Shutter)
 │   ├── Header.astro          # Logo pixel, Mode Switcher (Dev/Creative), Quick Nav (/projects, /game, #contact)
-│   ├── SectionNav.astro      # Navigasi titik vertikal ala makanan Pac-Man di sisi kanan layar
+│   ├── SectionNav.astro      # Navigasi titik vertikal ala makanan Pac-Man di sisi kanan layar (12 seksi)
 │   ├── RetroWindow.astro     # Komponen reusable jendela OS (.exe, .alert, .sys)
 │   ├── ContactDialog.astro   # Modal native <dialog> bergaya terminal (C:/HZB.DEV/CONTACT)
-│   └── PixelIcons.astro      # Kumpulan inline SVG 8-bit (Pac-Man, Heart, Brain, DNA, Trophy, Claw)
+│   └── PixelIcons.astro      # Kumpulan inline SVG 8-bit (Pac-Man, Heart, Brain, DNA, Hands, Trophy, Claw, Globe)
 ├── data/
 │   └── projects.ts           # Data portofolio proyek (Web Dev, UI/UX, Database/IS, Hackathon)
 ├── layouts/
-│   └── BaseLayout.astro      # Kerangka HTML5, Google Fonts, Theme Init Script, Header & ContactDialog
+│   └── BaseLayout.astro      # Kerangka HTML5, Google Fonts, Theme Init Script, PixelPreloader, Header & ContactDialog
 ├── pages/
-│   ├── index.astro           # Landing page Scroll Storytelling (Hero, Creator LVL, Pixels, Brain/DNA, OS Cascade, Tetris CTA, World Footer)
+│   ├── index.astro           # Landing page Pinned Scroll Storytelling (Hero, Creator LVL, Pixels->Ideas->Brain, DNA, Emotion/Beauty/Hands, 10-Window OS Cascade, Tetris CTA, World Footer)
 │   ├── projects.astro        # Halaman daftar proyek + fitur interaktif Arcade Claw Machine
 │   ├── game.astro            # Halaman mini-game HTML5 Canvas (Pixel Runner + Local Leaderboard SAVE_SCORE.EXE)
 │   └── 404.astro             # Halaman 404 interaktif bergaya Space Invaders

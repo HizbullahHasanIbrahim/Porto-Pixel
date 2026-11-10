@@ -5,7 +5,7 @@
   --bg-primary: #0b0d10;
   --bg-elevated: #141820;
   --text-primary: #f1f5f9;
-  --text-muted: #94a3b8;
+  --text-muted: #a1b1c6;
   --accent-primary: #00ff66;
   --accent-secondary: #38bdf8;
   --border-color: #00ff66;
@@ -22,7 +22,7 @@ html[data-mode="creative"] {
   --bg-primary: #f4f1ea;
   --bg-elevated: #ffffff;
   --text-primary: #18181b;
-  --text-muted: #52525b;
+  --text-muted: #3f3f46;
   --accent-primary: #ff4d00;
   --accent-secondary: #7c3aed;
   --border-color: #18181b;
@@ -35,9 +35,81 @@ html[data-mode="creative"] {
   padding: 0;
 }
 
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Explicitly disable specific animation classes */
+  .glitch-text::before,
+  .glitch-text::after,
+  .pixel-character,
+  .floating-pixel-art,
+  .pixel-bob {
+    animation: none !important;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+}
+
+/* Focus-visible global — accessible keyboard focus without mouse outline */
+:where(a, button, input, select, textarea, [tabindex], [role="button"]):focus-visible {
+  outline: 3px solid var(--accent-secondary);
+  outline-offset: 3px;
+}
+
+/* Scroll lock during preloader & hero entrance sequence */
+html.scroll-locked,
+body.scroll-locked {
+  overflow: hidden !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+}
+
+/* ============================================
+   CUSTOM 8-BIT RETRO PIXEL CURSOR (jld2nd.dev style)
+   ============================================ */
+@media (hover: hover) and (pointer: fine) {
+  html, body {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M0 0h2v18h2v-2h2v-2h2v-2h3v2h2v2h2v-6h-2v-2h-2v-2h-2V4h-2V2H0z'/%3E%3Cpath fill='%23ffffff' d='M2 2h2v12h2v-2h2v-2h2v-2h2v-2h-2V4H4V2z'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%2300ff66'/%3E%3C/svg%3E") 0 0, auto;
+  }
+
+  a, button, input, select, textarea, [role="button"], .pixel-btn, .mode-btn, .spec-tab, .contact-trigger, .spec-nav-btn {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M6 0h4v10h2V6h4v6h2V8h4v8h-2v2h-2v2h-2v2H8v-2H6v-4H4v-4h2V0z'/%3E%3Cpath fill='%23ffffff' d='M8 2h2v8h2V8h2v4h2v-2h2v6h-2v2h-2v2h-4v-2H8v-4H6v-2h2V2z'/%3E%3Crect x='8' y='2' width='2' height='2' fill='%2300ff66'/%3E%3C/svg%3E") 7 1, pointer;
+  }
+
+  /* Creative Mode Custom Cursor with Retro Orange Accent Tip */
+  html[data-mode="creative"],
+  html[data-mode="creative"] body {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M0 0h2v18h2v-2h2v-2h2v-2h3v2h2v2h2v-6h-2v-2h-2v-2h-2V4h-2V2H0z'/%3E%3Cpath fill='%23ffffff' d='M2 2h2v12h2v-2h2v-2h2v-2h2v-2h-2V4H4V2z'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23ff4d00'/%3E%3C/svg%3E") 0 0, auto;
+  }
+
+  html[data-mode="creative"] a, 
+  html[data-mode="creative"] button, 
+  html[data-mode="creative"] input, 
+  html[data-mode="creative"] select, 
+  html[data-mode="creative"] textarea, 
+  html[data-mode="creative"] [role="button"], 
+  html[data-mode="creative"] .pixel-btn, 
+  html[data-mode="creative"] .mode-btn, 
+  html[data-mode="creative"] .spec-tab, 
+  html[data-mode="creative"] .contact-trigger,
+  html[data-mode="creative"] .spec-nav-btn {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath fill='%23000000' d='M6 0h4v10h2V6h4v6h2V8h4v8h-2v2h-2v2h-2v2H8v-2H6v-4H4v-4h2V0z'/%3E%3Cpath fill='%23ffffff' d='M8 2h2v8h2V8h2v4h2v-2h2v6h-2v2h-2v2h-4v-2H8v-4H6v-2h2V2z'/%3E%3Crect x='8' y='2' width='2' height='2' fill='%23ff4d00'/%3E%3C/svg%3E") 7 1, pointer;
+  }
 }
 
 body {
@@ -46,6 +118,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100dvh;
   image-rendering: pixelated;
 }
 
@@ -192,7 +265,32 @@ h1, h2, h3, h4 {
   }
 }
 
-/* Scrollbar styling */
+/* Step-based hard-edge retro theme transition */
+html, body, .retro-window, button, a, input, textarea, select {
+  transition: background-color 0.15s steps(3), color 0.15s steps(3), border-color 0.15s steps(3), box-shadow 0.15s steps(3);
+}
+
+/* Retro CRT Scanlines Overlay */
+.crt-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.12),
+    rgba(0, 0, 0, 0.12) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.65;
+}
+
+@media (prefers-reduced-motion: reduce), (max-width: 480px) {
+  .crt-scanlines {
+    display: none !important;
+  }
+}
 ::-webkit-scrollbar {
   width: 12px;
 }

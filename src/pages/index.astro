@@ -6,425 +6,576 @@ import PixelIcons from '../components/PixelIcons.astro';
 ---
 
 <BaseLayout title="HZB // Creative Developer & IS Architect">
+  <div id="scroll-progress-line" class="scroll-progress-line" aria-hidden="true"></div>
   <SectionNav sections={[
     { id: 'hero', label: 'HERO' },
-    { id: 'creator', label: 'CREATOR' },
+    { id: 'about', label: 'ABOUT' },
     { id: 'pixels', label: 'PIXELS' },
-    { id: 'brain', label: 'BRAIN' },
+    { id: 'ideas', label: 'IDEAS' },
+    { id: 'brain-section', label: 'BRAIN' },
+    { id: 'dna', label: 'DNA' },
+    { id: 'emotion', label: 'EMOTION' },
+    { id: 'beauty', label: 'BEAUTY' },
+    { id: 'hands', label: 'HANDS' },
     { id: 'windows', label: 'WINDOWS' },
-    { id: 'tetris', label: 'ARCADE' },
-    { id: 'contact', label: 'CONTACT' },
+    { id: 'tetris', label: 'TETRIS' },
+    { id: 'world', label: 'WORLD' },
   ]} />
 
-  <!-- SECTION 1: HERO -->
+  <!-- SECTION 1: HERO - Multilingual Greeting & Dual-Mode Hero -->
   <section id="hero" class="story-section hero-section">
-    <div class="hero-content" id="hero-enter">
+    <div class="hero-content">
       <div class="terminal-badge">
         <span class="badge-dot"></span>
-        <span class="badge-text">STATUS: LVL 99 SYSTEM READY // PORT 4321</span>
+        <span class="badge-text" id="terminal-badge-text">STATUS: SYSTEM ONLINE // PORT 4321</span>
       </div>
 
       <h1 class="hero-title">
-        <span class="glitch-text" data-text="HIZBULLAH">HIZBULLAH</span>
-        <span class="title-sub">HASAN IBRAHIM</span>
+        <span class="glitch-text" data-text="HIZBULLAH" id="hero-glitch-name">HIZBULLAH</span>
+        <span class="title-sub" id="hero-title-sub">HASAN IBRAHIM</span>
       </h1>
 
-      <p class="hero-tagline">
-        <span class="highlight">Sistem Informasi</span> &amp; <span class="highlight-alt">Creative Web Developer</span>.
-        Menghubungkan arsitektur data terstruktur dengan pengalaman visual 8-bit retro yang interaktif.
+      <p class="hero-headline">
+        <span class="highlight">Turning Pixels</span> into <span class="highlight-alt">Memorable Digital Experiences.</span>
+      </p>
+      <p class="hero-subheadline">
+        Seamless code and thoughtful design, crafting visions to life.
       </p>
 
       <div class="hero-avatar-box">
-        <!-- Floating Decor Artifacts -->
-        <div class="floating-pixel-art f-1" style="top: -20px; left: -40px;"><PixelIcons name="heart" size={16} /></div>
-        <div class="floating-pixel-art f-2" style="bottom: 0px; right: -50px; animation-delay: -1s;"><PixelIcons name="pacman" size={16} /></div>
-        <div class="floating-pixel-art f-3" style="top: 20px; right: -40px; animation-delay: -2s;"><PixelIcons name="trophy" size={16} /></div>
-
         <div class="pixel-character">
-          <svg viewBox="0 0 48 48" class="char-svg" shape-rendering="crispEdges">
-            <!-- Retro 8-bit Character -->
+          <div class="avatar-scanline" aria-hidden="true"></div>
+          <!-- Developer Mode Character -->
+          <svg viewBox="0 0 48 48" class="char-svg char-dev" shape-rendering="crispEdges" aria-hidden="true">
             <rect width="48" height="48" fill="#141820" />
-            <!-- Hat / Hair -->
             <rect x="14" y="6" width="20" height="4" fill="#00ff66" />
             <rect x="10" y="10" width="28" height="6" fill="#00ff66" />
-            <!-- Face -->
             <rect x="12" y="16" width="24" height="12" fill="#f1f5f9" />
-            <!-- Pixel Glasses -->
             <rect x="14" y="18" width="8" height="6" fill="#0b0d10" />
             <rect x="26" y="18" width="8" height="6" fill="#0b0d10" />
             <rect x="22" y="20" width="4" height="2" fill="#0b0d10" />
             <rect x="16" y="20" width="4" height="2" fill="#38bdf8" />
             <rect x="28" y="20" width="4" height="2" fill="#38bdf8" />
-            <!-- Smile -->
             <rect x="20" y="25" width="8" height="2" fill="#0b0d10" />
-            <!-- Shirt / Body -->
             <rect x="12" y="28" width="24" height="14" fill="#141820" stroke="#00ff66" stroke-width="2" />
             <rect x="22" y="30" width="4" height="8" fill="#38bdf8" />
-            <!-- Feet -->
             <rect x="14" y="42" width="8" height="4" fill="#00ff66" />
             <rect x="26" y="42" width="8" height="4" fill="#00ff66" />
+          </svg>
+          <!-- Creative Mode Character -->
+          <svg viewBox="0 0 48 48" class="char-svg char-creative" shape-rendering="crispEdges" aria-hidden="true" style="display:none">
+            <rect width="48" height="48" fill="#ffffff" />
+            <rect x="14" y="6" width="20" height="4" fill="#ff4d00" />
+            <rect x="10" y="10" width="28" height="6" fill="#ff4d00" />
+            <rect x="12" y="16" width="24" height="12" fill="#18181b" />
+            <rect x="14" y="18" width="8" height="6" fill="#f4f1ea" />
+            <rect x="26" y="18" width="8" height="6" fill="#f4f1ea" />
+            <rect x="22" y="20" width="4" height="2" fill="#18181b" />
+            <rect x="16" y="20" width="4" height="2" fill="#7c3aed" />
+            <rect x="28" y="20" width="4" height="2" fill="#7c3aed" />
+            <rect x="20" y="25" width="8" height="2" fill="#18181b" />
+            <rect x="12" y="28" width="24" height="14" fill="#ffffff" stroke="#ff4d00" stroke-width="2" />
+            <rect x="22" y="30" width="4" height="8" fill="#7c3aed" />
+            <rect x="14" y="42" width="8" height="4" fill="#ff4d00" />
+            <rect x="26" y="42" width="8" height="4" fill="#ff4d00" />
           </svg>
         </div>
       </div>
 
-      <div class="hero-cta-group">
-        <a href="/projects" class="pixel-btn primary">
-          <PixelIcons name="claw" size={14} />
-          <span>PROJECT GALLERY</span>
-        </a>
-        <a href="/game" class="pixel-btn secondary">
-          <PixelIcons name="pacman" size={14} />
-          <span>PLAY RUNNER</span>
-        </a>
-        <a href="#contact" class="pixel-btn outline">
-          <PixelIcons name="terminal" size={14} />
-          <span>CONTACT.EXE</span>
-        </a>
+      <div class="mode-toggle-group">
+        <button class="mode-btn dev-mode active" data-mode="developer" type="button">
+          <svg class="mode-symbol" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">
+            <rect x="2" y="2" width="12" height="12" stroke="currentColor" stroke-width="1" fill="none" />
+            <rect class="mode-symbol-cutout" x="4" y="4" width="8" height="8" />
+            <rect x="5" y="6" width="3" height="1" />
+            <rect x="6" y="7" width="2" height="1" />
+            <rect x="5" y="8" width="3" height="1" />
+            <rect x="8" y="9" width="3" height="1" />
+          </svg>
+          <span>DEVELOPER MODE</span>
+        </button>
+        <button class="mode-btn creative-mode" data-mode="creative" type="button">
+          <svg class="mode-symbol" viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges" fill="currentColor">
+            <g stroke="currentColor" stroke-width="1" fill="currentColor">
+              <rect x="7" y="2" width="2" height="2" />
+              <rect x="5" y="4" width="6" height="2" />
+              <rect x="1" y="6" width="14" height="2" />
+              <rect x="3" y="8" width="10" height="2" />
+              <rect x="5" y="10" width="6" height="2" />
+              <rect x="3" y="12" width="3" height="2" />
+              <rect x="10" y="12" width="3" height="2" />
+            </g>
+          </svg>
+          <span>CREATIVE MODE</span>
+        </button>
       </div>
 
-      <div class="scroll-prompt">
-        <span class="prompt-text">SCROLL TO INITIALIZE</span>
-        <span class="prompt-arrow">▼</span>
+      <button class="skip-boot-btn" id="skip-boot-btn" type="button" aria-label="Skip boot sequence and unlock scroll">
+        <svg viewBox="0 0 16 16" class="skip-icon" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="2" y="2" width="12" height="12" stroke="currentColor" stroke-width="1" fill="none" />
+          <rect x="5" y="5" width="6" height="6" fill="currentColor" />
+        </svg>
+        <span>SKIP BOOT</span>
+      </button>
+
+      <div class="scroll-prompt" id="hero-scroll-prompt">
+        <div class="prompt-status-badge locked" id="scroll-lock-badge">
+          <span class="badge-icon">🔒</span>
+          <span class="badge-status">INITIALIZING SYSTEM...</span>
+        </div>
+        <div class="prompt-cta-row">
+          <span class="prompt-text">SCROLL TO INITIALIZE</span>
+          <span class="prompt-arrow">▼</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 2: CREATOR LVL -->
-  <section id="creator" class="story-section creator-section">
-    <div class="section-container" id="creator-enter">
-      <div class="section-titlebar">
-        <span class="sect-num">01/</span>
-        <h2 class="sect-title">CREATOR STATS</h2>
-      </div>
-
-      <div class="creator-cards-grid">
-        <RetroWindow title="STATUS_SHEET.EXE" type="exe" class="stat-window">
-          <div class="rpg-stats">
-            <div class="rpg-header">
-              <span class="lvl-badge">LVL 99 DEVELOPER</span>
-              <span class="class-title">CLASS: DUAL-SPEC ARCHITECT</span>
-            </div>
-
-            <div class="stat-bars">
-              <div class="stat-row">
-                <span class="stat-name">SYSTEMS ANALYSIS (SQL / 3NF)</span>
-                <div class="bar-container"><div class="bar-fill" style="width: 95%;"></div></div>
-                <span class="stat-val">95/100</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-name">FRONTEND CREATIVE (GSAP / CANVAS)</span>
-                <div class="bar-container"><div class="bar-fill alt" style="width: 90%;"></div></div>
-                <span class="stat-val">90/100</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-name">MICROSERVICES &amp; SSR (ASTRO / NODE)</span>
-                <div class="bar-container"><div class="bar-fill" style="width: 88%;"></div></div>
-                <span class="stat-val">88/100</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-name">HACKATHON SPEED-RUNNING</span>
-                <div class="bar-container"><div class="bar-fill warn" style="width: 98%;"></div></div>
-                <span class="stat-val">98/100</span>
-              </div>
-            </div>
-
-            <div class="special-perks">
-              <div class="perk-tag">
-                <PixelIcons name="trophy" size={14} />
-                <span>CODEQUEST 2024 CHAMPION</span>
-              </div>
-              <div class="perk-tag">
-                <PixelIcons name="coffee" size={14} />
-                <span>ZERO BLUR SHADOW PHILOSOPHY</span>
-              </div>
-            </div>
+  <!-- SECTION 2: ABOUT - The Creator Behind the Code and Pixels (RPG Character Select) -->
+  <section id="about" class="story-section about-section">
+    <div class="about-container">
+      <RetroWindow title="CREATOR_PROFILE.EXE // CHARACTER SELECT" type="exe" class="creator-profile-window">
+        <!-- Arcade Character Select Control Bar -->
+        <div class="character-select-bar">
+          <div class="select-bar-left">
+            <span class="select-badge-tag"><span class="blink-dot"></span> P1 SELECT</span>
+            <span class="select-instruction">CHOOSE CLASS:</span>
           </div>
-        </RetroWindow>
-
-        <RetroWindow title="INVENTORY.SYS" type="sys" class="inventory-window">
-          <div class="inventory-grid">
-            <div class="inv-slot" title="Astro SSG">
-              <span class="inv-code">ASTRO</span>
-              <span class="inv-meta">v5 Core</span>
-            </div>
-            <div class="inv-slot" title="GSAP Animation">
-              <span class="inv-code">GSAP</span>
-              <span class="inv-meta">ScrollTrigger</span>
-            </div>
-            <div class="inv-slot" title="TypeScript">
-              <span class="inv-code">TS</span>
-              <span class="inv-meta">Strict</span>
-            </div>
-            <div class="inv-slot" title="HTML5 Canvas">
-              <span class="inv-code">CANVAS</span>
-              <span class="inv-meta">2D Engine</span>
-            </div>
-            <div class="inv-slot" title="SQL Database">
-              <span class="inv-code">SQL</span>
-              <span class="inv-meta">Postgres/MySQL</span>
-            </div>
-            <div class="inv-slot" title="Laravel / PHP">
-              <span class="inv-code">LARAVEL</span>
-              <span class="inv-meta">Backend API</span>
-            </div>
+          <div class="spec-tabs" role="tablist">
+            <button class="spec-tab active" id="tab-spec-dev" data-spec="dev" type="button" role="tab" aria-selected="true">
+              <span class="tab-indicator">▶</span>
+              <span class="tab-num">01</span>
+              <span class="tab-name">SYSTEMS ARCHITECT</span>
+            </button>
+            <button class="spec-tab" id="tab-spec-creative" data-spec="creative" type="button" role="tab" aria-selected="false">
+              <span class="tab-indicator">▶</span>
+              <span class="tab-num">02</span>
+              <span class="tab-name">CREATIVE DEV</span>
+            </button>
           </div>
-        </RetroWindow>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 3: PIXELS (INTERACTIVE CANVAS PLAYGROUND) -->
-  <section id="pixels" class="story-section pixels-section">
-    <div class="section-container" id="pixels-enter">
-      <div class="section-titlebar">
-        <span class="sect-num">02/</span>
-        <h2 class="sect-title">PIXEL MATRIX</h2>
-      </div>
-
-      <RetroWindow title="PIXEL_PLAYGROUND.SYS" type="sys" class="playground-window">
-        <div class="playground-desc">
-          <p>Hover cursor atau usap jarimu di layar untuk menyalakan pixel grid secara interaktif!</p>
-        </div>
-        <div class="matrix-canvas-box">
-          <canvas id="pixel-matrix-canvas" width="600" height="240"></canvas>
-        </div>
-        <div class="matrix-controls">
-          <button id="matrix-clear-btn" class="pixel-mini-btn" type="button">CLEAR MATRIX</button>
-          <button id="matrix-rand-btn" class="pixel-mini-btn" type="button">GLITCH BURST</button>
-        </div>
-      </RetroWindow>
-    </div>
-  </section>
-
-  <!-- SECTION 4: BRAIN / DNA (DUAL ARCHITECTURE) -->
-  <section id="brain" class="story-section brain-section">
-    <div class="section-container" id="brain-enter">
-      <div class="section-titlebar">
-        <span class="sect-num">03/</span>
-        <h2 class="sect-title">BRAIN.SYS &amp; DNA.SYS</h2>
-      </div>
-
-      <div class="dual-columns">
-        <RetroWindow title="LEFT_BRAIN.EXE // SYSTEMS" type="exe" class="brain-card left">
-          <div class="brain-icon-top">
-            <PixelIcons name="dna" size={24} />
-          </div>
-          <h3 class="brain-role-title">ANALYTICAL RIGOR</h3>
-          <p class="brain-body">
-            Sebagai mahasiswa <strong>Sistem Informasi</strong>, pendekatan saya dibangun di atas fondasi:
-          </p>
-          <ul class="brain-list">
-            <li>Normalisasi Database 3NF &amp; Partitioning</li>
-            <li>Arsitektur Terdistribusi &amp; High-Throughput</li>
-            <li>Integritas Relasi, ACID, &amp; Query Optimizing</li>
-            <li>Pemetaan Business Process &amp; System Flowchart</li>
-          </ul>
-        </RetroWindow>
-
-        <RetroWindow title="RIGHT_BRAIN.EXE // CREATIVE" type="alert" class="brain-card right">
-          <div class="brain-icon-top">
-            <PixelIcons name="brain" size={24} />
-          </div>
-          <h3 class="brain-role-title">CREATIVE CODE CRAFT</h3>
-          <p class="brain-body">
-            Sebagai <strong>Creative Web Developer</strong>, saya mengubah kode teknis menjadi dunia seni:
-          </p>
-          <ul class="brain-list">
-            <li>Scroll-Driven Storytelling dengan GSAP</li>
-            <li>Desain Retro-Pixel 8-Bit tanpa broken images</li>
-            <li>Micro-Interactions, Canvas Mini-Games, Sound UI</li>
-            <li>Dual-Mode themes yang ekspresif &amp; responsif</li>
-          </ul>
-        </RetroWindow>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 5: OS CASCADE (STACKED RETRO WINDOWS) -->
-  <section id="windows" class="story-section windows-section">
-    <div class="section-container" id="windows-enter">
-      <div class="section-titlebar">
-        <span class="sect-num">04/</span>
-        <h2 class="sect-title">SYSTEM CASCADE</h2>
-        <p class="sect-subtitle">CASCADING RETRO OS WINDOWS // RESPONSIVE &amp; LAYERED</p>
-      </div>
-
-      <div class="windows-stack-container" id="windows-stack">
-        <!-- Window 1: TECH_STACK.EXE -->
-        <RetroWindow 
-          title="TECH_STACK.EXE" 
-          type="exe" 
-          class="cascade-window window-layer-1"
-          id="cascade-win-1"
-        >
-          <div class="window-inner-content">
-            <h4 class="win-heading">CORE TECH STACK</h4>
-            <p class="win-p">Arsitektur modern dengan sentuhan estetika komputasi klasik:</p>
-            <div class="tech-grid-compact">
-              <span class="tag-pill">Astro SSG</span>
-              <span class="tag-pill">GSAP ScrollTrigger</span>
-              <span class="tag-pill">TypeScript</span>
-              <span class="tag-pill">Canvas 2D</span>
-              <span class="tag-pill">PostgreSQL</span>
-              <span class="tag-pill">Redis</span>
-              <span class="tag-pill">Docker</span>
-              <span class="tag-pill">Tailwind CSS</span>
-            </div>
-          </div>
-        </RetroWindow>
-
-        <!-- Window 2: EXPERIENCE.SYS -->
-        <RetroWindow 
-          title="EXPERIENCE.SYS" 
-          type="sys" 
-          class="cascade-window window-layer-2"
-          id="cascade-win-2"
-        >
-          <div class="window-inner-content">
-            <h4 class="win-heading">PRODUCTION EXPERIENCE</h4>
-            <ul class="bullet-retro">
-              <li><strong>Lead Developer @ Startup E-Commerce:</strong> Performa load &lt; 0.8s dengan Astro + Redis caching.</li>
-              <li><strong>Database Architect @ SIAKAD Pixel:</strong> Migrasi zero-downtime untuk 10.000+ data mahasiswa aktif.</li>
-              <li><strong>Interactive Game Designer:</strong> Merancang Phaser &amp; Canvas games dengan puluhan ribu total plays.</li>
-            </ul>
-          </div>
-        </RetroWindow>
-
-        <!-- Window 3: ACHIEVEMENTS.ALERT -->
-        <RetroWindow 
-          title="ACHIEVEMENTS.ALERT" 
-          type="alert" 
-          class="cascade-window window-layer-3"
-          id="cascade-win-3"
-        >
-          <div class="window-inner-content">
-            <h4 class="win-heading">COMPETITIONS &amp; RECOGNITION</h4>
-            <div class="alert-box">
-              <span class="alert-icon">🏆</span>
-              <div class="alert-text">
-                <strong>JUARA 1 - CODEQUEST 2024 NATIONAL HACKATHON</strong>
-                <p>Kategori Best Technical Implementation dengan game realtime platformer multipemain.</p>
-              </div>
-            </div>
-          </div>
-        </RetroWindow>
-
-        <!-- Window 4: PHILOSOPHY.DLL -->
-        <RetroWindow 
-          title="PHILOSOPHY.DLL" 
-          type="exe" 
-          class="cascade-window window-layer-4"
-          id="cascade-win-4"
-        >
-          <div class="window-inner-content">
-            <h4 class="win-heading">DESIGN MANIFESTO</h4>
-            <p class="manifesto-quote">
-              "Perangkat lunak terbaik menggabungkan ketahanan sistemik yang tak tergoyahkan dengan kehangatan interaktivitas yang menyenangkan pengguna."
-            </p>
-          </div>
-        </RetroWindow>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 6: TETRIS CTA -->
-  <section id="tetris" class="story-section tetris-section">
-    <div class="section-container" id="tetris-enter">
-      <RetroWindow title="LEVEL_COMPLETE.EXE" type="exe" class="tetris-window">
-        <div class="tetris-content">
-          <div class="tetris-blocks">
-            <div class="t-block t1"></div>
-            <div class="t-block t2"></div>
-            <div class="t-block t3"></div>
-            <div class="t-block t4"></div>
-          </div>
-          <h2 class="tetris-title">STAGE CLEARED! READY FOR THE NEXT LEVEL?</h2>
-          <p class="tetris-sub">Uji keahlianmu di Claw Machine atau lari tanpa henti di Pixel Runner:</p>
-          
-          <div class="tetris-action-row">
-            <a href="/projects" class="pixel-btn primary large">
-              <span>EXPLORE ALL PROJECTS</span>
-            </a>
-            <a href="/game" class="pixel-btn secondary large">
-              <span>PLAY PIXEL RUNNER</span>
-            </a>
+          <div class="spec-nav-arrows">
+            <button class="spec-nav-btn" id="spec-nav-prev" type="button" title="Previous Class" aria-label="Previous Class">◀</button>
+            <button class="spec-nav-btn" id="spec-nav-next" type="button" title="Next Class" aria-label="Next Class">▶</button>
           </div>
         </div>
-      </RetroWindow>
-    </div>
-  </section>
 
-  <!-- SECTION 7: WORLD FOOTER / CONTACT -->
-  <footer id="contact" class="story-section world-footer">
-    <div class="footer-horizon" id="contact-enter">
-      <!-- 8-Bit Skyline SVG -->
-      <svg viewBox="0 0 800 60" preserveAspectRatio="none" class="skyline-svg" shape-rendering="crispEdges">
-        <rect x="0" y="30" width="80" height="30" fill="var(--bg-elevated)" />
-        <rect x="80" y="15" width="60" height="45" fill="var(--bg-elevated)" />
-        <rect x="140" y="25" width="90" height="35" fill="var(--bg-elevated)" />
-        <rect x="230" y="10" width="70" height="50" fill="var(--bg-elevated)" />
-        <rect x="300" y="35" width="80" height="25" fill="var(--bg-elevated)" />
-        <rect x="380" y="20" width="60" height="40" fill="var(--bg-elevated)" />
-        <rect x="440" y="5" width="50" height="55" fill="var(--bg-elevated)" />
-        <rect x="490" y="25" width="80" height="35" fill="var(--bg-elevated)" />
-        <rect x="570" y="15" width="70" height="45" fill="var(--bg-elevated)" />
-        <rect x="640" y="30" width="90" height="30" fill="var(--bg-elevated)" />
-        <rect x="730" y="10" width="70" height="50" fill="var(--bg-elevated)" />
-      </svg>
-    </div>
-
-    <div class="footer-container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <h3 class="footer-logo">HZB.DEV</h3>
-          <p class="footer-copy">Hizbullah Hasan Ibrahim &copy; 2024. All rights reserved.</p>
-        </div>
-        <div class="footer-nav">
-          <div class="footer-nav-group">
-            <a href="/" class="pixel-btn primary" title="Home">
-              <PixelIcons name="home" size={14} />
-              <span>Home</span>
-            </a>
-            <a href="/projects" class="pixel-btn primary" title="Projects">
-              <PixelIcons name="claw" size={14} />
-              <span>Projects</span>
-            </a>
-            <a href="/game" class="pixel-btn primary" title="Game">
-              <PixelIcons name="pacman" size={14} />
-              <span>Game</span>
-            </a>
-            <a href="#contact" class="pixel-btn primary" title="Contact">
-              <PixelIcons name="terminal" size={14} />
-              <span>Contact</span>
-            </a>
+        <div class="creator-header">
+          <div class="creator-avatar-large" id="creator-avatar">
+            <svg viewBox="0 0 96 96" class="avatar-svg" shape-rendering="crispEdges" aria-hidden="true">
+              <!-- Developer Mode Avatar (default) -->
+              <g class="avatar-dev">
+                <rect width="96" height="96" fill="#141820" />
+                <rect x="28" y="12" width="40" height="8" fill="#00ff66" />
+                <rect x="20" y="20" width="56" height="12" fill="#00ff66" />
+                <rect x="24" y="32" width="48" height="24" fill="#f1f5f9" />
+                <rect x="28" y="36" width="16" height="12" fill="#0b0d10" />
+                <rect x="52" y="36" width="16" height="12" fill="#0b0d10" />
+                <rect x="44" y="40" width="8" height="4" fill="#0b0d10" />
+                <rect x="32" y="40" width="8" height="4" fill="#38bdf8" />
+                <rect x="56" y="40" width="8" height="4" fill="#38bdf8" />
+                <rect x="40" y="50" width="16" height="4" fill="#0b0d10" />
+                <rect x="24" y="56" width="48" height="28" fill="#141820" stroke="#00ff66" stroke-width="3" />
+                <rect x="42" y="60" width="12" height="16" fill="#38bdf8" />
+                <rect x="28" y="84" width="16" height="8" fill="#00ff66" />
+                <rect x="52" y="84" width="16" height="8" fill="#00ff66" />
+              </g>
+              <!-- Creative Mode Avatar -->
+              <g class="avatar-creative" style="display:none">
+                <rect width="96" height="96" fill="#ffffff" />
+                <rect x="28" y="12" width="40" height="8" fill="#ff4d00" />
+                <rect x="20" y="20" width="56" height="12" fill="#ff4d00" />
+                <rect x="24" y="32" width="48" height="24" fill="#18181b" />
+                <rect x="28" y="36" width="16" height="12" fill="#f4f1ea" />
+                <rect x="52" y="36" width="16" height="12" fill="#f4f1ea" />
+                <rect x="44" y="40" width="8" height="4" fill="#18181b" />
+                <rect x="32" y="40" width="8" height="4" fill="#7c3aed" />
+                <rect x="56" y="40" width="8" height="4" fill="#7c3aed" />
+                <rect x="40" y="50" width="16" height="4" fill="#18181b" />
+                <rect x="24" y="56" width="48" height="28" fill="#ffffff" stroke="#ff4d00" stroke-width="3" />
+                <rect x="42" y="60" width="12" height="16" fill="#7c3aed" />
+                <rect x="28" y="84" width="16" height="8" fill="#ff4d00" />
+                <rect x="52" y="84" width="16" height="8" fill="#ff4d00" />
+              </g>
+            </svg>
           </div>
-          
-          <div class="footer-social">
-            <a href="https://github.com/hzb" class="pixel-btn" title="GitHub" target="_blank">
-              <PixelIcons name="github" size={14} />
-              <span>GitHub</span>
-            </a>
-            <a href="https://linkedin.com/in/hzb" class="pixel-btn" title="LinkedIn" target="_blank">
-              <PixelIcons name="linkedin" size={14} />
-              <span>LinkedIn</span>
-            </a>
-            <a href="https://twitter.com/hzb_dev" class="pixel-btn" title="Twitter" target="_blank">
-              <PixelIcons name="twitter" size={14} />
-              <span>Twitter</span>
-            </a>
+          <div class="creator-title-area">
+            <div class="lvl-badge-large">LVL. 20</div>
+            <h2 class="creator-name" id="creator-name">SYSTEMS ARCHITECT</h2>
+            <p class="creator-class" id="creator-class">Sistem Informasi & Microservices Engineer</p>
+            <p class="creator-quote" id="creator-quote">"Turning complex business logic into rock-solid 3NF architectures & high-concurrency systems."</p>
           </div>
         </div>
-        
-        <div class="footer-actions">
-          <button id="footer-contact-trigger" class="pixel-btn primary" type="button">
+
+        <div class="creator-stats-grid" id="creator-stats-grid">
+          <div class="stat-card" data-index="0">
+            <span class="stat-icon icon-dev"><PixelIcons name="brain" size={18} /></span>
+            <span class="stat-icon icon-creative" style="display:none"><PixelIcons name="pacman" size={18} /></span>
+            <div class="stat-info">
+              <span class="stat-label">SYSTEMS ANALYSIS & 3NF</span>
+              <div class="stat-bar"><div class="stat-fill" data-progress="98"></div></div>
+              <span class="stat-value">98/100</span>
+            </div>
+          </div>
+          <div class="stat-card" data-index="1">
+            <span class="stat-icon icon-dev"><PixelIcons name="dna" size={18} /></span>
+            <span class="stat-icon icon-creative" style="display:none"><PixelIcons name="brain" size={18} /></span>
+            <div class="stat-info">
+              <span class="stat-label">DATABASE & ORM ARCH</span>
+              <div class="stat-bar"><div class="stat-fill alt" data-progress="95"></div></div>
+              <span class="stat-value">95/100</span>
+            </div>
+          </div>
+          <div class="stat-card" data-index="2">
+            <span class="stat-icon icon-dev"><PixelIcons name="trophy" size={18} /></span>
+            <span class="stat-icon icon-creative" style="display:none"><PixelIcons name="terminal" size={18} /></span>
+            <div class="stat-info">
+              <span class="stat-label">MICROSERVICES & SSR</span>
+              <div class="stat-bar"><div class="stat-fill" data-progress="90"></div></div>
+              <span class="stat-value">90/100</span>
+            </div>
+          </div>
+          <div class="stat-card" data-index="3">
+            <span class="stat-icon icon-dev"><PixelIcons name="coffee" size={18} /></span>
+            <span class="stat-icon icon-creative" style="display:none"><PixelIcons name="heart" size={18} /></span>
+            <div class="stat-info">
+              <span class="stat-label">HACKATHON SPEED-RUN</span>
+              <div class="stat-bar"><div class="stat-fill warn" data-progress="98"></div></div>
+              <span class="stat-value">98/100</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="creator-perks" id="creator-perks">
+          <div class="perks-group perks-dev">
+            <span class="perk"><PixelIcons name="trophy" size={14} /> CODEQUEST 2024 CHAMPION</span>
+            <span class="perk"><PixelIcons name="dna" size={14} /> 3NF DATABASE MASTER</span>
+            <span class="perk"><PixelIcons name="coffee" size={14} /> ZERO BLUR SHADOW PHILOSOPHY</span>
+          </div>
+          <div class="perks-group perks-creative" style="display:none">
+            <span class="perk"><PixelIcons name="pacman" size={14} /> 60FPS CANVAS PHYSICS</span>
+            <span class="perk"><PixelIcons name="heart" size={14} /> PIXEL PERFECT EMOTION</span>
+            <span class="perk"><PixelIcons name="star" size={14} /> JLD2ND EXPERIMENTALIST</span>
+          </div>
+        </div>
+
+        <div class="creator-actions">
+          <a href="/game" class="pixel-btn primary play-btn">
+            <PixelIcons name="pacman" size={14} />
+            <span>PLAY PIXEL RUNNER →</span>
+          </a>
+          <a href="/projects" class="pixel-btn view-projects-btn">
             <PixelIcons name="terminal" size={14} />
-            <span>OPEN CONTACT TERMINAL</span>
-          </button>
+            <span>BROWSE PROJECTS</span>
+          </a>
+        </div>
+      </RetroWindow>
+    </div>
+  </section>
+
+  <!-- SECTION 3: PIXELS → IDEAS → BRAIN - Pinned Scroll Story -->
+  <section id="pixels" class="story-section pin-section pixels-story-section">
+    <div class="pin-wrapper" id="pixels-pin-wrapper">
+      <div class="pinned-content pixels-content">
+        <!-- Phase A: Single Pixel Dot -->
+        <div class="story-phase phase-a" data-phase="pixels">
+          <div class="single-pixel-wrapper">
+            <div class="single-pixel" id="single-pixel"></div>
+            <div class="pixel-sparks" id="pixel-sparks" aria-hidden="true">
+              <span class="spark s-tl"></span>
+              <span class="spark s-tr"></span>
+              <span class="spark s-bl"></span>
+              <span class="spark s-br"></span>
+            </div>
+          </div>
+          <div class="phase-text">
+            <p class="phase-line">It all starts with the pixels.</p>
+            <p class="phase-line">Each one placed with purpose.</p>
+          </div>
+        </div>
+        <!-- Phase B: Constellation Grid -->
+        <div class="story-phase phase-b" id="ideas" data-phase="ideas">
+          <div class="constellation-canvas" id="constellation-canvas"></div>
+          <div class="phase-text">
+            <p class="phase-line">This is where ideas take shape.</p>
+          </div>
+        </div>
+        <!-- Phase C: Pixel Brain Blueprint -->
+        <div class="story-phase phase-c" id="brain-section" data-phase="brain-section">
+          <div class="pixel-brain-svg" id="pixel-brain-assemble"></div>
+          <div class="phase-text">
+            <p class="phase-line">Concept — The brain sparks the blueprint.</p>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span class="footer-note">CRAFTED WITH ASTRO + GSAP + RETRO PIXEL SPIRIT</span>
-        <span class="footer-copyright">© 2024 HZB.DEV - All rights reserved.</span>
+    </div>
+  </section>
+
+  <!-- SECTION 4: DNA - 8-Bit DNA Double Helix (Pinned) -->
+  <section id="dna" class="story-section pin-section dna-section">
+    <div class="pin-wrapper" id="dna-pin-wrapper">
+      <div class="pinned-content dna-content">
+        <div class="dna-strand-container" id="dna-strand">
+          <div class="dna-metric-tag" aria-hidden="true">[ HELIX // 3NF ARCH ]</div>
+        </div>
+        <div class="dna-text">
+          <p>From this strand, everything grows…</p>
+          <p>My DNA is a blueprint of <span class="dna-highlight hl-1">creativity</span>, <span class="dna-highlight hl-2">logic</span>, <span class="dna-highlight hl-3">empathy</span>, and <span class="dna-highlight hl-4">vision</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: EMOTION - Pixel Heart -->
+  <section id="emotion" class="story-section emotion-section">
+    <div class="emotion-container">
+      <RetroWindow title="EMOTION.EXE" type="exe" class="emotion-window">
+        <div class="emotion-content">
+          <div class="pixel-heart-container" id="pixel-heart">
+            <svg viewBox="0 0 64 64" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="12" y="14" width="16" height="16" fill="#ff4d00" class="heart-lobe left" />
+              <rect x="36" y="14" width="16" height="16" fill="#ff4d00" class="heart-lobe right" />
+              <rect x="8" y="24" width="48" height="16" fill="#ff4d00" class="heart-body" />
+              <rect x="14" y="40" width="36" height="12" fill="#ff4d00" class="heart-tip" />
+              <rect x="22" y="52" width="20" height="6" fill="#ff4d00" class="heart-bottom" />
+              <rect x="14" y="16" width="6" height="4" fill="#ffaaaa" class="heart-shine" />
+            </svg>
+          </div>
+          <div class="emotion-text">
+            <p class="emotion-headline">More than just function.</p>
+            <p class="emotion-sub">Design evokes <span class="emotion-highlight">emotion</span>.</p>
+          </div>
+          <div class="ecg-monitor" aria-hidden="true">
+            <svg viewBox="0 0 200 36" class="ecg-svg" shape-rendering="crispEdges">
+              <polyline points="0,18 45,18 52,18 58,4 66,32 72,12 78,22 84,18 135,18 142,18 148,4 156,32 162,12 168,22 174,18 200,18" fill="none" stroke="#ff4d00" stroke-width="2" class="ecg-line" />
+            </svg>
+            <div class="ecg-label"><span class="ecg-live-dot"></span> 82 BPM // SYNAPSE EMOTION ONLINE</div>
+          </div>
+        </div>
+      </RetroWindow>
+    </div>
+  </section>
+
+  <!-- SECTION 6: BEAUTY - Pixel Eye -->
+  <section id="beauty" class="story-section beauty-section">
+    <div class="beauty-container">
+      <RetroWindow title="BEAUTY.SYS" type="sys" class="beauty-window">
+        <div class="beauty-content">
+          <div class="pixel-eye-container" id="pixel-eye">
+            <div class="eye-hud-bracket top-left"></div>
+            <div class="eye-hud-bracket top-right"></div>
+            <div class="eye-hud-bracket bottom-left"></div>
+            <div class="eye-hud-bracket bottom-right"></div>
+            <svg viewBox="0 0 80 40" shape-rendering="crispEdges" aria-hidden="true">
+              <!-- Eye white -->
+              <rect x="4" y="4" width="72" height="32" fill="var(--bg-elevated)" class="eye-white" />
+              <!-- Iris -->
+              <rect x="28" y="10" width="24" height="20" fill="var(--accent-primary)" class="eye-iris" id="eye-iris" />
+              <!-- Pupil (moves with scroll) -->
+              <rect x="36" y="14" width="8" height="12" fill="var(--text-primary)" class="eye-pupil" id="eye-pupil" />
+              <!-- Shine -->
+              <rect x="30" y="12" width="4" height="4" fill="var(--accent-secondary)" class="eye-shine" />
+              <!-- Eyelashes top -->
+              <rect x="8" y="4" width="2" height="2" fill="var(--border-color)" class="lash" />
+              <rect x="14" y="4" width="2" height="2" fill="var(--border-color)" class="lash" />
+              <rect x="20" y="4" width="2" height="2" fill="var(--border-color)" class="lash" />
+              <rect x="58" y="4" width="2" height="2" fill="var(--border-color)" class="lash" />
+              <rect x="64" y="4" width="2" height="2" fill="var(--border-color)" class="lash" />
+              <rect x="70" y="4" width="2" height="2" fill="var(--border-color)" class="lash" />
+            </svg>
+            <div class="eye-target-badge">SCANNING // GOLDEN RATIO: 1.618</div>
+          </div>
+          <div class="beauty-text">
+            <p class="beauty-headline">Form follows function,</p>
+            <p class="beauty-sub">but <span class="beauty-highlight">beauty leads</span>.</p>
+          </div>
+        </div>
+      </RetroWindow>
+    </div>
+  </section>
+
+  <!-- SECTION 7: HANDS - Building Hands (Pinned Scrub) -->
+  <section id="hands" class="story-section pin-section hands-section">
+    <div class="pin-wrapper" id="hands-pin-wrapper">
+      <div class="pinned-content hands-content">
+        <div class="hands-stage">
+          <div class="hand left-hand" id="left-hand">
+            <svg viewBox="0 0 60 60" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="0" y="20" width="16" height="32" fill="#f1f5f9" class="hand-arm" />
+              <rect x="16" y="12" width="28" height="40" fill="#f1f5f9" class="hand-palm" />
+              <rect x="16" y="12" width="8" height="16" fill="#f1f5f9" class="finger" />
+              <rect x="24" y="12" width="8" height="20" fill="#f1f5f9" class="finger" />
+              <rect x="32" y="12" width="8" height="18" fill="#f1f5f9" class="finger" />
+              <rect x="40" y="16" width="4" height="14" fill="#f1f5f9" class="finger pinky" />
+            </svg>
+          </div>
+          <div class="energy-spark-bridge" id="energy-spark-bridge" aria-hidden="true">
+            <svg viewBox="0 0 100 20" shape-rendering="crispEdges" class="spark-svg">
+              <rect x="10" y="9" width="14" height="2" fill="var(--accent-primary)" class="spark-bit" />
+              <rect x="28" y="6" width="18" height="3" fill="var(--accent-secondary)" class="spark-bit" />
+              <rect x="50" y="10" width="16" height="3" fill="#ffde00" class="spark-bit" />
+              <rect x="70" y="7" width="20" height="2" fill="var(--accent-primary)" class="spark-bit" />
+            </svg>
+          </div>
+          <div class="hand right-hand" id="right-hand">
+            <svg viewBox="0 0 60 60" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="44" y="20" width="16" height="32" fill="#f1f5f9" class="hand-arm" />
+              <rect x="16" y="12" width="28" height="40" fill="#f1f5f9" class="hand-palm" />
+              <rect x="16" y="12" width="8" height="16" fill="#f1f5f9" class="finger" />
+              <rect x="24" y="12" width="8" height="20" fill="#f1f5f9" class="finger" />
+              <rect x="32" y="12" width="8" height="18" fill="#f1f5f9" class="finger" />
+              <rect x="40" y="16" width="4" height="14" fill="#f1f5f9" class="finger pinky" />
+            </svg>
+          </div>
+          <div class="center-crystal" id="center-crystal">
+            <div class="crystal-glow-ring"></div>
+            <svg viewBox="0 0 40 40" shape-rendering="crispEdges" aria-hidden="true">
+              <rect x="14" y="4" width="12" height="4" fill="#00ff66" />
+              <rect x="10" y="8" width="20" height="4" fill="#38bdf8" />
+              <rect x="6" y="12" width="28" height="4" fill="#00ff66" />
+              <rect x="4" y="16" width="32" height="8" fill="#38bdf8" fill-opacity="0.3" stroke="#00ff66" stroke-width="2" />
+              <rect x="16" y="24" width="8" height="16" fill="#7c3aed" />
+            </svg>
+          </div>
+        </div>
+        <div class="hands-text">
+          <p>Ideas are nothing without <span class="hands-highlight">hands to build them</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: WINDOWS - 10-Window Retro OS Cascade (Pinned Scrub) -->
+  <section id="windows" class="story-section pin-section windows-section">
+    <div class="pin-wrapper" id="windows-pin-wrapper">
+      <div class="pinned-content windows-content">
+        <div class="windows-cascade-stage" id="windows-cascade">
+          <!-- Window 1: system.alert -->
+          <RetroWindow title="system.alert" type="alert" class="cascade-win win-1">
+            <div class="win-msg">Initializing creative modules…</div>
+          </RetroWindow>
+          <!-- Window 2: loading.exe -->
+          <RetroWindow title="loading.exe" type="exe" class="cascade-win win-2">
+            <div class="win-msg">Optimizing pixels for maximum clarity.</div>
+            <div class="win-progress"><div class="win-bar"></div></div>
+          </RetroWindow>
+          <!-- Window 3: Assets.dll -->
+          <RetroWindow title="Assets.dll" type="sys" class="cascade-win win-3">
+            <div class="win-msg">Importing design files… Complete.</div>
+          </RetroWindow>
+          <!-- Window 4: warning.exe -->
+          <RetroWindow title="warning.exe" type="alert" class="cascade-win win-4">
+            <div class="win-msg">This portfolio may cause sudden inspiration.</div>
+          </RetroWindow>
+          <!-- Window 5: modules.sync -->
+          <RetroWindow title="modules.sync" type="sys" class="cascade-win win-5">
+            <div class="win-msg">Syncing design + development modes…</div>
+          </RetroWindow>
+          <!-- Window 6: pixel_engine.exe -->
+          <RetroWindow title="pixel_engine.exe" type="exe" class="cascade-win win-6">
+            <div class="win-msg">Rendering visuals in 8-bit precision.</div>
+          </RetroWindow>
+          <!-- Window 7: system.scan -->
+          <RetroWindow title="system.scan" type="alert" class="cascade-win win-7">
+            <div class="win-msg">Scanning creativity levels… Levels stable.</div>
+          </RetroWindow>
+          <!-- Window 8: portfolio_loader.sys -->
+          <RetroWindow title="portfolio_loader.sys" type="sys" class="cascade-win win-8">
+            <div class="win-msg">Loading projects from /HZB/Creative…</div>
+          </RetroWindow>
+          <!-- Window 9: system_ready -->
+          <RetroWindow title="system_ready" type="exe" class="cascade-win win-9">
+            <div class="win-msg">All creative components successfully assembled.</div>
+          </RetroWindow>
+          <!-- Window 10: portfolio.exe (Main) -->
+          <RetroWindow title="portfolio.exe" type="exe" class="cascade-win win-10 main-portfolio-win">
+            <div class="win-msg" id="portfolio-win-msg">The portfolio is ready. Would you like to open it now?</div>
+            <div class="win-actions">
+              <button class="win-btn no-btn" id="win-no-btn" type="button">[ No ]</button>
+              <a href="/projects" class="win-btn yes-btn">[ Yes ]</a>
+            </div>
+          </RetroWindow>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: TETRIS - Tetris Block Stack CTA (Pinned Scrub) -->
+  <section id="tetris" class="story-section pin-section tetris-section">
+    <div class="pin-wrapper" id="tetris-pin-wrapper">
+      <div class="pinned-content tetris-content">
+        <div class="tetris-stage">
+          <div class="tetris-side-panel">
+            <div class="panel-label">NEXT PIECE</div>
+            <div class="next-piece-preview" id="next-piece"></div>
+          </div>
+          <div class="tetris-board" id="tetris-board">
+            <div class="tetris-crt-lines" aria-hidden="true"></div>
+            <div class="tetris-flash-overlay" id="tetris-flash" aria-hidden="true"></div>
+            <div class="tetris-clear-banner" id="tetris-clear-banner">LINE CLEAR!</div>
+            <!-- Tetrominoes fall here via GSAP -->
+          </div>
+        </div>
+        <div class="tetris-cta-text">
+          <h2 class="tetris-headline">Perfect Fit!</h2>
+          <p class="tetris-subtext">Stack your vision with mine. Good ideas deserve great execution.</p>
+          <a href="#contact" class="pixel-btn primary contact-cta contact-trigger">
+            <PixelIcons name="terminal" size={14} />
+            <span>CONTACT ME</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: WORLD - Pixel Globe Footer -->
+  <footer id="world" class="story-section world-footer">
+    <div class="world-container">
+      <div class="pixel-globe-container" id="pixel-globe">
+        <svg viewBox="0 0 200 200" shape-rendering="crispEdges" aria-hidden="true" class="globe-svg">
+          <!-- Globe base circle -->
+          <circle cx="100" cy="100" r="96" fill="var(--bg-elevated)" stroke="var(--border-color)" stroke-width="3" />
+          <!-- Meridians -->
+          <line x1="100" y1="4" x2="100" y2="196" stroke="var(--border-color)" stroke-width="2" opacity="0.4" />
+          <line x1="4" y1="100" x2="196" y2="100" stroke="var(--border-color)" stroke-width="2" opacity="0.4" />
+          <!-- Pixel continents (simplified 8-bit) -->
+          <!-- North America -->
+          <rect x="20" y="30" width="28" height="16" fill="var(--accent-primary)" class="continent" />
+          <rect x="24" y="46" width="20" height="12" fill="var(--accent-primary)" class="continent" />
+          <!-- South America -->
+          <rect x="40" y="58" width="12" height="28" fill="var(--accent-secondary)" class="continent" />
+          <!-- Europe/Africa -->
+          <rect x="92" y="28" width="24" height="16" fill="var(--accent-primary)" class="continent" />
+          <rect x="88" y="44" width="32" height="20" fill="var(--accent-secondary)" class="continent" />
+          <rect x="100" y="64" width="20" height="24" fill="var(--accent-primary)" class="continent" />
+          <!-- Asia -->
+          <rect x="136" y="24" width="32" height="28" fill="var(--accent-primary)" class="continent" />
+          <rect x="140" y="52" width="24" height="20" fill="var(--accent-secondary)" class="continent" />
+          <!-- Australia -->
+          <rect x="152" y="84" width="16" height="12" fill="var(--accent-primary)" class="continent" />
+          <!-- Pulse dots on tech hubs -->
+          <circle cx="34" cy="38" r="3" fill="#ffde00" class="globe-ping-dot ping-1" />
+          <circle cx="104" cy="36" r="3" fill="#ffde00" class="globe-ping-dot ping-2" />
+          <circle cx="152" cy="40" r="3" fill="#ffde00" class="globe-ping-dot ping-3" />
+          <!-- Connection lines between continents -->
+          <line x1="48" y1="42" x2="104" y2="36" stroke="var(--accent-primary)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" class="conn-line" />
+          <line x1="104" y1="64" x2="152" y2="56" stroke="var(--accent-secondary)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" class="conn-line" />
+          <line x1="120" y1="88" x2="160" y2="90" stroke="var(--accent-primary)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" class="conn-line" />
+          <line x1="56" y1="70" x2="96" y2="110" stroke="var(--accent-secondary)" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" class="conn-line" />
+        </svg>
+      </div>
+
+      <div class="world-content">
+        <h2 class="world-headline">Let's build your next project, one pixel at a time.</h2>
+        <div class="world-social">
+          <button id="footer-contact-trigger" class="pixel-btn primary contact-trigger" type="button">
+            <PixelIcons name="terminal" size={14} /> <span>CONTACT.EXE</span>
+          </button>
+          <a href="https://github.com/hzb" class="pixel-btn" target="_blank" title="GitHub"><PixelIcons name="github" size={14} /> GitHub</a>
+          <a href="https://linkedin.com/in/hzb" class="pixel-btn" target="_blank" title="LinkedIn"><PixelIcons name="linkedin" size={14} /> LinkedIn</a>
+          <a href="https://twitter.com/hzb_dev" class="pixel-btn" target="_blank" title="Twitter"><PixelIcons name="twitter" size={14} /> Twitter</a>
+          <a href="mailto:hzb@dev" class="pixel-btn" title="Email"><PixelIcons name="terminal" size={14} /> Email</a>
+        </div>
+        <p class="world-copyright">© HZB'2ND 2026</p>
       </div>
     </div>
   </footer>
@@ -436,213 +587,1537 @@ import PixelIcons from '../components/PixelIcons.astro';
 
   gsap.registerPlugin(ScrollTrigger);
 
-  function initScrollStorytelling() {
-    // 1. Hero animations
-    gsap.from('.terminal-badge', {
-      opacity: 0,
-      y: -20,
-      duration: 0.8,
-      ease: 'power2.out',
-    });
+  if (typeof window !== 'undefined') {
+    (window as any).gsap = gsap;
+    (window as any).ScrollTrigger = ScrollTrigger;
+  }
 
-    gsap.from('.hero-title', {
-      opacity: 0,
-      scale: 0.95,
-      duration: 1,
-      delay: 0.2,
-      ease: 'back.out(1.7)',
-    });
+  // ============================================
+  // SCROLL-LOCK CONTROLLER (Animasi Selesai Dulu)
+  // ============================================
+  let isScrollLocked = true;
+  let isBootComplete = false;
+  let heroTimeline: gsap.core.Timeline | null = null;
 
-    gsap.from('.hero-avatar-box', {
-      opacity: 0,
-      scale: 0.8,
-      duration: 0.8,
-      delay: 0.4,
-      ease: 'power2.out',
-    });
+  function skipBoot() {
+    if (isBootComplete) return;
+    isBootComplete = true;
 
-    // 2. Section animations - each section fades in from opposite sides
-    const sectionIds = ['hero', 'creator', 'pixels', 'brain', 'windows', 'tetris', 'contact'];
-    sectionIds.forEach((id, i) => {
-      gsap.from(`#${id}-enter`, {
-        opacity: 0,
-        x: i % 2 === 0 ? -50 : 50,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: `#${id}`,
-          start: 'top 85%',
-          end: 'bottom 60%',
-          scrub: 1,
-        }
-      });
-    });
+    // Kill running hero entrance timeline, then jump to final states
+    heroTimeline?.kill();
+    heroTimeline = null;
 
-    // 3. Cascade Windows ScrollTrigger (stagger reveal)
-    const cascadeWindows = gsap.utils.toArray('.cascade-window');
-    if (cascadeWindows.length > 0) {
-      gsap.from(cascadeWindows, {
-        scrollTrigger: {
-          trigger: '#windows',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-        opacity: 0,
-        y: 60,
-        scale: 0.8,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: 'back.out(1.7)',
-      });
+    // Immediately complete the hero timeline and unlock scroll
+    unlockScroll();
+
+    // Set all animated elements to their final states instantly
+    gsap.set('.terminal-badge', { opacity: 1, y: 0 });
+    gsap.set('.hero-title', { opacity: 1, y: 0 });
+    gsap.set('.hero-headline', { opacity: 1, y: 0 });
+    gsap.set('.hero-subheadline', { opacity: 1, y: 0 });
+    gsap.set('.hero-avatar-box', { opacity: 1, scale: 1, rotation: 0 });
+    gsap.set('.mode-toggle-group .mode-btn', { opacity: 1, y: 0, scale: 1 });
+    gsap.set('.scroll-prompt', { opacity: 1, y: 0 });
+    gsap.set('.skip-boot-btn', { opacity: 0, pointerEvents: 'none' });
+  }
+
+  function preventDefaultScroll(e: Event) {
+    if (isScrollLocked) {
+      e.preventDefault();
+      // Gentle shake visual feedback if user tries to scroll prematurely
+      const lockBadge = document.getElementById('scroll-lock-badge');
+      if (lockBadge && !lockBadge.classList.contains('shake')) {
+        lockBadge.classList.add('shake');
+        setTimeout(() => lockBadge?.classList.remove('shake'), 400);
+      }
+    }
+  }
+
+  function preventScrollKeys(e: KeyboardEvent) {
+    if (isScrollLocked && ['Space', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Escape'].includes(e.code)) {
+      e.preventDefault();
+      if (e.code === 'Escape') {
+        skipBoot();
+        return;
+      }
+      const lockBadge = document.getElementById('scroll-lock-badge');
+      if (lockBadge && !lockBadge.classList.contains('shake')) {
+        lockBadge.classList.add('shake');
+        setTimeout(() => lockBadge?.classList.remove('shake'), 400);
+      }
+    }
+  }
+
+  function lockScroll() {
+    isScrollLocked = true;
+    document.documentElement.classList.add('scroll-locked');
+    document.body.classList.add('scroll-locked');
+    window.addEventListener('wheel', preventDefaultScroll, { passive: false });
+    window.addEventListener('touchmove', preventDefaultScroll, { passive: false });
+    window.addEventListener('keydown', preventScrollKeys, { passive: false });
+  }
+
+  function unlockScroll() {
+    isScrollLocked = false;
+    isBootComplete = true;
+    document.documentElement.classList.remove('scroll-locked');
+    document.body.classList.remove('scroll-locked');
+    window.removeEventListener('wheel', preventDefaultScroll);
+    window.removeEventListener('touchmove', preventDefaultScroll);
+    window.removeEventListener('keydown', preventScrollKeys);
+
+    // Update prompt badge state to UNLOCKED with neon fanfare
+    const lockBadge = document.getElementById('scroll-lock-badge');
+    const lockIcon = lockBadge?.querySelector('.badge-icon');
+    const badgeStatus = lockBadge?.querySelector('.badge-status');
+    const promptArrow = document.querySelector('.prompt-arrow');
+
+    if (lockBadge) {
+      lockBadge.classList.remove('locked');
+      lockBadge.classList.add('unlocked');
+    }
+    if (lockIcon) lockIcon.textContent = '⚡';
+    if (badgeStatus) badgeStatus.textContent = 'READY // SCROLL UNLOCKED';
+    if (promptArrow) promptArrow.classList.add('bouncing');
+
+    // Hide skip boot button
+    const skipBtn = document.getElementById('skip-boot-btn');
+    if (skipBtn) {
+      skipBtn.style.opacity = '0';
+      skipBtn.style.pointerEvents = 'none';
     }
 
-    // 4. Creator section triggers
-    gsap.from('.rpg-stats', {
-      scrollTrigger: {
-        trigger: '#creator',
-        start: 'top 75%',
-      },
-      opacity: 0,
-      x: -30,
-      duration: 0.8,
-      ease: 'power2.out',
-    });
+    // Click on prompt smoothly navigates to about section
+    const promptEl = document.getElementById('hero-scroll-prompt');
+    if (promptEl) {
+      promptEl.style.cursor = 'pointer';
+      promptEl.title = 'Click or scroll down to explore';
+      promptEl.addEventListener('click', () => {
+        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+      }, { once: true });
+    }
 
-    // 5. Brain section triggers
-    gsap.from('.brain-card.left', {
-      scrollTrigger: {
-        trigger: '#brain',
-        start: 'top 75%',
-      },
-      opacity: 0,
-      x: -40,
-      duration: 0.8,
-      ease: 'power2.out',
-    });
-
-    gsap.from('.brain-card.right', {
-      scrollTrigger: {
-        trigger: '#brain',
-        start: 'top 75%',
-      },
-      opacity: 0,
-      x: 40,
-      duration: 0.8,
-      ease: 'power2.out',
-    });
-
-    // Active dot handling is now owned by SectionNav (scroll-driven, self-contained).
-
-    // Refresh ScrollTrigger once fully loaded to prevent calculation mismatch
+    // Refresh GSAP ScrollTrigger to ensure all trigger coordinates match active scroll
     ScrollTrigger.refresh();
   }
 
-  // Pixel Matrix Canvas logic
-  function initPixelMatrix() {
-    const canvas = document.getElementById('pixel-matrix-canvas') as HTMLCanvasElement | null;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const COLS = 30;
-    const ROWS = 12;
-    const cellW = canvas.width / COLS;
-    const cellH = canvas.height / ROWS;
-    const grid: number[][] = Array(ROWS).fill(0).map(() => Array(COLS).fill(0));
-
-    function draw() {
-      if (!ctx || !canvas) return;
-      ctx.fillStyle = '#0b0d10';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const val = grid[r][c];
-          if (val > 0) {
-            ctx.fillStyle = val === 2 ? '#38bdf8' : '#00ff66';
-            ctx.fillRect(c * cellW + 1, r * cellH + 1, cellW - 2, cellH - 2);
-          } else {
-            ctx.strokeStyle = 'rgba(0, 255, 102, 0.08)';
-            ctx.strokeRect(c * cellW, r * cellH, cellW, cellH);
-          }
+  // Cyber text unscramble decoding effect
+  function cyberDecodeText(element: HTMLElement, finalStr: string, durationMs: number = 700) {
+    const chars = '!@#$%^&*<>[]{}/*_+-~=01';
+    const totalFrames = Math.max(8, Math.floor(durationMs / 32));
+    let frame = 0;
+    const interval = setInterval(() => {
+      frame++;
+      const progress = frame / totalFrames;
+      const revealedLength = Math.floor(progress * finalStr.length);
+      let scrambled = finalStr.slice(0, revealedLength);
+      for (let i = revealedLength; i < finalStr.length; i++) {
+        if (finalStr[i] === ' ') {
+          scrambled += ' ';
+        } else {
+          scrambled += chars[Math.floor(Math.random() * chars.length)];
         }
       }
-    }
-
-    function handleInput(e: MouseEvent | TouchEvent) {
-      const rect = canvas!.getBoundingClientRect();
-      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-      const scaleX = canvas!.width / rect.width;
-      const scaleY = canvas!.height / rect.height;
-      const x = (clientX - rect.left) * scaleX;
-      const y = (clientY - rect.top) * scaleY;
-
-      const col = Math.floor(x / cellW);
-      const row = Math.floor(y / cellH);
-
-      if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
-        grid[row][col] = (grid[row][col] + 1) % 3;
-        draw();
+      element.textContent = scrambled;
+      if (element.hasAttribute('data-text')) {
+        element.setAttribute('data-text', scrambled);
       }
-    }
-
-    canvas.addEventListener('mousemove', (e) => {
-      if (e.buttons === 1) handleInput(e);
-    });
-    canvas.addEventListener('pointerdown', handleInput);
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      handleInput(e);
-    });
-
-    document.getElementById('matrix-clear-btn')?.addEventListener('click', () => {
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          grid[r][c] = 0;
+      if (frame >= totalFrames) {
+        clearInterval(interval);
+        element.textContent = finalStr;
+        if (element.hasAttribute('data-text')) {
+          element.setAttribute('data-text', finalStr);
         }
       }
-      draw();
-    });
-
-    document.getElementById('matrix-rand-btn')?.addEventListener('click', () => {
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          grid[r][c] = Math.random() < 0.25 ? Math.floor(Math.random() * 2) + 1 : 0;
-        }
-      }
-      draw();
-    });
-
-    // Initial random pattern
-    for (let c = 0; c < COLS; c++) {
-      grid[Math.floor(ROWS / 2)][c] = c % 2 === 0 ? 1 : 0;
-    }
-    draw();
+    }, 32);
   }
 
-  // Footer contact modal trigger
-  document.getElementById('footer-contact-trigger')?.addEventListener('click', () => {
-    const dialog = document.getElementById('contact-dialog') as HTMLDialogElement | null;
-    dialog?.showModal();
-  });
+  // ============================================
+  // 1. PRELOADER COMPLETION - Start Hero Animations
+  // ============================================
+  function initHeroAnimations() {
+    // Reduced motion: skip timeline, set final states, unlock immediately
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      lockScroll();
+      gsap.set('.terminal-badge', { opacity: 1, y: 0 });
+      gsap.set('.hero-title', { opacity: 1, y: 0 });
+      gsap.set('.hero-headline', { opacity: 1, y: 0 });
+      gsap.set('.hero-subheadline', { opacity: 1, y: 0 });
+      gsap.set('.hero-avatar-box', { opacity: 1, scale: 1, rotation: 0 });
+      gsap.set('.mode-toggle-group .mode-btn', { opacity: 1, y: 0, scale: 1 });
+      gsap.set('.scroll-prompt', { opacity: 1, y: 0 });
+      const skipBtn = document.getElementById('skip-boot-btn');
+      if (skipBtn) {
+        skipBtn.style.opacity = '0';
+        skipBtn.style.pointerEvents = 'none';
+      }
+      unlockScroll();
+      return;
+    }
 
-  // Also refresh after fonts load
+    // Ensure scroll is locked at the start of hero sequence
+    lockScroll();
+
+    // Prepare initial visual states
+    gsap.set('.terminal-badge', { opacity: 0, y: -20 });
+    gsap.set('.hero-title', { opacity: 0, y: 15 });
+    gsap.set('.hero-headline', { opacity: 0, y: 20 });
+    gsap.set('.hero-subheadline', { opacity: 0, y: 20 });
+    gsap.set('.hero-avatar-box', { opacity: 0, scale: 0.65, rotation: -3 });
+    gsap.set('.mode-toggle-group .mode-btn', { opacity: 0, y: 25, scale: 0.9 });
+    gsap.set('.scroll-prompt', { opacity: 0, y: 20 });
+
+    const heroTl = gsap.timeline({
+      onComplete: () => {
+        // Unlock scroll ONLY after the full hero entrance sequence completes!
+        unlockScroll();
+      },
+    });
+    heroTimeline = heroTl;
+
+    // 1. Terminal badge drops in & decodes
+    heroTl.to('.terminal-badge', {
+      opacity: 1,
+      y: 0,
+      duration: 0.45,
+      ease: 'back.out(1.7)',
+      onStart: () => {
+        const badgeText = document.querySelector<HTMLElement>('.badge-text');
+        if (badgeText) cyberDecodeText(badgeText, 'STATUS: SYSTEM ONLINE // PORT 4321', 550);
+      },
+    }, 0.05);
+
+    // 2. Hero title pops in with cyber unscramble glitch
+    heroTl.to('.hero-title', {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      ease: 'power2.out',
+      onStart: () => {
+        const glitchEl = document.getElementById('hero-glitch-name');
+        const titleSub = document.getElementById('hero-title-sub');
+        if (glitchEl) cyberDecodeText(glitchEl, 'HIZBULLAH', 650);
+        if (titleSub) cyberDecodeText(titleSub, 'HASAN IBRAHIM', 650);
+      },
+    }, 0.3);
+
+    // 3. Headline & subheadline slide up
+    heroTl.to('.hero-headline', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.55)
+          .to('.hero-subheadline', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.7);
+
+    // 4. Avatar box drops with 8-bit spring bounce & power-up aura
+    heroTl.to('.hero-avatar-box', {
+      opacity: 1,
+      scale: 1,
+      rotation: 0,
+      duration: 0.55,
+      ease: 'back.out(2)',
+      onStart: () => {
+        const currentMode = document.documentElement.getAttribute('data-mode') || 'developer';
+        createModeParticles(currentMode);
+      },
+    }, 0.85);
+
+    // 5. Mode buttons snap in
+    heroTl.to('.mode-toggle-group .mode-btn', {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      stagger: 0.1,
+      duration: 0.4,
+      ease: 'back.out(1.7)',
+    }, 1.1);
+
+    // 6. Scroll prompt reveals with locked status badge
+    heroTl.to('.scroll-prompt', {
+      opacity: 1,
+      y: 0,
+      duration: 0.4,
+      ease: 'power2.out',
+    }, 1.35);
+
+    // 7. Small buffer before unlock so user perceives the complete boot sequence
+    heroTl.to({}, { duration: 0.2 });
+
+    // Hero scroll parallax scrub (activated once scroll is unlocked)
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.set('.hero-avatar-box', { y: p * 50, scale: 1 - p * 0.08 });
+        gsap.set('.hero-title', { y: -p * 35 });
+        gsap.set('.scroll-prompt', { opacity: Math.max(0, 1 - p * 3.5), y: -p * 20 });
+      },
+    });
+  }
+
+  // ============================================
+  // 2. ABOUT SECTION - RPG Character Select & Stats
+  // ============================================
+  function initAboutSection() {
+    // Character Spec Definitions
+    const specsData: Record<string, {
+      title: string;
+      classTitle: string;
+      quote: string;
+      stats: Array<{ label: string; progress: number; fillClass: string }>;
+    }> = {
+      dev: {
+        title: 'SYSTEMS ARCHITECT',
+        classTitle: 'Sistem Informasi & Microservices Engineer',
+        quote: '"Turning complex business logic into rock-solid 3NF architectures & high-concurrency systems."',
+        stats: [
+          { label: 'SYSTEMS ANALYSIS & 3NF', progress: 98, fillClass: 'stat-fill' },
+          { label: 'DATABASE & ORM ARCH', progress: 95, fillClass: 'stat-fill alt' },
+          { label: 'MICROSERVICES & SSR', progress: 90, fillClass: 'stat-fill' },
+          { label: 'HACKATHON SPEED-RUN', progress: 98, fillClass: 'stat-fill warn' },
+        ],
+      },
+      creative: {
+        title: 'CREATIVE TECHNOLOGIST',
+        classTitle: 'Creative Developer & 2D Motion Designer',
+        quote: '"Blending math, canvas physics, and 8-bit retro soul to create delightful interactive web experiences."',
+        stats: [
+          { label: 'HTML5 CANVAS 2D ENGINES', progress: 96, fillClass: 'stat-fill warn' },
+          { label: 'GSAP & SCROLL STORYTELLING', progress: 95, fillClass: 'stat-fill alt' },
+          { label: 'RETRO-PIXEL SHADER & SVGS', progress: 92, fillClass: 'stat-fill' },
+          { label: 'MICRO-INTERACTIONS & CRAFT', progress: 94, fillClass: 'stat-fill alt' },
+        ],
+      },
+    };
+
+    let currentSpec = 'dev';
+
+    function setSpec(specKey: string, syncTheme = true) {
+      if (specKey !== 'dev' && specKey !== 'creative') return;
+      currentSpec = specKey;
+      const data = specsData[specKey];
+      if (!data) return;
+
+      // 1. Update Tabs UI
+      const tabDev = document.getElementById('tab-spec-dev');
+      const tabCreative = document.getElementById('tab-spec-creative');
+      if (tabDev && tabCreative) {
+        tabDev.classList.toggle('active', specKey === 'dev');
+        tabDev.setAttribute('aria-selected', specKey === 'dev' ? 'true' : 'false');
+        tabCreative.classList.toggle('active', specKey === 'creative');
+        tabCreative.setAttribute('aria-selected', specKey === 'creative' ? 'true' : 'false');
+      }
+
+      // 2. Avatar bounce & power-up burst
+      const avatarBox = document.getElementById('creator-avatar');
+      const avatarDev = document.querySelector<HTMLElement>('#creator-avatar .avatar-dev');
+      const avatarCreative = document.querySelector<HTMLElement>('#creator-avatar .avatar-creative');
+
+      if (avatarBox) {
+        gsap.killTweensOf(avatarBox);
+        gsap.timeline()
+          .to(avatarBox, { scale: 0.88, y: -8, duration: 0.1, ease: 'power1.out' })
+          .to(avatarBox, { scale: 1.08, y: 3, duration: 0.14, ease: 'back.out(2)' })
+          .to(avatarBox, { scale: 1, y: 0, duration: 0.12, ease: 'power2.out' });
+
+        createBurstAt(avatarBox, specKey === 'creative' ? ['#ff4d00', '#7c3aed', '#ffde00'] : ['#00ff66', '#38bdf8', '#ffde00']);
+      }
+
+      // 3. Switch avatar visuals
+      if (avatarDev && avatarCreative) {
+        if (specKey === 'creative') {
+          avatarDev.style.display = 'none';
+          avatarCreative.style.display = 'block';
+        } else {
+          avatarDev.style.display = 'block';
+          avatarCreative.style.display = 'none';
+        }
+      }
+
+      // 4. Cyber decode text
+      const nameEl = document.getElementById('creator-name');
+      const classEl = document.getElementById('creator-class');
+      const quoteEl = document.getElementById('creator-quote');
+      if (nameEl) cyberDecodeText(nameEl, data.title, 420);
+      if (classEl) cyberDecodeText(classEl, data.classTitle, 460);
+      if (quoteEl) {
+        gsap.to(quoteEl, {
+          opacity: 0,
+          y: -4,
+          duration: 0.15,
+          onComplete: () => {
+            quoteEl.textContent = data.quote;
+            gsap.to(quoteEl, { opacity: 1, y: 0, duration: 0.25 });
+          },
+        });
+      }
+
+      // 5. Update Stat Cards with animated bars & counting values
+      const cards = document.querySelectorAll<HTMLElement>('#creator-stats-grid .stat-card');
+      cards.forEach((card, index) => {
+        const stat = data.stats[index];
+        if (!stat) return;
+
+        const label = card.querySelector<HTMLElement>('.stat-label');
+        const fill = card.querySelector<HTMLElement>('.stat-fill');
+        const valSpan = card.querySelector<HTMLElement>('.stat-value');
+        const iconDev = card.querySelector<HTMLElement>('.icon-dev');
+        const iconCreative = card.querySelector<HTMLElement>('.icon-creative');
+
+        if (iconDev && iconCreative) {
+          iconDev.style.display = specKey === 'dev' ? 'inline-flex' : 'none';
+          iconCreative.style.display = specKey === 'creative' ? 'inline-flex' : 'none';
+        }
+
+        if (label) label.textContent = stat.label;
+        if (fill) {
+          fill.className = stat.fillClass;
+          fill.dataset.progress = stat.progress.toString();
+
+          gsap.killTweensOf(fill);
+          gsap.to(fill, {
+            width: `${stat.progress}%`,
+            duration: 0.65,
+            ease: 'back.out(1.2)',
+            onUpdate: () => {
+              if (valSpan) {
+                const currentWidth = parseFloat(fill.style.width || '0');
+                valSpan.textContent = `${Math.min(stat.progress, Math.round(currentWidth))}/100`;
+              }
+            },
+            onComplete: () => {
+              if (valSpan) valSpan.textContent = `${stat.progress}/100`;
+            },
+          });
+        }
+      });
+
+      // 6. Swap perks
+      const perksDev = document.querySelector<HTMLElement>('.perks-dev');
+      const perksCreative = document.querySelector<HTMLElement>('.perks-creative');
+      if (perksDev && perksCreative) {
+        if (specKey === 'creative') {
+          perksDev.style.display = 'none';
+          perksCreative.style.display = 'flex';
+          gsap.fromTo(perksCreative, { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.3 });
+        } else {
+          perksDev.style.display = 'flex';
+          perksCreative.style.display = 'none';
+          gsap.fromTo(perksDev, { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.3 });
+        }
+      }
+
+      // 7. Synchronize with global theme mode
+      if (syncTheme) {
+        const targetTheme = specKey === 'creative' ? 'creative' : 'developer';
+        const currentTheme = document.documentElement.getAttribute('data-mode') || 'developer';
+        if (targetTheme !== currentTheme) {
+          document.documentElement.setAttribute('data-mode', targetTheme);
+          localStorage.setItem('hzb-theme-mode', targetTheme);
+          window.dispatchEvent(new CustomEvent('hzb-theme-change', { detail: { mode: targetTheme } }));
+        }
+      }
+    }
+
+    function createBurstAt(container: HTMLElement, colors: string[]) {
+      for (let i = 0; i < 12; i++) {
+        const p = document.createElement('div');
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const angle = (Math.PI * 2 * i) / 12;
+        const dist = 45 + Math.random() * 35;
+        p.style.cssText = `
+          position: absolute; width: 6px; height: 6px; background: ${color};
+          left: 50%; top: 50%; transform: translate(-50%, -50%);
+          pointer-events: none; z-index: 25; box-shadow: 1px 1px 0px #0b0d10;
+        `;
+        container.style.position = 'relative';
+        container.appendChild(p);
+        gsap.to(p, {
+          x: Math.cos(angle) * dist,
+          y: Math.sin(angle) * dist,
+          opacity: 0,
+          scale: 0,
+          duration: 0.5 + Math.random() * 0.25,
+          ease: 'power2.out',
+          onComplete: () => p.remove(),
+        });
+      }
+    }
+
+    // Attach click handlers
+    document.getElementById('tab-spec-dev')?.addEventListener('click', () => setSpec('dev'));
+    document.getElementById('tab-spec-creative')?.addEventListener('click', () => setSpec('creative'));
+    document.getElementById('spec-nav-prev')?.addEventListener('click', () => {
+      setSpec(currentSpec === 'dev' ? 'creative' : 'dev');
+    });
+    document.getElementById('spec-nav-next')?.addEventListener('click', () => {
+      setSpec(currentSpec === 'dev' ? 'creative' : 'dev');
+    });
+
+    // Listen to external theme changes (Header or Hero toggle)
+    window.addEventListener('hzb-theme-change', ((e: Event) => {
+      const customEvent = e as CustomEvent<{ mode?: string }>;
+      const mode = customEvent.detail?.mode;
+      if (mode && (mode === 'developer' || mode === 'creative')) {
+        const specKey = mode === 'creative' ? 'creative' : 'dev';
+        if (specKey !== currentSpec) {
+          setSpec(specKey, false);
+        }
+      }
+    }) as EventListener);
+
+    // Initial check from active data-mode
+    const initialMode = document.documentElement.getAttribute('data-mode') || 'developer';
+    if (initialMode === 'creative') {
+      setSpec('creative', false);
+    }
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      // Pin the about section for stat bar scrub animation with real-time numeric counter
+      ScrollTrigger.create({
+        trigger: '#about',
+        start: 'top 80%',
+        end: 'bottom 60%',
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          document.querySelectorAll<HTMLElement>('.stat-fill').forEach((fill) => {
+            const target = parseInt(fill.dataset.progress || '0', 10);
+            const current = Math.round(target * progress);
+            fill.style.width = `${current}%`;
+            const card = fill.closest('.stat-card');
+            const valSpan = card?.querySelector<HTMLElement>('.stat-value');
+            if (valSpan) {
+              valSpan.textContent = `${current}/100`;
+            }
+          });
+        },
+      });
+
+      // Window entrance float elevation
+      gsap.from('.creator-profile-window', {
+        scrollTrigger: { trigger: '#about', start: 'top 90%', end: 'top 50%', scrub: 1 },
+        y: 30,
+        opacity: 0.85,
+      });
+    });
+
+    mm.add('(max-width: 768px)', () => {
+      // Mobile: stat fill animation with counting feedback
+      gsap.from('.stat-fill', {
+        scrollTrigger: { trigger: '#about', start: 'top 80%' },
+        width: '0%',
+        duration: 1,
+        stagger: 0.1,
+        ease: 'power2.out',
+        onUpdate: function() {
+          document.querySelectorAll<HTMLElement>('.stat-fill').forEach((fill) => {
+            const target = parseInt(fill.dataset.progress || '0', 10);
+            const widthPct = parseFloat(fill.style.width || '0');
+            const current = Math.round((widthPct / 100) * target);
+            const card = fill.closest('.stat-card');
+            const valSpan = card?.querySelector<HTMLElement>('.stat-value');
+            if (valSpan && !isNaN(current)) {
+              valSpan.textContent = `${Math.min(target, Math.max(0, current))}/100`;
+            }
+          });
+        },
+      });
+    });
+  }
+
+  // ============================================
+  // DOM BUILDERS (Unified Mobile & Desktop)
+  // ============================================
+  function buildConstellationDOM() {
+    const constellationCanvas = document.getElementById('constellation-canvas');
+    if (!constellationCanvas || constellationCanvas.dataset.initialized === 'true') return;
+    constellationCanvas.dataset.initialized = 'true';
+    constellationCanvas.innerHTML = '';
+
+    // Cyber HUD Header
+    const hud = document.createElement('div');
+    hud.className = 'constellation-hud';
+    hud.innerHTML = `
+      <span>[ NET: SYNAPSE-64 ]</span>
+      <span class="hud-coords">STATUS: ACTIVE</span>
+      <span>NODES: 32</span>
+    `;
+    constellationCanvas.appendChild(hud);
+
+    // SVG container for constellation lines
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'constellation-svg-lines');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    constellationCanvas.appendChild(svg);
+
+    // Generate coordinates for dots
+    const coords: { x: number; y: number }[] = [];
+    const numDots = 32;
+    for (let i = 0; i < numDots; i++) {
+      const x = 8 + Math.random() * 84;
+      const y = 16 + Math.random() * 72;
+      coords.push({ x, y });
+
+      const dot = document.createElement('div');
+      dot.className = 'constellation-dot';
+      dot.style.cssText = `
+        position: absolute;
+        width: 6px; height: 6px;
+        background: var(--accent-primary);
+        left: ${x}%;
+        top: ${y}%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 6px var(--accent-primary);
+        z-index: 2;
+      `;
+      constellationCanvas.appendChild(dot);
+    }
+
+    // Connect nearby dots with SVG lines
+    for (let i = 0; i < coords.length; i++) {
+      for (let j = i + 1; j < coords.length; j++) {
+        const dx = coords[i].x - coords[j].x;
+        const dy = coords[i].y - coords[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 22) {
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', String(coords[i].x));
+          line.setAttribute('y1', String(coords[i].y));
+          line.setAttribute('x2', String(coords[j].x));
+          line.setAttribute('y2', String(coords[j].y));
+          line.setAttribute('stroke', 'var(--accent-secondary)');
+          line.setAttribute('stroke-width', '0.6');
+          line.setAttribute('stroke-opacity', '0.6');
+          line.setAttribute('class', 'constellation-line');
+          svg.appendChild(line);
+        }
+      }
+    }
+  }
+
+  function buildBrainDOM() {
+    const brainContainer = document.getElementById('pixel-brain-assemble');
+    if (!brainContainer || brainContainer.dataset.initialized === 'true') return;
+    brainContainer.dataset.initialized = 'true';
+    brainContainer.style.position = 'relative';
+    brainContainer.innerHTML = `
+      <div class="brain-scanline" id="brain-scanline" aria-hidden="true"></div>
+      <svg viewBox="0 0 120 100" shape-rendering="crispEdges" class="brain-svg" aria-hidden="true">
+        <g class="brain-part">
+          <rect x="30" y="10" width="60" height="12" fill="var(--accent-primary)" />
+        </g>
+        <g class="brain-part">
+          <rect x="20" y="22" width="80" height="40" fill="var(--accent-primary)" />
+          <rect x="35" y="24" width="10" height="36" fill="var(--bg-primary)" />
+          <rect x="45" y="30" width="10" height="30" fill="var(--bg-primary)" />
+          <rect x="65" y="30" width="10" height="30" fill="var(--bg-primary)" />
+          <rect x="75" y="24" width="10" height="36" fill="var(--bg-primary)" />
+        </g>
+        <g class="brain-part">
+          <rect x="25" y="62" width="70" height="18" fill="var(--accent-primary)" />
+          <rect x="40" y="66" width="40" height="10" fill="var(--bg-primary)" />
+        </g>
+      </svg>
+    `;
+  }
+
+  function buildDNADOM() {
+    const dnaContainer = document.getElementById('dna-strand');
+    if (!dnaContainer || dnaContainer.dataset.initialized === 'true') return;
+    dnaContainer.dataset.initialized = 'true';
+    dnaContainer.innerHTML = `
+      <div class="dna-strand-svg" style="height: 100%; width: 100%; display: flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 100 600" shape-rendering="crispEdges" class="dna-svg" aria-hidden="true" style="height: 100%; width: 100px;">
+          <!-- Backbone left -->
+          <line x1="35" y1="0" x2="35" y2="600" stroke="var(--accent-primary)" stroke-width="3" />
+          <!-- Backbone right -->
+          <line x1="65" y1="0" x2="65" y2="600" stroke="var(--accent-secondary)" stroke-width="3" />
+          <!-- Base pairs -->
+          <g class="dna-pairs"></g>
+        </svg>
+      </div>
+    `;
+
+    const pairsGroup = dnaContainer.querySelector('.dna-pairs');
+    if (!pairsGroup) return;
+    for (let i = 0; i < 30; i++) {
+      const y = i * 20;
+      const pair = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      pair.setAttribute('class', 'dna-pair');
+      pair.innerHTML = `
+        <line x1="35" y1="${y}" x2="65" y2="${y}" stroke="var(--text-muted)" stroke-width="2" />
+        <rect x="33" y="${y - 4}" width="4" height="8" fill="var(--accent-primary)" />
+        <rect x="63" y="${y - 4}" width="4" height="8" fill="var(--accent-secondary)" />
+      `;
+      pairsGroup.appendChild(pair);
+    }
+  }
+
+  // ============================================
+  // 3. PIXELS → IDEAS → BRAIN PINNED SCROLL STORY
+  // ============================================
+  function initPixelsStory() {
+    buildConstellationDOM();
+    buildBrainDOM();
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      const dots = document.querySelectorAll<HTMLElement>('.constellation-dot');
+      gsap.set(dots, { opacity: 0, scale: 0 });
+
+      const lines = document.querySelectorAll<SVGLineElement>('.constellation-line');
+      gsap.set(lines, { opacity: 0 });
+
+      const brainParts = document.querySelectorAll<SVGElement>('.brain-part');
+      gsap.set(brainParts, { opacity: 0, scale: 0.5 });
+
+      const sparks = document.querySelectorAll<HTMLElement>('.spark');
+      gsap.set(sparks, { opacity: 0, scale: 0 });
+
+      // Master Timeline for Pixels → Ideas → Brain (Compressed to +=180% to eliminate scroll fatigue)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          id: 'pixels-story-pin',
+          trigger: '#pixels',
+          start: 'top top',
+          end: '+=180%',
+          pin: '#pixels-pin-wrapper',
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            let phase = 'pixels';
+            if (self.progress >= 0.66) phase = 'brain-section';
+            else if (self.progress >= 0.33) phase = 'ideas';
+            if ((window as any).__hzbStoryPhase !== phase) {
+              (window as any).__hzbStoryPhase = phase;
+              window.dispatchEvent(new CustomEvent('hzb-phase-change', { detail: { phase } }));
+            }
+          },
+        },
+      });
+
+      // Phase A: Single Pixel + Sparks (0.0 to 1.0s)
+      tl.to('#single-pixel', { scale: 1.8, boxShadow: '0 0 30px var(--accent-primary)', duration: 0.35 }, 0.1)
+        .to('.spark.s-tl', { x: -28, y: -28, opacity: 1, scale: 1.2, duration: 0.3 }, 0.15)
+        .to('.spark.s-tr', { x: 28, y: -28, opacity: 1, scale: 1.2, duration: 0.3 }, 0.15)
+        .to('.spark.s-bl', { x: -28, y: 28, opacity: 1, scale: 1.2, duration: 0.3 }, 0.15)
+        .to('.spark.s-br', { x: 28, y: 28, opacity: 1, scale: 1.2, duration: 0.3 }, 0.15)
+        .to(sparks, { opacity: 0, scale: 0, duration: 0.25 }, 0.45)
+        .to('#single-pixel', { scale: 1, boxShadow: '0 0 0 var(--accent-primary)', duration: 0.35 }, 0.45)
+        .to('.phase-a', { opacity: 0, duration: 0.3 }, 0.8);
+
+      // Phase B: Constellation Grid & Network Synapses (1.0 to 2.0s)
+      tl.to('.phase-b', { opacity: 1, duration: 0.3 }, 1.0)
+        .to(dots, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.4,
+          stagger: {
+            amount: 0.35,
+            from: 'random',
+          },
+        }, 1.1)
+        .to(lines, {
+          opacity: 0.7,
+          duration: 0.35,
+          stagger: {
+            amount: 0.25,
+            from: 'start',
+          },
+        }, 1.3)
+        .to('.constellation-dot', {
+          boxShadow: '0 0 10px var(--accent-primary)',
+          duration: 0.25,
+        }, 1.5)
+        .to('.phase-b', { opacity: 0, duration: 0.3 }, 1.8);
+
+      // Phase C: Pixel Brain Assembly + Hologram Scan (2.0 to 3.0s)
+      tl.to('.phase-c', { opacity: 1, duration: 0.3 }, 2.0)
+        .to(brainParts, {
+          opacity: 1,
+          scale: 1,
+          ease: 'back.out(1.7)',
+          duration: 0.45,
+          stagger: 0.12,
+        }, 2.1)
+        .fromTo('#brain-scanline', { top: '0%', opacity: 1 }, { top: '100%', opacity: 0.3, duration: 0.55 }, 2.3)
+        .to('.pixel-brain-svg', { scale: 1.06, duration: 0.25 }, 2.65);
+    });
+
+    mm.add('(max-width: 768px)', () => {
+      const dots = document.querySelectorAll<HTMLElement>('.constellation-dot');
+      gsap.set(dots, { opacity: 0.85, scale: 1 });
+
+      const lines = document.querySelectorAll<SVGLineElement>('.constellation-line');
+      gsap.set(lines, { opacity: 0.5 });
+
+      const brainParts = document.querySelectorAll<SVGElement>('.brain-part');
+      gsap.set(brainParts, { opacity: 1, scale: 1 });
+
+      gsap.from('.phase-a', { scrollTrigger: { trigger: '#pixels', start: 'top 85%' }, opacity: 0, y: 25, duration: 0.8 });
+      gsap.from('.phase-b', { scrollTrigger: { trigger: '#ideas', start: 'top 85%' }, opacity: 0, y: 25, duration: 0.8 });
+      gsap.from('.phase-c', { scrollTrigger: { trigger: '#brain-section', start: 'top 85%' }, opacity: 0, y: 25, duration: 0.8 });
+    });
+  }
+
+  // ============================================
+  // 4. DNA DOUBLE HELIX (PINNED)
+  // ============================================
+  function initDNASection() {
+    buildDNADOM();
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      const pairs = document.querySelectorAll<SVGElement>('.dna-pair');
+      gsap.set(pairs, { opacity: 0, transformOrigin: '50% 50%', rotation: 0, scale: 0 });
+
+      // Master Timeline for DNA (Compressed to +=100%)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#dna',
+          start: 'top top',
+          end: '+=100%',
+          pin: '#dna-pin-wrapper',
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            const p = self.progress;
+            document.querySelector('.hl-1')?.classList.toggle('active', p >= 0.2);
+            document.querySelector('.hl-2')?.classList.toggle('active', p >= 0.4);
+            document.querySelector('.hl-3')?.classList.toggle('active', p >= 0.6);
+            document.querySelector('.hl-4')?.classList.toggle('active', p >= 0.8);
+          },
+        },
+      });
+
+      tl.from('.dna-text', { opacity: 0, y: 30, duration: 0.4 }, 0);
+      tl.to(pairs, {
+        opacity: 1,
+        scale: 1,
+        rotation: 180,
+        transformOrigin: '50% 50%',
+        ease: 'power2.out',
+        duration: 0.4,
+        stagger: {
+          amount: 0.65,
+          from: 'start',
+        },
+      }, 0.05);
+    });
+
+    mm.add('(max-width: 768px)', () => {
+      const pairs = document.querySelectorAll<SVGElement>('.dna-pair');
+      pairs.forEach((pair) => {
+        gsap.set(pair, { opacity: 1, scale: 1, rotation: 0 });
+      });
+
+      gsap.from('#dna-strand', { scrollTrigger: { trigger: '#dna', start: 'top 85%' }, opacity: 0, scale: 0.9, duration: 0.8 });
+      gsap.from('.dna-text', {
+        scrollTrigger: {
+          trigger: '#dna',
+          start: 'top 85%',
+          onEnter: () => {
+            document.querySelectorAll('.dna-highlight').forEach((el, idx) => {
+              setTimeout(() => el.classList.add('active'), idx * 250);
+            });
+          },
+        },
+        opacity: 0,
+        y: 25,
+        duration: 0.8,
+        delay: 0.2,
+      });
+    });
+  }
+
+  // ============================================
+  // 5. EMOTION - PIXEL HEART PULSE & ECG MONITOR
+  // ============================================
+  function initEmotionSection() {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#emotion',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: 1,
+      },
+    });
+
+    // Realistic double-thump retro heartbeat scrub
+    tl.to('#pixel-heart svg', { scale: 1.15, duration: 0.15 }, 0.05)
+      .to('#pixel-heart svg', { scale: 0.95, duration: 0.1 }, 0.2)
+      .to('#pixel-heart svg', { scale: 1.25, duration: 0.2 }, 0.3)
+      .to('#pixel-heart svg', { scale: 1.0, duration: 0.25 }, 0.5);
+
+    // ECG wave line draw
+    tl.fromTo('.ecg-line',
+      { strokeDashoffset: 260 },
+      { strokeDashoffset: 0, duration: 0.7, ease: 'none' },
+      0.1
+    );
+
+    // Fade in text
+    gsap.from('.emotion-text', {
+      scrollTrigger: { trigger: '#emotion', start: 'top 75%' },
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power2.out',
+    });
+  }
+
+  // ============================================
+  // 6. BEAUTY - PIXEL EYE & CYBER HUD TRACKING
+  // ============================================
+  function initBeautySection() {
+    const pupil = document.getElementById('eye-pupil');
+    const iris = document.getElementById('eye-iris');
+
+    // Master scrub for Beauty HUD Brackets & Scanning Badge
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#beauty',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: 1,
+      },
+    });
+
+    // HUD Brackets lock-in
+    tl.fromTo('.eye-hud-bracket.top-left', { x: -15, y: -15, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.3 }, 0)
+      .fromTo('.eye-hud-bracket.top-right', { x: 15, y: -15, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.3 }, 0)
+      .fromTo('.eye-hud-bracket.bottom-left', { x: -15, y: 15, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.3 }, 0)
+      .fromTo('.eye-hud-bracket.bottom-right', { x: 15, y: 15, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.3 }, 0)
+      .to('.eye-target-badge', { opacity: 1, duration: 0.25 }, 0.2);
+
+    // Pupil & Iris tracking on scroll
+    ScrollTrigger.create({
+      trigger: '#beauty',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        if (pupil) {
+          const maxX = 12;
+          const x = 36 + (progress - 0.5) * maxX * 2;
+          pupil.setAttribute('x', String(Math.max(30, Math.min(42, x))));
+        }
+        if (iris) {
+          const irisX = 28 + (progress - 0.5) * 6;
+          iris.setAttribute('x', String(Math.max(25, Math.min(31, irisX))));
+        }
+      },
+    });
+
+    gsap.from('.beauty-text', {
+      scrollTrigger: { trigger: '#beauty', start: 'top 75%' },
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power2.out',
+    });
+  }
+
+  // ============================================
+  // 7. HANDS - BUILDING HANDS & ENERGY SPARK BRIDGE
+  // ============================================
+  function initHandsSection() {
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      // Master Timeline for Building Hands (Compressed to +=120% to prevent fatigue)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#hands',
+          start: 'top top',
+          end: '+=120%',
+          pin: '#hands-pin-wrapper',
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+        },
+      });
+
+      // Hands slide in
+      tl.from('#left-hand', { x: -280, opacity: 0, ease: 'power1.out', duration: 0.45 }, 0);
+      tl.from('#right-hand', { x: 280, opacity: 0, ease: 'power1.out', duration: 0.45 }, 0);
+
+      // Energy Spark Bridge sparks between fingertips
+      tl.to('#energy-spark-bridge', { opacity: 1, duration: 0.2 }, 0.25)
+        .to('.spark-bit', { scaleX: 1.3, opacity: 1, stagger: 0.05, duration: 0.2 }, 0.28)
+        .to('#energy-spark-bridge', { opacity: 0, duration: 0.15 }, 0.5);
+
+      // Center Crystal manifests & expands glow ring
+      tl.from('#center-crystal', {
+        scale: 0,
+        opacity: 0,
+        rotation: -180,
+        transformOrigin: 'center center',
+        ease: 'back.out(1.7)',
+        duration: 0.4,
+      }, 0.42);
+
+      tl.fromTo('.crystal-glow-ring',
+        { scale: 0.5, opacity: 1 },
+        { scale: 2, opacity: 0, duration: 0.35, ease: 'power2.out' },
+        0.5
+      );
+
+      tl.from('.hands-text', { opacity: 0, y: 20, duration: 0.35 }, 0.65);
+    });
+
+    mm.add('(max-width: 768px)', () => {
+      gsap.from('.hand', { scrollTrigger: { trigger: '#hands', start: 'top 80%' }, opacity: 0, x: (i) => i === 0 ? -100 : 100, duration: 1, stagger: 0.2 });
+      gsap.from('#energy-spark-bridge', { scrollTrigger: { trigger: '#hands', start: 'top 65%' }, opacity: 0, scale: 0.5, duration: 0.6 });
+      gsap.from('#center-crystal', { scrollTrigger: { trigger: '#hands', start: 'top 50%' }, scale: 0, opacity: 0, duration: 1, delay: 0.3, ease: 'back.out(1.7)' });
+      gsap.from('.hands-text', { scrollTrigger: { trigger: '#hands', start: 'top 50%' }, opacity: 0, y: 20, duration: 0.8, delay: 0.6 });
+    });
+  }
+
+  // ============================================
+  // 8. WINDOWS - 10 WINDOW CASCADE (PINNED SCRUB)
+  // ============================================
+  function initWindowsSection() {
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      // Master Timeline for 10 Windows Cascade (Compressed to +=180% to eliminate dead scroll time)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#windows',
+          start: 'top top',
+          end: '+=180%',
+          pin: '#windows-pin-wrapper',
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+        },
+      });
+
+      const alertWindows = gsap.utils.toArray<HTMLElement>('.cascade-win:not(.win-10)');
+      tl.from(alertWindows, {
+        y: 120,
+        x: (i) => (i % 2 === 0 ? -50 : 50),
+        rotation: (i) => ((i % 3) - 1) * 2.5,
+        scale: 0.8,
+        opacity: 0,
+        ease: 'power1.out',
+        duration: 0.5,
+        stagger: 0.08,
+      }, 0);
+
+      // Main portfolio window (10th) takes center stage
+      tl.from('.win-10', {
+        scale: 0.4,
+        opacity: 0,
+        y: 50,
+        ease: 'back.out(1.7)',
+        duration: 0.45,
+      }, 0.85);
+    });
+
+    mm.add('(max-width: 768px)', () => {
+      // Mobile: simple vertical stack reveal
+      gsap.from('.cascade-win', {
+        scrollTrigger: { trigger: '#windows', start: 'top 80%' },
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+      });
+    });
+  }
+
+  // ============================================
+  // 9. TETRIS - BLOCK STACK CTA (PINNED SCRUB)
+  // ============================================
+  function buildTetrisDOM() {
+    const board = document.getElementById('tetris-board');
+    const nextPieceElement = document.getElementById('next-piece');
+    if (!board || board.dataset.initialized === 'true') return;
+    board.dataset.initialized = 'true';
+
+    if (nextPieceElement) {
+      nextPieceElement.innerHTML = `
+        <div class="tetromino-preview" style="position:relative; width:64px; height:64px; margin:0 auto; border: 2px solid var(--border-color); background: var(--bg-elevated); box-shadow: var(--pixel-shadow);">
+          <div style="position:absolute; width:14px; height:14px; left:14px; top:18px; background:#7c3aed; border:1px solid var(--border-color);"></div>
+          <div style="position:absolute; width:14px; height:14px; left:28px; top:18px; background:#7c3aed; border:1px solid var(--border-color);"></div>
+          <div style="position:absolute; width:14px; height:14px; left:42px; top:18px; background:#7c3aed; border:1px solid var(--border-color);"></div>
+          <div style="position:absolute; width:14px; height:14px; left:28px; top:32px; background:#7c3aed; border:1px solid var(--border-color);"></div>
+        </div>
+      `;
+    }
+
+    const tetrominoes = [
+      { type: 'I', blocks: [[0,0],[0,1],[0,2],[0,3]], color: 'var(--accent-secondary)' },
+      { type: 'L', blocks: [[0,0],[0,1],[0,2],[1,2]], color: '#ff4d00' },
+      { type: 'T', blocks: [[0,0],[1,0],[2,0],[1,1]], color: '#7c3aed' },
+      { type: 'O', blocks: [[0,0],[1,0],[0,1],[1,1]], color: '#ffde00' },
+      { type: 'Z', blocks: [[0,0],[1,0],[1,1],[2,1]], color: '#00ff66' },
+      { type: 'S', blocks: [[1,0],[2,0],[0,1],[1,1]], color: '#ff4d00' },
+      { type: 'J', blocks: [[1,0],[1,1],[1,2],[0,2]], color: '#38bdf8' },
+    ];
+
+    let currentY = -4;
+    tetrominoes.forEach((t) => {
+      const piece = document.createElement('div');
+      piece.className = `tetromino tetromino-${t.type}`;
+      piece.dataset.initialY = String(currentY * 30);
+      piece.style.cssText = `
+        position: absolute;
+        top: ${currentY * 30}px;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+      `;
+
+      t.blocks.forEach(([bx, by]) => {
+        const block = document.createElement('div');
+        block.style.cssText = `
+          position: absolute;
+          width: 28px; height: 28px;
+          left: ${bx * 30}px; top: ${by * 30}px;
+          background: ${t.color};
+          border: 2px solid var(--border-color);
+          box-sizing: border-box;
+        `;
+        piece.appendChild(block);
+      });
+
+      board.appendChild(piece);
+      currentY += 4;
+    });
+  }
+
+  function initTetrisSection() {
+    buildTetrisDOM();
+
+    const mm = gsap.matchMedia();
+
+    mm.add('(min-width: 769px)', () => {
+      // Master Timeline for Tetris Section (Compressed to +=120%)
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#tetris',
+          start: 'top top',
+          end: '+=120%',
+          pin: '#tetris-pin-wrapper',
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1,
+        },
+      });
+
+      const pieces = document.querySelectorAll<HTMLElement>('#tetris-board .tetromino');
+      pieces.forEach((piece, i) => {
+        const initialY = parseFloat(piece.dataset.initialY || '0');
+        const currentYIndex = initialY / 30;
+        gsap.set(piece, { y: 0 });
+        tl.to(piece, {
+          y: (18 - currentYIndex) * 30,
+          ease: 'none',
+          duration: 0.35,
+        }, i * 0.09);
+      });
+
+      // Victory Line Clear Flash, Board Shake & Banner
+      tl.to('#tetris-flash', { opacity: 0.9, duration: 0.08 }, 0.68)
+        .to('#tetris-flash', { opacity: 0, duration: 0.15 }, 0.76)
+        .to('#tetris-board', { x: 5, duration: 0.03 }, 0.69)
+        .to('#tetris-board', { x: -6, duration: 0.04 }, 0.72)
+        .to('#tetris-board', { x: 4, duration: 0.03 }, 0.76)
+        .to('#tetris-board', { x: 0, duration: 0.03 }, 0.79)
+        .to('#tetris-clear-banner', { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.7)' }, 0.72);
+
+      // Fade in CTA text
+      tl.from('.tetris-cta-text', {
+        opacity: 0,
+        y: 25,
+        duration: 0.35,
+      }, 0.8);
+    });
+
+    mm.add('(max-width: 768px)', () => {
+      const pieces = document.querySelectorAll<HTMLElement>('#tetris-board .tetromino');
+      pieces.forEach((piece, i) => {
+        gsap.set(piece, { y: 220 + (i % 4) * 28 });
+      });
+
+      gsap.from('#tetris-board', { scrollTrigger: { trigger: '#tetris', start: 'top 85%' }, opacity: 0, y: 25, duration: 0.8 });
+      gsap.to('#tetris-clear-banner', {
+        scrollTrigger: { trigger: '#tetris', start: 'top 60%' },
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+      });
+      gsap.from('.tetris-cta-text', { scrollTrigger: { trigger: '#tetris', start: 'top 85%' }, opacity: 0, y: 20, duration: 0.8, delay: 0.2 });
+    });
+  }
+
+  // ============================================
+  // 10. WORLD - PIXEL GLOBE ROTATION & RADAR PINGS
+  // ============================================
+  function initWorldSection() {
+    const globeSvg = document.querySelector<SVGSVGElement>('.globe-svg');
+    if (globeSvg) {
+      // Rotation on scroll
+      ScrollTrigger.create({
+        trigger: '#world',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+        onUpdate: (self) => {
+          const rotation = self.progress * 30; // 30 deg total
+          globeSvg.style.transform = `rotate(${rotation}deg)`;
+        },
+      });
+
+      // Continent pulse
+      gsap.to('.continent', {
+        scrollTrigger: { trigger: '#world', start: 'top 80%', end: 'bottom 20%', scrub: 1 },
+        scale: 1.05,
+        transformOrigin: 'center center',
+        stagger: 0.1,
+      });
+
+      // Radar ping dots pulsing
+      gsap.to('.globe-ping-dot', {
+        scale: 1.8,
+        opacity: 0.3,
+        transformOrigin: 'center center',
+        repeat: -1,
+        yoyo: true,
+        duration: 1.2,
+        stagger: 0.3,
+      });
+
+      // Connection lines draw
+      gsap.from('.conn-line', {
+        scrollTrigger: { trigger: '#world', start: 'top 70%', end: 'bottom 30%', scrub: 1 },
+        strokeDasharray: '0, 200',
+        strokeDashoffset: 0,
+        opacity: 0.6,
+      });
+    }
+
+    gsap.from('.world-content', {
+      scrollTrigger: { trigger: '#world', start: 'top 75%' },
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: 'power2.out',
+    });
+  }
+
+  // ============================================
+  // 11. MODE TOGGLE - Real-time Theme Switch
+  // ============================================
+  function initModeToggle() {
+    const devBtn = document.querySelector<HTMLButtonElement>('.mode-btn.dev-mode');
+    const creativeBtn = document.querySelector<HTMLButtonElement>('.mode-btn.creative-mode');
+    const avatarDev = document.querySelector<HTMLElement>('.avatar-dev');
+    const avatarCreative = document.querySelector<HTMLElement>('.avatar-creative');
+
+    function setMode(mode: string, dispatch = true) {
+      document.documentElement.setAttribute('data-mode', mode);
+      localStorage.setItem('hzb-theme-mode', mode);
+
+      if (devBtn && creativeBtn) {
+        devBtn.classList.toggle('active', mode === 'developer');
+        creativeBtn.classList.toggle('active', mode === 'creative');
+      }
+
+      if (avatarDev && avatarCreative) {
+        if (mode === 'creative') {
+          avatarDev.style.display = 'none';
+          avatarCreative.style.display = 'block';
+        } else {
+          avatarDev.style.display = 'block';
+          avatarCreative.style.display = 'none';
+        }
+      }
+
+      // Hero character toggle
+      const heroDev = document.querySelector<HTMLElement>('.char-dev');
+      const heroCreative = document.querySelector<HTMLElement>('.char-creative');
+      if (heroDev && heroCreative) {
+        if (mode === 'creative') {
+          heroDev.style.display = 'none';
+          heroCreative.style.display = 'block';
+        } else {
+          heroDev.style.display = 'block';
+          heroCreative.style.display = 'none';
+        }
+      }
+
+      // Particle burst effect
+      createModeParticles(mode);
+
+      // Synchronize with Header navbar and other listeners
+      if (dispatch) {
+        window.dispatchEvent(new CustomEvent('hzb-theme-change', { detail: { mode } }));
+      }
+    }
+
+    devBtn?.addEventListener('click', () => setMode('developer'));
+    creativeBtn?.addEventListener('click', () => setMode('creative'));
+
+    // Listen to mode toggle from floating navbar dock (Header.astro)
+    window.addEventListener('hzb-theme-change', ((e: Event) => {
+      const customEvent = e as CustomEvent<{ mode?: string }>;
+      const mode = customEvent.detail?.mode;
+      if (mode && mode !== document.documentElement.getAttribute('data-mode')) {
+        setMode(mode, false);
+      }
+    }) as EventListener);
+
+    // Initialize from localStorage
+    const savedMode = localStorage.getItem('hzb-theme-mode');
+    if (savedMode) setMode(savedMode, false);
+  }
+
+  function createModeParticles(mode: string) {
+    const colors = mode === 'creative' ? ['#ff4d00', '#7c3aed', '#ffde00'] : ['#00ff66', '#38bdf8', '#ffde00'];
+    const container = document.querySelector('.hero-avatar-box');
+    if (!container) return;
+
+    for (let i = 0; i < 12; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'mode-particle';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const angle = (Math.PI * 2 * i) / 12;
+      const distance = 60 + Math.random() * 40;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+
+      particle.style.cssText = `
+        position: absolute;
+        width: 6px; height: 6px;
+        background: ${color};
+        left: 50%; top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10;
+      `;
+      container.appendChild(particle);
+
+      gsap.to(particle, {
+        x,
+        y,
+        opacity: 0,
+        scale: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        onComplete: () => particle.remove(),
+      });
+    }
+  }
+
+  // ============================================
+  // 12. GREETING SCRAMBLE (Hero Badge)
+  // ============================================
+  function initGreetingScramble() {
+    const badgeText = document.querySelector<HTMLElement>('.badge-text')!;
+    if (!badgeText) return;
+
+    const greetings = [
+      'HELLO // WORLD READY',
+      'HALO // SISTEM SIAP',
+      'こんにちは // システム準備完了',
+      'BONJOUR // SYSTÈME PRÊT',
+      'HOLA // SISTEMA LISTO',
+    ];
+
+    let index = 0;
+    function scramble() {
+      const text = greetings[index];
+      let chars = text.split('');
+      let iterations = 0;
+      const interval = setInterval(() => {
+        badgeText.textContent = chars.map((_, i) => {
+          if (i < iterations) return text[i];
+          return '!@#$%^&*()_+-=[]{}|;:,.<>?'.charAt(Math.floor(Math.random() * 30));
+        }).join('');
+        iterations += 2;
+        if (iterations >= text.length) {
+          clearInterval(interval);
+          badgeText.textContent = text;
+        }
+      }, 30);
+    }
+
+    scramble();
+    setInterval(() => {
+      index = (index + 1) % greetings.length;
+      scramble();
+    }, 4000);
+  }
+
+  // ============================================
+  // 13. CONTACT MODAL TRIGGER
+  // ============================================
+  function initContactTriggers() {
+    document.querySelectorAll('.contact-trigger, #footer-contact-trigger').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dialog = document.getElementById('contact-dialog') as HTMLDialogElement | null;
+        dialog?.showModal();
+      });
+    });
+  }
+
+  // ============================================
+  // 14. WINDOW 10 [ NO ] BUTTON RETRO EASTER EGG
+  // ============================================
+  function initWindowNoButton() {
+    const noBtn = document.getElementById('win-no-btn') as HTMLButtonElement | null;
+    const winMsg = document.getElementById('portfolio-win-msg');
+    const win10 = document.querySelector('.win-10') as HTMLElement | null;
+
+    if (!noBtn || !winMsg || !win10) return;
+
+    let clicks = 0;
+    const messages = [
+      'ERROR 403: Curiosity overflow! Are you really sure?',
+      'ACCESS DENIED: Great projects await your inspection!',
+      'SYSTEM OVERRIDE: Opening anyway in 3... 2... 1...',
+    ];
+
+    noBtn.addEventListener('click', () => {
+      clicks++;
+
+      // Retro screen shake via GSAP
+      gsap.timeline()
+        .to(win10, { x: '+=10', duration: 0.05 })
+        .to(win10, { x: '-=20', duration: 0.05 })
+        .to(win10, { x: '+=15', duration: 0.05 })
+        .to(win10, { x: '-=10', duration: 0.05 })
+        .to(win10, { x: '+=0', duration: 0.05 });
+
+      if (clicks <= messages.length) {
+        winMsg.textContent = messages[clicks - 1];
+        winMsg.style.color = clicks === 3 ? '#ff4d00' : 'var(--accent-primary)';
+      }
+
+      if (clicks >= 3) {
+        noBtn.textContent = '[ Yes, Open! ]';
+        noBtn.style.background = 'var(--accent-primary)';
+        noBtn.style.color = '#0b0d10';
+        setTimeout(() => {
+          window.location.href = '/projects';
+        }, 1000);
+      }
+    });
+  }
+
+  // ============================================
+  // 15. TOP RETRO SCROLL PROGRESS INDICATOR
+  // ============================================
+  function initScrollProgress() {
+    const progressLine = document.getElementById('scroll-progress-line');
+    if (!progressLine) return;
+
+    ScrollTrigger.create({
+      start: 'top top',
+      end: 'max',
+      onUpdate: (self) => {
+        progressLine.style.width = `${Math.round(self.progress * 100)}%`;
+      },
+    });
+  }
+
+  // ============================================
+  // INITIALIZATION SEQUENCE (Strict Scroll Lock)
+  // ============================================
+  function initAll() {
+    // Keep scroll locked until the entrance animation is 100% finished
+    lockScroll();
+
+    if (sessionStorage.getItem('hzb-booted')) {
+      // Already booted in this session - begin animations after DOM paint
+      setTimeout(startAnimations, 80);
+    } else {
+      // Wait for preloader:complete event
+      window.addEventListener('preloader:complete', startAnimations, { once: true });
+    }
+  }
+
+  function startAnimations() {
+    initHeroAnimations();
+    initAboutSection();
+    initPixelsStory();
+    initDNASection();
+    initEmotionSection();
+    initBeautySection();
+    initHandsSection();
+    initWindowsSection();
+    initTetrisSection();
+    initWorldSection();
+    initModeToggle();
+    initGreetingScramble();
+    initContactTriggers();
+    initWindowNoButton();
+    initScrollProgress();
+
+    // Skip boot button handler
+    const skipBtn = document.getElementById('skip-boot-btn');
+    skipBtn?.addEventListener('click', skipBoot);
+
+    // Refresh ScrollTrigger after all animations registered
+    ScrollTrigger.refresh();
+  }
+
+  initAll();
+
+  // ============================================
+  // RESIZE HANDLER & CLEANUP
+  // ============================================
+  const handleResize = () => ScrollTrigger.refresh();
+  window.addEventListener('resize', handleResize);
+
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => {
-      ScrollTrigger.refresh();
-    });
+    document.fonts.ready.then(() => ScrollTrigger.refresh());
   }
 
-  // Cleanup on unload to prevent event listener leaks
   window.addEventListener('pagehide', () => {
+    window.removeEventListener('resize', handleResize);
     ScrollTrigger.getAll().forEach((t) => t.kill());
-  });
+  }, { once: true });
 </script>
 
 <style>
+  /* ============================================
+     TOP RETRO SCROLL PROGRESS LINE
+     ============================================ */
+  .scroll-progress-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px var(--accent-primary);
+    z-index: 999;
+    pointer-events: none;
+    transition: width 0.05s ease-out;
+  }
+
+  /* ============================================
+     BASE STORY SECTIONS
+     ============================================ */
   .story-section {
-    min-height: 90vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -651,44 +2126,29 @@ import PixelIcons from '../components/PixelIcons.astro';
     box-sizing: border-box;
   }
 
-  .section-container {
-    max-width: 1100px;
+  .pin-section {
+    min-height: auto;
+  }
+
+  .pin-wrapper {
+    position: relative;
     width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
-  .section-titlebar {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .sect-num {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 1rem;
-    color: var(--accent-primary);
-  }
-
-  .sect-title {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--text-primary);
-    margin: 0;
-  }
-
-  .sect-subtitle {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.8rem;
-    color: var(--text-muted);
+  .pinned-content {
     width: 100%;
-    margin-top: 0.25rem;
+    position: relative;
   }
 
-  /* HERO */
+  .pin-spacer {
+    width: 100%;
+  }
+
+  /* ============================================
+     HERO SECTION
+     ============================================ */
   .hero-section {
     min-height: calc(100vh - 80px);
     text-align: center;
@@ -700,7 +2160,7 @@ import PixelIcons from '../components/PixelIcons.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
   .terminal-badge {
@@ -714,11 +2174,13 @@ import PixelIcons from '../components/PixelIcons.astro';
   }
 
   .badge-dot {
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     background: var(--accent-primary);
     border-radius: 50%;
+    animation: pulse 1.5s infinite;
   }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
   .badge-text {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
@@ -735,651 +2197,1180 @@ import PixelIcons from '../components/PixelIcons.astro';
     gap: 0.5rem;
   }
 
+  .glitch-text {
+    position: relative;
+    color: var(--text-primary);
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0; top: 0;
+    clip: rect(0, 900px, 0, 0);
+  }
+
+  .glitch-text::before {
+    color: var(--accent-primary);
+    animation: glitch-1 3s infinite linear alternate-reverse;
+  }
+
+  .glitch-text::after {
+    color: var(--accent-secondary);
+    animation: glitch-2 2.5s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-1 {
+    0% { clip: rect(10px, 900px, 20px, 0); transform: translate(-2px, 0); }
+    25% { clip: rect(30px, 900px, 50px, 0); transform: translate(2px, 0); }
+    50% { clip: rect(5px, 900px, 40px, 0); transform: translate(-1px, 0); }
+    75% { clip: rect(20px, 900px, 60px, 0); transform: translate(1px, 0); }
+    100% { clip: rect(15px, 900px, 30px, 0); transform: translate(0, 0); }
+  }
+
+  @keyframes glitch-2 {
+    0% { clip: rect(40px, 900px, 60px, 0); transform: translate(2px, 0); }
+    25% { clip: rect(10px, 900px, 30px, 0); transform: translate(-2px, 0); }
+    50% { clip: rect(50px, 900px, 70px, 0); transform: translate(1px, 0); }
+    75% { clip: rect(5px, 900px, 20px, 0); transform: translate(-1px, 0); }
+    100% { clip: rect(25px, 900px, 45px, 0); transform: translate(0, 0); }
+  }
+
   .title-sub {
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     color: var(--accent-secondary);
   }
 
-  .hero-tagline {
-    font-family: var(--font-body, 'Space Grotesk', sans-serif);
-    font-size: clamp(0.95rem, 2vw, 1.15rem);
-    line-height: 1.7;
+  .hero-headline {
+    font-family: var(--font-heading, 'Syne', sans-serif);
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.3;
     color: var(--text-primary);
-    max-width: 650px;
   }
 
-  .hero-tagline .highlight {
-    color: var(--accent-primary);
-    font-weight: 600;
+  .hero-subheadline {
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 600px;
   }
 
-  .hero-tagline .highlight-alt {
-    color: var(--accent-secondary);
-    font-weight: 600;
-  }
+  .highlight { color: var(--accent-primary); font-weight: 800; }
+  .highlight-alt { color: var(--accent-secondary); font-weight: 800; }
 
-  .hero-avatar-box {
-    margin: 0.5rem 0;
-  }
+  .hero-avatar-box { margin: 0.5rem 0; }
 
   .pixel-character {
-    width: 96px;
-    height: 96px;
+    position: relative;
+    width: 120px; height: 120px;
     border: 3px solid var(--border-color);
     box-shadow: var(--pixel-shadow);
     background: var(--bg-elevated);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
   }
 
-  .char-svg {
-    width: 100%;
-    height: 100%;
+  .avatar-scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: 5;
+    animation: avatarScan 2.2s ease-in-out infinite alternate;
+  }
+  @keyframes avatarScan {
+    0% { transform: translateY(-4px); }
+    100% { transform: translateY(120px); }
   }
 
-  .hero-cta-group {
+  .char-svg { width: 100%; height: 100%; }
+
+  .mode-toggle-group {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 0.5rem;
   }
 
-  .pixel-btn {
+  .mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mode-symbol {
+    display: block;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    fill: currentColor;
+  }
+
+  .mode-symbol-cutout {
+    fill: var(--bg-elevated);
+  }
+
+  .mode-btn {
     background: var(--bg-elevated);
     border: 2px solid var(--border-color);
     color: var(--text-primary);
     font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     padding: 0.75rem 1.25rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
     box-shadow: var(--pixel-shadow);
     cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
+    transition: all 0.15s;
   }
 
-  .pixel-btn.primary {
-    background: var(--accent-primary);
-    color: #0b0d10;
-  }
-
-  .pixel-btn.secondary {
-    background: var(--accent-secondary);
-    color: #0b0d10;
-  }
-
-  .pixel-btn.large {
-    padding: 1rem 1.75rem;
-    font-size: 0.8rem;
-  }
-
-  .pixel-btn:hover {
+  .mode-btn:hover {
     transform: translate(-3px, -3px);
     box-shadow: 6px 6px 0 var(--border-color);
   }
 
-  .pixel-btn:active {
-    transform: translate(0, 0);
-    box-shadow: none;
+  .mode-btn.active {
+    background: var(--accent-primary);
+    color: #0b0d10;
+    border-color: var(--accent-primary);
+  }
+
+  .mode-btn.creative-mode.active {
+    background: var(--accent-primary);
+    color: #0b0d10;
+  }
+
+  .mode-particle { image-rendering: pixelated; }
+
+  .skip-boot-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--accent-primary);
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    padding: 0.5rem 1rem;
+    box-shadow: var(--pixel-shadow);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .skip-boot-btn:hover {
+    background: var(--accent-primary);
+    color: #0b0d10;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--border-color);
+  }
+
+  .skip-icon {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 12px;
+    fill: currentColor;
   }
 
   .scroll-prompt {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
-    margin-top: 1.5rem;
-    opacity: 0.7;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+
+  .prompt-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 0 var(--border-color);
+    transition: all 0.3s ease;
+  }
+
+  .prompt-status-badge.locked {
+    background: rgba(255, 77, 0, 0.15);
+    border-color: #ff4d00;
+    color: #ff4d00;
+    box-shadow: 2px 2px 0 #ff4d00;
+  }
+
+  .prompt-status-badge.locked.shake {
+    animation: badgeShake 0.35s ease;
+  }
+
+  @keyframes badgeShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  .prompt-status-badge.unlocked {
+    background: rgba(0, 255, 102, 0.15);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 0 12px rgba(0, 255, 102, 0.4), 2px 2px 0 var(--border-color);
+    animation: unlockedGlow 2s infinite alternate;
+  }
+
+  @keyframes unlockedGlow {
+    0% { box-shadow: 0 0 4px var(--accent-primary), 2px 2px 0 var(--border-color); }
+    100% { box-shadow: 0 0 16px var(--accent-primary), 3px 3px 0 var(--border-color); }
+  }
+
+  .prompt-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .prompt-text {
     font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     color: var(--text-muted);
   }
 
   .prompt-arrow {
-    animation: bounce 1.5s infinite;
     color: var(--accent-primary);
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
   }
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
+  .prompt-arrow.bouncing {
+    animation: bounce 1.2s infinite;
   }
 
-  /* CREATOR SECTION */
-  .creator-cards-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 1.5rem;
+  .scroll-prompt:hover .prompt-status-badge.unlocked {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px var(--accent-primary), 3px 3px 0 var(--border-color);
   }
 
-  .rpg-stats {
+  /* ============================================
+     ABOUT SECTION - RPG Character Select
+     ============================================ */
+  .about-section { padding: 6rem 1.5rem; }
+  .about-container { max-width: 1000px; margin: 0 auto; width: 100%; }
+
+  .creator-profile-window { width: 100%; }
+
+  /* Arcade Character Select Bar */
+  .character-select-bar {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .rpg-header {
-    display: flex;
+    align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    padding: 0.75rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .select-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .select-badge-tag {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
     font-family: var(--font-pixel, 'Press Start 2P', monospace);
     font-size: 0.65rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    border-bottom: 1px dashed var(--border-color);
-    padding-bottom: 0.5rem;
-  }
-
-  .lvl-badge {
-    color: var(--accent-primary);
-  }
-
-  .class-title {
-    color: var(--accent-secondary);
-  }
-
-  .stat-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .stat-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .stat-name {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-
-  .bar-container {
-    height: 12px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    position: relative;
-  }
-
-  .bar-fill {
-    height: 100%;
-    background: var(--accent-primary);
-  }
-
-  .bar-fill.alt { background: var(--accent-secondary); }
-  .bar-fill.warn { background: #ff4d00; }
-
-  .stat-val {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.6rem;
-    align-self: flex-end;
-  }
-
-  .special-perks {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-  }
-
-  .perk-tag {
+    padding: 0.35rem 0.65rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    font-weight: 700;
+    box-shadow: 2px 2px 0px var(--text-primary);
+  }
+
+  .blink-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--bg-primary);
+    display: inline-block;
+    animation: blink-dot-anim 1s steps(1) infinite;
+  }
+
+  @keyframes blink-dot-anim {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  .select-instruction {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .spec-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .spec-tab {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.65rem;
+    padding: 0.5rem 0.85rem;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.15s ease, color 0.15s ease;
+  }
+
+  .spec-tab:hover:not(.active) {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: translate(-1px, -1px);
+  }
+
+  .spec-tab.active {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border-color: var(--text-primary);
+    box-shadow: 3px 3px 0px var(--text-primary);
+  }
+
+  .spec-tab .tab-indicator {
+    opacity: 0;
+    transform: translateX(-3px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .spec-tab.active .tab-indicator {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .spec-tab .tab-num {
+    opacity: 0.75;
+    font-size: 0.6rem;
+  }
+
+  .spec-nav-arrows {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .spec-nav-btn {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.7rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px var(--border-color);
+    transition: transform 0.05s ease, background 0.15s ease, color 0.15s ease;
+  }
+
+  .spec-nav-btn:hover {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px var(--border-color);
+  }
+
+  .spec-nav-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--border-color);
+  }
+
+  .creator-header {
+    display: flex; gap: 2rem; align-items: flex-start;
+    margin-bottom: 2rem; flex-wrap: wrap;
+  }
+
+  .creator-avatar-large {
+    flex-shrink: 0;
+    position: relative;
+    border: 3px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    background: var(--bg-primary);
+    padding: 0.35rem;
+  }
+
+  .avatar-svg { width: 140px; height: 140px; image-rendering: pixelated; }
+
+  .creator-title-area { flex: 1; min-width: 200px; }
+  .lvl-badge-large {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 1.5rem; color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+  }
+  .creator-name {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--text-primary); margin-bottom: 0.25rem;
+  }
+  .creator-class {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.9rem; color: var(--text-muted);
+  }
+
+  .creator-quote {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.85rem;
+    color: var(--accent-secondary);
+    margin-top: 0.6rem;
+    border-left: 3px solid var(--accent-secondary);
+    padding-left: 0.75rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .creator-stats-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--bg-primary); border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0px var(--border-color);
+    padding: 1rem;
+  }
+
+  .stat-icon {
+    color: var(--accent-primary);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+  }
+  .stat-info { flex: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+  .stat-label {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.6rem; color: var(--text-muted);
+  }
+  .stat-bar {
+    height: 10px; background: var(--bg-elevated); border: 1px solid var(--border-color);
+    overflow: hidden;
+  }
+  .stat-fill {
+    height: 100%; width: 0%; background: var(--accent-primary);
+    transition: width 0.3s;
+  }
+  .stat-fill.alt { background: var(--accent-secondary); }
+  .stat-fill.warn { background: #ff4d00; }
+  .stat-value {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.65rem; color: var(--accent-primary); text-align: right;
+  }
+
+  .creator-perks {
+    margin-bottom: 1.5rem;
+  }
+
+  .perks-group {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem; color: var(--text-muted);
+  }
+
+  .perk {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.65rem;
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
-    padding: 0.3rem 0.6rem;
+    box-shadow: 2px 2px 0px var(--border-color);
+  }
+
+  .creator-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+  }
+
+  .creator-actions .pixel-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .play-btn { width: 100%; max-width: 300px; justify-content: center; }
+  .view-projects-btn { width: 100%; max-width: 300px; justify-content: center; }
+
+  /* ============================================
+     PIXELS → IDEAS → BRAIN STORY
+     ============================================ */
+  .pixels-story-section { overflow: visible; }
+
+  .pixels-content {
+    position: relative;
+    height: 100vh;
+    min-height: 560px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .story-phase {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: min(100%, 800px);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: none;
+  }
+
+  .story-phase.phase-a { opacity: 1; }
+
+  .phase-text { max-width: 600px; }
+  .phase-line {
+    font-family: var(--font-heading, 'Syne', sans-serif);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700; line-height: 1.3;
+    color: var(--text-primary); margin-bottom: 0.5rem;
+  }
+
+  /* Phase A: Single Pixel */
+  .single-pixel-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .single-pixel {
+    width: 24px; height: 24px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 0 var(--accent-primary);
+    image-rendering: pixelated;
+  }
+
+  .pixel-sparks {
+    position: absolute;
+    inset: -20px;
+    pointer-events: none;
+  }
+
+  .spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+  }
+
+  /* Phase B: Constellation */
+  .constellation-canvas {
+    position: relative;
+    width: min(72vw, 680px);
+    height: min(62vh, 560px);
+    min-height: 300px;
+    background: radial-gradient(ellipse at center, var(--bg-elevated) 0%, var(--bg-primary) 100%);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    overflow: hidden;
+  }
+
+  .constellation-hud {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
     font-family: var(--font-pixel, 'Press Start 2P', monospace);
     font-size: 0.55rem;
     color: var(--accent-primary);
+    opacity: 0.85;
+    pointer-events: none;
+    z-index: 3;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 4px;
   }
 
-  .inventory-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-  }
-
-  .inv-slot {
-    background: var(--bg-primary);
-    border: 2px solid var(--border-color);
-    padding: 0.75rem 0.5rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .inv-code {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.7rem;
-    color: var(--accent-primary);
-  }
-
-  .inv-meta {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-  }
-
-  /* PIXEL PLAYGROUND */
-  .playground-desc {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-  }
-
-  .matrix-canvas-box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  #pixel-matrix-canvas {
-    background: #0b0d10;
-    border: 2px solid var(--border-color);
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    aspect-ratio: 600 / 240;
-    image-rendering: pixelated;
-    cursor: crosshair;
-    touch-action: none;
-  }
-
-  .matrix-controls {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1rem;
-    justify-content: center;
-  }
-
-  .pixel-mini-btn {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.6rem;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
-  }
-
-  .pixel-mini-btn:hover {
-    background: var(--accent-primary);
-    color: #0b0d10;
-  }
-
-  /* BRAIN SECTION */
-  .dual-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  .brain-icon-top {
-    margin-bottom: 0.75rem;
-  }
-
-  .brain-role-title {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.85rem;
-    margin-bottom: 0.75rem;
-    color: var(--accent-primary);
-  }
-
-  .brain-body {
-    font-family: var(--font-body, 'Space Grotesk', sans-serif);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  .brain-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.8rem;
-  }
-
-  .brain-list li::before {
-    content: "▶ ";
-    color: var(--accent-primary);
-  }
-
-  /* SECTION 5: OS CASCADE WINDOWS */
-  .windows-stack-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    position: relative;
-    width: 100%;
-  }
-
-  .cascade-window {
-    width: 100%;
-    box-sizing: border-box;
-    transition: transform 0.2s;
-  }
-
-  .cascade-window:hover {
-    transform: translateY(-2px);
-  }
-
-  /* Desktop Staggered Cascade Styling */
-  @media (min-width: 769px) {
-    .windows-stack-container {
-      gap: 1.5rem;
-      padding: 0.5rem 0;
-    }
-    .window-layer-1 { margin-left: 0; max-width: 90%; }
-    .window-layer-2 { margin-left: 5%; max-width: 90%; }
-    .window-layer-3 { margin-left: 2%; max-width: 90%; }
-    .window-layer-4 { margin-left: 7%; max-width: 90%; }
-  }
-
-  .window-inner-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .win-heading {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.8rem;
-    color: var(--accent-primary);
-  }
-
-  .win-p {
-    font-family: var(--font-body, 'Space Grotesk', sans-serif);
-    font-size: 0.9rem;
-  }
-
-  .tech-grid-compact {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tag-pill {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    padding: 0.25rem 0.6rem;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.75rem;
-    color: var(--accent-secondary);
-  }
-
-  .bullet-retro {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.8rem;
-  }
-
-  .bullet-retro li::before {
-    content: "■ ";
-    color: var(--accent-secondary);
-  }
-
-  .alert-box {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: var(--bg-primary);
-    border: 1px dashed #ff4d00;
-    padding: 0.75rem;
-  }
-
-  .alert-icon {
-    font-size: 1.5rem;
-  }
-
-  .alert-text strong {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.7rem;
-    color: #ff4d00;
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-
-  .alert-text p {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.75rem;
-    margin: 0;
-  }
-
-  .manifesto-quote {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.85rem;
-    font-style: italic;
-    border-left: 3px solid var(--accent-primary);
-    padding-left: 0.75rem;
-    margin: 0;
-  }
-
-  /* TETRIS CTA */
-  .tetris-window {
-    width: 100%;
-  }
-
-  .tetris-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.25rem;
-    padding: 1.5rem 0.5rem;
-  }
-
-  .tetris-blocks {
-    display: flex;
-    gap: 8px;
-  }
-
-  .t-block {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border-color);
-  }
-
-  .t1 { background: var(--accent-primary); }
-  .t2 { background: var(--accent-secondary); }
-  .t3 { background: #ff4d00; }
-  .t4 { background: #7c3aed; }
-
-  .tetris-title {
-    font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    color: var(--accent-primary);
-  }
-
-  .tetris-sub {
-    font-family: var(--font-body, 'Space Grotesk', sans-serif);
-    font-size: 0.95rem;
-    color: var(--text-muted);
-  }
-
-  .tetris-action-row {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  /* WORLD FOOTER */
-  .world-footer {
-    min-height: 460px;
-    padding: 5rem 2rem 3rem;
-    flex-direction: column;
-    border-top: 2px solid var(--border-color);
-    background: var(--bg-elevated);
-  }
-
-  .footer-horizon {
-    width: 100%;
-    max-width: 1280px;
-    height: 72px;
-    overflow: hidden;
-    margin-bottom: 3rem;
-  }
-
-  .skyline-svg {
+  .constellation-svg-lines {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .footer-container {
-    max-width: 1280px;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+  .constellation-line {
+    stroke-linecap: square;
+    filter: drop-shadow(0 0 2px var(--accent-secondary));
   }
 
-  .footer-top {
-    display: grid;
-    grid-template-columns: minmax(240px, 1fr) 2fr auto;
-    align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
-    min-height: 220px;
-  }
+  .constellation-dot { image-rendering: pixelated; }
 
-  .footer-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  /* Phase C: Pixel Brain */
+  .pixel-brain-svg {
+    position: relative;
+    width: 300px;
+    height: 250px;
+    overflow: hidden;
   }
-
-  .footer-nav-group,
-  .footer-social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+  .brain-scanline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 12px var(--accent-primary);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
   }
+  .brain-svg { width: 100%; height: 100%; }
+  .brain-part { transform-origin: center center; }
 
-  .footer-nav .pixel-btn {
-    padding: 0.75rem 1rem;
-    font-size: 0.7rem;
-    min-width: 115px;
-    box-shadow: 2px 2px 0 var(--border-color);
-  }
-
-  .footer-social .pixel-btn {
-    color: var(--text-muted);
-    border-color: var(--text-muted);
-  }
-
-  .footer-copyright {
-    margin-left: 1rem;
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-  }
-
-  .footer-logo {
+  /* ============================================
+     DNA SECTION
+     ============================================ */
+  .dna-content { display: flex; flex-direction: row; align-items: center; height: 100vh; justify-content: center; gap: clamp(2rem, 8vw, 8rem); }
+  .dna-strand-container { width: 180px; height: min(72vh, 680px); position: relative; flex: 0 0 auto; }
+  .dna-metric-tag {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-size: 0.5rem;
+    color: var(--accent-secondary);
+    white-space: nowrap;
+    opacity: 0.75;
+    letter-spacing: 0.5px;
+  }
+  .dna-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .dna-pair { transform-origin: 50px 50px; }
+  .dna-text {
+    max-width: 440px;
+    text-align: left;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+  }
+  .dna-highlight {
+    color: var(--text-muted);
+    font-weight: 700;
+    padding: 0 4px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  .dna-highlight.active.hl-1 {
+    color: #ff4d00;
+    border-bottom-color: #ff4d00;
+    text-shadow: 0 0 8px rgba(255, 77, 0, 0.6);
+  }
+  .dna-highlight.active.hl-2 {
     color: var(--accent-primary);
-    margin-bottom: 0.75rem;
+    border-bottom-color: var(--accent-primary);
+    text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
+  }
+  .dna-highlight.active.hl-3 {
+    color: #ff3366;
+    border-bottom-color: #ff3366;
+    text-shadow: 0 0 8px rgba(255, 51, 102, 0.6);
+  }
+  .dna-highlight.active.hl-4 {
+    color: var(--accent-secondary);
+    border-bottom-color: var(--accent-secondary);
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
   }
 
-  .footer-copy {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.9rem;
-    color: var(--text-muted);
+  /* ============================================
+     EMOTION - HEART & ECG
+     ============================================ */
+  .emotion-section { padding: 6rem 1.5rem; }
+  .emotion-container { max-width: 600px; margin: 0 auto; width: 100%; }
+  .emotion-window { width: 100%; }
+  .emotion-content { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; padding: 2rem 1rem; }
+  .pixel-heart-container { width: 180px; height: 180px; }
+  .pixel-heart-container svg { width: 100%; height: 100%; transform-origin: center center; }
+  .emotion-text { max-width: 500px; }
+  .emotion-headline {
+    font-family: var(--font-heading, 'Syne', sans-serif);
+    font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700;
+    color: var(--text-primary); margin-bottom: 0.5rem;
   }
-
-  .footer-bottom {
-    border-top: 1px dashed var(--border-color);
-    padding-top: 1.5rem;
-    text-align: center;
+  .emotion-sub {
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+    font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted);
   }
+  .emotion-highlight { color: #ff4d00; font-weight: 800; }
 
-  .footer-note {
+  .ecg-monitor {
+    width: 100%;
+    max-width: 380px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    box-shadow: var(--pixel-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ecg-svg {
+    width: 100%;
+    height: 36px;
+    overflow: visible;
+  }
+  .ecg-line {
+    stroke-dasharray: 260;
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 4px #ff4d00);
+  }
+  .ecg-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     font-family: var(--font-pixel, 'Press Start 2P', monospace);
-    font-size: 0.65rem;
-    color: var(--text-muted);
+    font-size: 0.55rem;
+    color: #ff4d00;
+    letter-spacing: 0.5px;
+  }
+  .ecg-live-dot {
+    width: 6px;
+    height: 6px;
+    background: #ff4d00;
+    border-radius: 50%;
+    animation: pulse 1s infinite;
   }
 
-  /* MOBILE RESPONSIVE OPTIMIZATIONS (max-width: 768px) */
+  /* ============================================
+     BEAUTY - EYE & CYBER HUD
+     ============================================ */
+  .beauty-section { padding: 6rem 1.5rem; }
+  .beauty-container { max-width: 600px; margin: 0 auto; width: 100%; }
+  .beauty-window { width: 100%; }
+  .beauty-content { display: flex; flex-direction: column; align-items: center; gap: 2rem; text-align: center; padding: 2rem 1rem; }
+  .pixel-eye-container {
+    position: relative;
+    width: 240px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pixel-eye-container svg { width: 100%; height: 100%; }
+  .eye-hud-bracket {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--accent-secondary);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .eye-hud-bracket.top-left {
+    top: -8px; left: -8px;
+    border-width: 2px 0 0 2px;
+  }
+  .eye-hud-bracket.top-right {
+    top: -8px; right: -8px;
+    border-width: 2px 2px 0 0;
+  }
+  .eye-hud-bracket.bottom-left {
+    bottom: -8px; left: -8px;
+    border-width: 0 0 2px 2px;
+  }
+  .eye-hud-bracket.bottom-right {
+    bottom: -8px; right: -8px;
+    border-width: 0 2px 2px 0;
+  }
+  .eye-target-badge {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    color: var(--accent-secondary);
+    background: var(--bg-elevated);
+    border: 1px solid var(--accent-secondary);
+    padding: 3px 8px;
+    box-shadow: 2px 2px 0 var(--border-color);
+    opacity: 0;
+  }
+  .beauty-text { max-width: 500px; }
+  .beauty-headline {
+    font-family: var(--font-heading, 'Syne', sans-serif);
+    font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700;
+    color: var(--text-primary); margin-bottom: 0.5rem;
+  }
+  .beauty-sub {
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+    font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-muted);
+  }
+  .beauty-highlight { color: var(--accent-secondary); font-weight: 800; }
+
+  /* ============================================
+     HANDS SECTION & SPARK BRIDGE
+     ============================================ */
+  .hands-content { display: flex; flex-direction: column; align-items: center; height: 100vh; justify-content: center; gap: 2rem; }
+  .hands-stage { display: flex; align-items: center; justify-content: center; gap: 2rem; height: 60vh; position: relative; }
+  .hand { flex-shrink: 0; }
+  .hand svg { width: 180px; height: 180px; image-rendering: pixelated; }
+  .left-hand { transform: scaleX(-1); }
+  .energy-spark-bridge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 30px;
+    pointer-events: none;
+    z-index: 8;
+    opacity: 0;
+  }
+  .spark-svg { width: 100%; height: 100%; }
+  .spark-bit {
+    transform-origin: center center;
+    filter: drop-shadow(0 0 4px var(--accent-primary));
+  }
+  .center-crystal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+  .center-crystal svg { width: 120px; height: 120px; image-rendering: pixelated; }
+  .crystal-glow-ring {
+    position: absolute;
+    inset: -14px;
+    border: 2px dashed var(--accent-primary);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: rotateGlow 6s linear infinite;
+  }
+  @keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .hands-text { text-align: center; max-width: 600px; }
+  .hands-text p {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 1.1rem; line-height: 1.6; color: var(--text-primary);
+  }
+  .hands-highlight { color: var(--accent-primary); font-weight: 600; }
+
+  /* ============================================
+     WINDOWS CASCADE
+     ============================================ */
+  .windows-content { height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .windows-cascade-stage {
+    position: relative;
+    width: min(100%, 1040px);
+    height: min(78vh, 760px);
+    margin: 0 auto;
+  }
+  .cascade-win {
+    position: absolute;
+    width: clamp(220px, 28vw, 360px);
+    max-width: calc(100vw - 3rem);
+    transition: none; /* GSAP controls */
+  }
+  .cascade-win .win-msg {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.8rem; padding: 1rem; text-align: center;
+  }
+  .cascade-win .win-progress { padding: 0 1rem 1rem; }
+  .cascade-win .win-bar {
+    height: 6px; background: var(--bg-primary); border: 1px solid var(--border-color);
+    position: relative; overflow: hidden;
+  }
+  .cascade-win .win-bar::after {
+    content: ''; position: absolute; top: 0; left: 0; height: 100%;
+    width: 100%; background: var(--accent-primary);
+    animation: loadBar 2s ease-in-out infinite;
+  }
+  @keyframes loadBar { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+  .win-actions { display: flex; gap: 0.5rem; justify-content: center; padding: 1rem; }
+  .win-btn {
+    background: var(--bg-primary); border: 1px solid var(--border-color);
+    color: var(--text-primary); font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.6rem; padding: 0.5rem 1rem; cursor: pointer;
+  }
+  .win-btn.yes-btn { background: var(--accent-primary); color: #0b0d10; text-decoration: none; display: inline-flex; align-items: center; }
+  .win-btn:hover { background: var(--accent-primary); color: #0b0d10; }
+
+  /* Position each window at different depths */
+  .win-1 { top: 4%; left: 4%; z-index: 1; }
+  .win-2 { top: 10%; right: 4%; z-index: 2; }
+  .win-3 { top: 22%; left: 10%; z-index: 3; }
+  .win-4 { top: 30%; right: 10%; z-index: 4; }
+  .win-5 { top: 40%; left: 3%; z-index: 5; }
+  .win-6 { top: 48%; right: 3%; z-index: 6; }
+  .win-7 { top: 58%; left: 8%; z-index: 7; }
+  .win-8 { top: 66%; right: 8%; z-index: 8; }
+  .win-9 { top: 72%; left: 16%; z-index: 9; }
+  .win-10 { top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; width: min(460px, calc(100vw - 3rem)); }
+
+  /* ============================================
+     TETRIS SECTION
+     ============================================ */
+  .tetris-content { display: flex; flex-direction: column; align-items: center; height: 100vh; justify-content: center; gap: 2rem; }
+  .tetris-stage { display: flex; align-items: flex-end; gap: 2rem; height: 60vh; position: relative; }
+  .tetris-side-panel {
+    width: 120px; height: 300px;
+    background: var(--bg-elevated); border: 2px solid var(--border-color);
+    display: flex; flex-direction: column; align-items: center; padding: 1rem;
+    box-shadow: var(--pixel-shadow);
+  }
+  .panel-label {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.6rem; color: var(--accent-primary); margin-bottom: 1rem;
+  }
+  .next-piece-preview { width: 80px; height: 80px; background: var(--bg-primary); border: 1px solid var(--border-color); }
+  .tetris-board {
+    flex: 1; max-width: 400px; height: 500px;
+    background: var(--bg-primary); border: 2px solid var(--border-color);
+    position: relative; overflow: hidden; box-shadow: var(--pixel-shadow);
+  }
+  .tetris-crt-lines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.18),
+      rgba(0, 0, 0, 0.18) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    pointer-events: none;
+    z-index: 15;
+  }
+  .tetris-flash-overlay {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+  }
+  .tetris-clear-banner {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    background: var(--accent-primary);
+    color: #0b0d10;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 1rem;
+    font-weight: 900;
+    padding: 0.6rem 1.2rem;
+    border: 3px solid var(--border-color);
+    box-shadow: 4px 4px 0 var(--border-color);
+    z-index: 25;
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .tetromino { image-rendering: pixelated; }
+  .tetris-cta-text { text-align: center; max-width: 500px; z-index: 5; }
+  .tetris-headline {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--accent-primary);
+    margin-bottom: 1rem;
+  }
+  .tetris-subtext {
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+    font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem;
+  }
+  .contact-cta { justify-content: center; }
+
+  /* ============================================
+     WORLD FOOTER
+     ============================================ */
+  .world-footer { min-height: 100vh; padding: 4rem 2rem; background: var(--bg-elevated); border-top: 2px solid var(--border-color); }
+  .world-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 3rem; }
+  .pixel-globe-container { width: 300px; height: 300px; position: relative; }
+  .globe-svg { width: 100%; height: 100%; transform-origin: center center; transition: transform 0.1s; }
+  .continent { transform-origin: center center; }
+  .globe-ping-dot {
+    transform-origin: center center;
+    filter: drop-shadow(0 0 3px #ffde00);
+  }
+  .conn-line { stroke-linecap: round; }
+  .world-content { text-align: center; }
+  .world-headline {
+    font-family: var(--font-heading, 'Syne', sans-serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem); font-weight: 700;
+    color: var(--text-primary); margin-bottom: 1.5rem; line-height: 1.3;
+  }
+  .world-social { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem; }
+  .world-social .pixel-btn { font-size: 0.7rem; padding: 0.6rem 1rem; }
+  .world-copyright {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.7rem; color: var(--text-muted);
+  }
+
+  /* ============================================
+     RETRO WINDOW OVERRIDES FOR CASCADE
+     ============================================ */
+  .cascade-win .retro-window { max-width: none; width: 100%; }
+  .main-portfolio-win .retro-window { max-width: none; width: 100%; }
+
+  /* ============================================
+     MOBILE RESPONSIVE
+     ============================================ */
   @media (max-width: 768px) {
-    .story-section {
-      padding: 2.5rem 1rem;
-      min-height: auto;
-    }
+    .story-section { padding: 3rem 1rem; min-height: auto; }
+    .pin-section { min-height: auto; }
+    .pin-spacer { display: none !important; }
+    .pin-wrapper { position: static !important; }
+    .pinned-content { height: auto !important; }
 
-    .creator-cards-grid,
-    .dual-columns {
-      grid-template-columns: 1fr;
+    /* Character Select Bar on mobile */
+    .character-select-bar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
     }
-
-    /* Windows stack on mobile: strictly bound within mobile viewport */
-    .windows-stack-container {
-      padding: 0;
-      gap: 1.25rem;
-      width: 100%;
-      overflow-x: hidden;
+    .select-bar-left {
+      justify-content: space-between;
     }
-
-    .cascade-window {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      left: 0 !important;
-      position: relative !important;
-      box-sizing: border-box !important;
-    }
-
-    .hero-cta-group {
+    .spec-tabs {
       flex-direction: column;
       width: 100%;
-      max-width: 300px;
     }
-
-    .pixel-btn {
+    .spec-tab {
       width: 100%;
-      justify-content: center;
-      padding: 0.75rem 1rem;
+      justify-content: flex-start;
+    }
+    .spec-nav-arrows {
+      display: none;
     }
 
-    .footer-top {
-      grid-template-columns: 1fr;
-      text-align: center;
-      gap: 1.25rem;
+    .creator-header { flex-direction: column; align-items: center; text-align: center; }
+    .creator-quote {
+      border-left: none;
+      border-top: 2px solid var(--accent-secondary);
+      padding-left: 0;
+      padding-top: 0.6rem;
+    }
+    .creator-stats-grid { grid-template-columns: 1fr; }
+    .stat-card { flex-direction: row; align-items: center; gap: 0.75rem; }
+    .stat-value { text-align: right; }
+    .creator-actions { flex-direction: column; width: 100%; }
+    .creator-actions .pixel-btn { width: 100%; justify-content: center; }
+
+    /* Fix #pixels story on mobile: display as sequential blocks, not stacked */
+    .pixels-content {
+      display: flex !important;
+      flex-direction: column !important;
+      height: auto !important;
+      padding: 2rem 0 !important;
+      gap: 3.5rem !important;
+    }
+    .story-phase {
+      position: static !important;
+      grid-area: auto !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      width: 100% !important;
+      transform: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+    }
+    .constellation-canvas {
+      width: 100% !important;
+      max-width: 380px !important;
+      height: 260px !important;
+      min-height: 260px !important;
+    }
+    .pixel-brain-svg {
+      width: 220px !important;
+      height: 180px !important;
     }
 
-    .footer-nav,
-    .footer-nav-group,
-    .footer-social {
-      justify-content: center;
+    /* Fix DNA on mobile */
+    .dna-content {
+      flex-direction: column !important;
+      height: auto !important;
+      padding: 2.5rem 1rem !important;
+      gap: 2rem !important;
+      text-align: center !important;
+    }
+    .dna-strand-container {
+      width: 100px !important;
+      height: 380px !important;
+      margin: 0 auto !important;
+    }
+    .dna-text {
+      text-align: center !important;
+      max-width: 100% !important;
     }
 
-    .footer-actions {
-      width: 100%;
-    }
+    .hands-stage { flex-direction: column; height: auto; gap: 1.5rem; }
+    .hand svg { width: 120px; height: 120px; }
+    .energy-spark-bridge { position: static !important; transform: none !important; margin: 0 auto !important; }
+    .center-crystal { position: static; transform: none; }
+    .center-crystal svg { width: 80px; height: 80px; }
+    .hands-content { height: auto; padding: 2rem 0; }
 
-    .footer-actions .pixel-btn {
-      width: 100%;
-      justify-content: center;
-    }
+    .ecg-monitor { max-width: 100% !important; }
+    .eye-target-badge { font-size: 0.5rem !important; bottom: -24px !important; }
 
-    .footer-copyright {
-      display: block;
-      margin: 0.5rem 0 0;
+    .windows-cascade-stage { height: auto; position: static; }
+    .cascade-win { position: static; max-width: 100%; width: 100%; margin-bottom: 1rem; }
+    .windows-content { height: auto; padding: 2rem 0; }
+
+    /* Fix Tetris on mobile */
+    .tetris-stage {
+      flex-direction: column-reverse !important;
+      height: auto !important;
+      align-items: center !important;
+      gap: 1.5rem !important;
     }
+    .tetris-board {
+      width: min(100%, 300px) !important;
+      height: 360px !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    .tetris-clear-banner {
+      font-size: 0.75rem !important;
+      padding: 0.4rem 0.8rem !important;
+    }
+    .tetris-side-panel {
+      align-self: center !important;
+      height: auto !important;
+      padding: 0.75rem 1.5rem !important;
+    }
+    .tetris-content { height: auto !important; padding: 2.5rem 1rem !important; }
+
+    .pixel-globe-container { width: 220px; height: 220px; }
+    .world-footer { min-height: auto; padding: 3rem 1rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    .scroll-prompt .prompt-arrow { animation: none; }
+    .badge-dot { animation: none; }
+    .win-bar::after { animation: none; }
+    .stat-fill { transition: none; }
   }
 </style>

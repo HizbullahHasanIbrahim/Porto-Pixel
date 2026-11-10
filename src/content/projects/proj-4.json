@@ -1,0 +1,13 @@
+{
+  "id": "proj-4",
+  "title": "Hackathon Winner: \"BUG-HUNTER ARCADE\"",
+  "year": 2024,
+  "client": "Hackathon Nasional \"CodeQuest 2024\"",
+  "role": "Development",
+  "techStack": ["Phaser.js", "WebSocket", "Node.js", "Socket.io", "Vercel"],
+  "description": "Game multiplayer real-time 2D platformer dibuat dalam 48 jam. 4 pemain bersaing mengumpulkan bug (token) sambil menghindari antivirus. Juara 1 kategori \"Best Technical Implementation\".",
+  "posterSVG": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\"><rect width=\"64\" height=\"64\" fill=\"#141820\"/><rect x=\"8\" y=\"8\" width=\"48\" height=\"48\" fill=\"#0b0d10\" stroke=\"#ff4d00\" stroke-width=\"2\"/><rect x=\"20\" y=\"16\" width=\"24\" height=\"8\" fill=\"#ff4d00\"/><rect x=\"24\" y=\"28\" width=\"16\" height=\"20\" fill=\"#7c3aed\"/><rect x=\"20\" y=\"28\" width=\"4\" height=\"12\" fill=\"#ff4d00\"/><rect x=\"36\" y=\"28\" width=\"4\" height=\"12\" fill=\"#ff4d00\"/><rect x=\"24\" y=\"52\" width=\"6\" height=\"4\" fill=\"#ff4d00\"/><rect x=\"34\" y=\"52\" width=\"6\" height=\"4\" fill=\"#ff4d00\"/><text x=\"32\" y=\"44\" font-family=\"monospace\" font-size=\"5\" fill=\"#ff4d00\" text-anchor=\"middle\">🏆</text></svg>",
+  "featured": true,
+  "liveUrl": "https://bug-hunter.vercel.app",
+  "repoUrl": "https://github.com/hzb/bug-hunter"
+}

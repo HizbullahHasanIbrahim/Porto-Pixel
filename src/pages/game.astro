@@ -27,7 +27,7 @@ import RetroWindow from '../components/RetroWindow.astro';
       </div>
 
       <div class="canvas-wrapper">
-        <canvas id="game-canvas" width="800" height="240"></canvas>
+        <canvas id="game-canvas" width="800" height="240" role="img" aria-label="Pixel runner mini game canvas"></canvas>
       </div>
 
       <!-- On-Screen Arcade Touch Controls for Mobile Users -->
@@ -113,6 +113,7 @@ import RetroWindow from '../components/RetroWindow.astro';
     width: number;
     height: number;
     color: string;
+    type?: 'low' | 'tall' | 'flyer' | 'double';
   }
 
   interface LeaderboardEntry {
@@ -142,27 +143,28 @@ import RetroWindow from '../components/RetroWindow.astro';
     let score = 0;
     let hiScore = parseInt(localStorage.getItem('hzb-runner-hi') || '0', 10) || 0;
     let frame = 0;
-    let gameSpeed = 5;
+    let gameSpeed = 3.6;
     let timeScale = 1;
     let mode = 'developer';
     let powerActive = false;
     let powerCooldown = 0;
     let powerDuration = 0;
 
-    // Player config
+    // Player config (lincah, terukur, dan nyaman ala Dino Game)
     const player = {
       x: 80,
-      y: 190,
+      y: 194,
       width: 16,
       height: 16,
       vy: 0,
-      gravity: 0.6,
-      jumpPower: -12,
+      gravity: 0.58,
+      jumpPower: -10.5,
       isJumping: false,
     };
 
     let obstacles: Obstacle[] = [];
-    let nextObstacle = 100;
+    let nextObstacle = 140;
+    let jumpBuffer = 0;
     // Penanda eksplisit Game Over. Restart HANYA lewat tombol dialog.
     let isGameOver = false;
 
@@ -173,6 +175,7 @@ import RetroWindow from '../components/RetroWindow.astro';
     function showSplashScreen() {
       gameRunning = false;
       isGameOver = false;
+      stopLoop();
       if (gameOverOverlay) gameOverOverlay.style.display = 'none';
       if (scoreEl) scoreEl.textContent = '00000';
       updateLeaderboard();
@@ -193,10 +196,13 @@ import RetroWindow from '../components/RetroWindow.astro';
 
     function resetGame() {
       score = 0;
-      gameSpeed = 5;
+      frame = 0;
+      gameSpeed = 3.6;
       timeScale = 1;
       obstacles = [];
-      player.y = 190;
+      nextObstacle = 140; // Memberi jeda santai ~2.3 detik sebelum rintangan pertama
+      jumpBuffer = 0;
+      player.y = 194;
       player.vy = 0;
       player.isJumping = false;
       powerActive = false;
@@ -204,9 +210,11 @@ import RetroWindow from '../components/RetroWindow.astro';
       powerDuration = 0;
       gameRunning = true;
       isGameOver = false;
+      lastTime = performance.now();
       if (gameOverOverlay) gameOverOverlay.style.display = 'none';
       updateLeaderboard();
-      requestAnimationFrame(gameLoop);
+      stopLoop();
+      startLoop();
     }
 
     function triggerJump() {
@@ -215,6 +223,10 @@ import RetroWindow from '../components/RetroWindow.astro';
       if (!player.isJumping) {
         player.vy = player.jumpPower;
         player.isJumping = true;
+        jumpBuffer = 0;
+      } else {
+        // Buffer jump input jika player sedikit lagi mendarat (~130ms)
+        jumpBuffer = 8;
       }
     }
 
@@ -267,14 +279,18 @@ import RetroWindow from '../components/RetroWindow.astro';
       }
     }
 
-    function updatePlayer() {
-      player.vy += player.gravity * timeScale;
-      player.y += player.vy * timeScale;
+    let lastTime = performance.now();
+    let rafId: number | null = null;
 
-      if (player.y > 194) {
-        player.y = 194;
-        player.vy = 0;
-        player.isJumping = false;
+    function startLoop() {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(gameLoop);
+    }
+
+    function stopLoop() {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
       }
     }
 
@@ -302,73 +318,80 @@ import RetroWindow from '../components/RetroWindow.astro';
       }
     }
 
-    function updateObstacles() {
-      if (frame > nextObstacle) {
-        obstacles.push({
-          x: 800,
-          y: 178,
-          width: 16,
-          height: 32,
-          color: '#ff4d00',
-        });
-        nextObstacle = frame + Math.max(35, Math.floor((Math.random() * 50 + 40) / (gameSpeed / 5)));
-      }
-
-      for (let i = obstacles.length - 1; i >= 0; i--) {
-        const obs = obstacles[i];
-        obs.x -= gameSpeed * timeScale;
-        if (obs.x + obs.width < 0) {
-          obstacles.splice(i, 1);
-        }
-      }
-    }
-
     function drawObstacles() {
       if (!ctx) return;
       obstacles.forEach((obs) => {
-        ctx.fillStyle = obs.color;
-        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-
-        // Bug spikes
-        ctx.fillRect(obs.x - 2, obs.y + 4, 4, 2);
-        ctx.fillRect(obs.x + 14, obs.y + 4, 4, 2);
-        ctx.fillRect(obs.x + 4, obs.y - 2, 8, 2);
+        if (obs.type === 'flyer') {
+          // Cyber Bird / Pterodactyl ala Chrome Dino (terbang di atas)
+          const wingUp = (Math.floor(frame / 8) % 2 === 0);
+          ctx.fillStyle = '#38bdf8';
+          // Badan
+          ctx.fillRect(obs.x + 4, obs.y + 4, 12, 5);
+          // Kepala & paruh
+          ctx.fillRect(obs.x, obs.y + 2, 4, 4);
+          ctx.fillRect(obs.x - 2, obs.y + 3, 2, 2);
+          // Mata
+          ctx.fillStyle = '#0b0d10';
+          ctx.fillRect(obs.x + 1, obs.y + 3, 1, 1);
+          // Sayap mengepak
+          ctx.fillStyle = '#38bdf8';
+          if (wingUp) {
+            ctx.fillRect(obs.x + 7, obs.y - 4, 5, 8);
+          } else {
+            ctx.fillRect(obs.x + 7, obs.y + 7, 5, 7);
+          }
+        } else if (obs.type === 'low') {
+          // Rintangan Rendah (Small Cactus 14px - sangat mudah dilompati)
+          ctx.fillStyle = obs.color;
+          ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+          // Detail duri atas
+          ctx.fillRect(obs.x + 3, obs.y - 2, obs.width - 6, 2);
+          ctx.fillStyle = '#0b0d10';
+          ctx.fillRect(obs.x + 3, obs.y + 3, 2, obs.height - 6);
+        } else if (obs.type === 'double') {
+          // Rintangan Ganda Rendah (Dua kaktus kecil 14px berdampingan)
+          ctx.fillStyle = obs.color;
+          ctx.fillRect(obs.x, obs.y, 10, obs.height);
+          ctx.fillRect(obs.x + 14, obs.y + 2, 10, obs.height - 2);
+          ctx.fillStyle = '#0b0d10';
+          ctx.fillRect(obs.x + 3, obs.y + 3, 2, obs.height - 6);
+          ctx.fillRect(obs.x + 17, obs.y + 5, 2, obs.height - 8);
+        } else {
+          // Rintangan Tinggi (Tall Cactus 24px - dengan cabang samping)
+          ctx.fillStyle = obs.color;
+          ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+          // Cabang kiri & kanan
+          ctx.fillRect(obs.x - 3, obs.y + 6, 3, 6);
+          ctx.fillRect(obs.x - 3, obs.y + 6, 5, 2);
+          ctx.fillRect(obs.x + obs.width, obs.y + 10, 3, 6);
+          ctx.fillRect(obs.x + obs.width - 2, obs.y + 10, 5, 2);
+          ctx.fillStyle = '#0b0d10';
+          ctx.fillRect(obs.x + 4, obs.y + 4, 2, obs.height - 8);
+        }
       });
-    }
-
-    function updatePowers() {
-      if (powerDuration > 0) {
-        powerDuration--;
-        if (powerDuration <= 0) {
-          powerActive = false;
-          timeScale = 1;
-          powerCooldown = 180;
-        }
-      }
-
-      if (powerCooldown > 0) {
-        powerCooldown--;
-        if (powerEl) {
-          powerEl.textContent = `COOLDOWN (${Math.ceil(powerCooldown / 60)}s)`;
-          powerEl.style.color = '#94a3b8';
-        }
-      } else {
-        if (powerEl) {
-          powerEl.textContent = 'READY';
-          powerEl.style.color = 'var(--accent-primary)';
-        }
-      }
     }
 
     function checkCollisions() {
       if (mode === 'developer' && powerActive) return;
 
+      // Hitbox pemaaf (padding 3px horizontal, 2px vertikal)
+      const pLeft = player.x + 3;
+      const pRight = player.x + player.width - 3;
+      const pTop = player.y + 2;
+      const pBottom = player.y + player.height - 1;
+
       for (const obs of obstacles) {
+        const oPaddingX = (obs.type === 'flyer') ? 1 : 2;
+        const oLeft = obs.x + oPaddingX;
+        const oRight = obs.x + obs.width - oPaddingX;
+        const oTop = obs.y + 2;
+        const oBottom = obs.y + obs.height - 1;
+
         if (
-          player.x < obs.x + obs.width &&
-          player.x + player.width > obs.x &&
-          player.y < obs.y + obs.height &&
-          player.y + player.height > obs.y
+          pLeft < oRight &&
+          pRight > oLeft &&
+          pTop < oBottom &&
+          pBottom > oTop
         ) {
           gameOver();
           break;
@@ -378,7 +401,8 @@ import RetroWindow from '../components/RetroWindow.astro';
 
     function gameOver() {
       gameRunning = false;
-      isGameOver = true; // Kunci restart otomatis sampai user klik tombol
+      isGameOver = true;
+      stopLoop();
       if (finalScoreEl) finalScoreEl.textContent = score.toString();
       if (gameOverOverlay) gameOverOverlay.style.display = 'flex';
 
@@ -389,15 +413,143 @@ import RetroWindow from '../components/RetroWindow.astro';
       }
     }
 
-    function gameLoop() {
-      if (!gameRunning || !ctx || !canvas) return;
+    function gameLoop(currentTime = performance.now()) {
+      if (!gameRunning || !ctx || !canvas || rafId === null) return;
+
+      const dt = Math.min((currentTime - lastTime) / 1000, 0.1);
+      lastTime = currentTime;
+      const step = dt * 60; // Normalize to 60fps base ticks
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawBackground();
-      updatePlayer();
-      updateObstacles();
-      updatePowers();
+      
+      // Update with dt scaling
+      player.vy += player.gravity * timeScale * step;
+      player.y += player.vy * step;
+
+      if (player.y > 194) {
+        player.y = 194;
+        player.vy = 0;
+        player.isJumping = false;
+      }
+
+      // Jump buffer: jika player menekan tombol sedikit sebelum mendarat, langsung lompat saat menyentuh tanah
+      if (jumpBuffer > 0) {
+        if (!player.isJumping) {
+          player.vy = player.jumpPower;
+          player.isJumping = true;
+          jumpBuffer = 0;
+        } else {
+          jumpBuffer -= step;
+        }
+      }
+
+      if (frame > nextObstacle) {
+        // Tentukan tipe rintangan berdasarkan skor (seperti Chrome Dino Game)
+        let type: 'low' | 'tall' | 'flyer' | 'double' = 'low';
+        let w = 12;
+        let h = 14;
+        let y = 196; // 210 - 14 (di tanah)
+        let color = '#ff4d00';
+
+        const rand = Math.random();
+        if (score < 100) {
+          // Fase 1: 100% rintangan rendah (14px) - santai dan sangat mudah dilompati
+          type = 'low';
+          w = 12;
+          h = 14;
+          y = 196;
+        } else if (score < 300) {
+          // Fase 2: Rintangan rendah (60%), kaktus tinggi 24px (25%), burung terbang tinggi (15%)
+          if (rand < 0.60) {
+            type = 'low';
+            w = 12;
+            h = 14;
+            y = 196;
+          } else if (rand < 0.85) {
+            type = 'tall';
+            w = 14;
+            h = 24;
+            y = 186; // 210 - 24
+          } else {
+            type = 'flyer';
+            w = 20;
+            h = 12;
+            y = 156; // Burung terbang tinggi di atas kepala player (aman dilewati sambil lari tanpa lompat!)
+            color = '#38bdf8';
+          }
+        } else {
+          // Fase 3: Variasi lengkap (rendah, ganda, tinggi, burung)
+          if (rand < 0.35) {
+            type = 'low';
+            w = 12;
+            h = 14;
+            y = 196;
+          } else if (rand < 0.60) {
+            type = 'tall';
+            w = 14;
+            h = 24;
+            y = 186;
+          } else if (rand < 0.80) {
+            type = 'double';
+            w = 24;
+            h = 14;
+            y = 196;
+          } else {
+            type = 'flyer';
+            w = 20;
+            h = 12;
+            y = 156;
+            color = '#38bdf8';
+          }
+        }
+
+        obstacles.push({
+          x: 800,
+          y,
+          width: w,
+          height: h,
+          color,
+          type,
+        });
+
+        // Jarak rintangan luas dan teratur seperti Dino game (minimal 78 frame / ~1.4 - 2.8 detik)
+        const minGap = Math.max(78, 115 - Math.floor(score / 25));
+        const randomBonus = Math.floor(Math.random() * 65);
+        nextObstacle = frame + Math.floor((minGap + randomBonus) / (gameSpeed / 3.6));
+      }
+
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const obs = obstacles[i];
+        obs.x -= gameSpeed * timeScale * step;
+        if (obs.x + obs.width < 0) {
+          obstacles.splice(i, 1);
+        }
+      }
+
+      if (powerDuration > 0) {
+        powerDuration -= step;
+        if (powerDuration <= 0) {
+          powerActive = false;
+          timeScale = 1;
+          powerCooldown = 180;
+        }
+      }
+
+      if (powerCooldown > 0) {
+        powerCooldown -= step;
+        if (powerEl) {
+          powerEl.textContent = `COOLDOWN (${Math.ceil(powerCooldown / 60)}s)`;
+          powerEl.style.color = '#94a3b8';
+        }
+      } else {
+        if (powerEl) {
+          powerEl.textContent = 'READY';
+          powerEl.style.color = 'var(--accent-primary)';
+        }
+      }
+
       checkCollisions();
       drawPlayer();
       drawObstacles();
@@ -408,10 +560,11 @@ import RetroWindow from '../components/RetroWindow.astro';
         if (scoreEl) scoreEl.textContent = score.toString().padStart(5, '0');
       }
 
-      if (frame % 500 === 0) gameSpeed += 0.2;
+      // Kenaikan kecepatan sangat halus dan stabil seperti Dino Game (max 6.0)
+      if (frame % 600 === 0 && gameSpeed < 6.0) gameSpeed += 0.08;
 
       frame++;
-      requestAnimationFrame(gameLoop);
+      rafId = requestAnimationFrame(gameLoop);
     }
 
     // Touch controls attachment
@@ -441,12 +594,10 @@ import RetroWindow from '../components/RetroWindow.astro';
     });
 
     // Keyboard handlers
-    window.addEventListener('keydown', (e: KeyboardEvent) => {
+    const handleKeydown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
       if (!gameRunning && e.code === 'Space') {
-        // Space saat idle (splash) boleh memulai ronde pertama,
-        // tapi saat Game Over overlay terbuka, biarkan tombol dialog yang bekerja.
         e.preventDefault();
         startFromCanvas();
         return;
@@ -464,7 +615,39 @@ import RetroWindow from '../components/RetroWindow.astro';
           activatePower('creative');
         }
       }
-    });
+    };
+    window.addEventListener('keydown', handleKeydown);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopLoop();
+      } else if (gameRunning && !isGameOver) {
+        lastTime = performance.now();
+        startLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          if (gameRunning && !isGameOver) {
+            lastTime = performance.now();
+            startLoop();
+          }
+        } else {
+          stopLoop();
+        }
+      }
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+
+    window.addEventListener('pagehide', () => {
+      stopLoop();
+      observer.disconnect();
+      window.removeEventListener('keydown', handleKeydown);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    }, { once: true });
 
     // Leaderboard
     function saveScore() {
@@ -503,14 +686,22 @@ import RetroWindow from '../components/RetroWindow.astro';
         return;
       }
 
-      tbody.innerHTML = scores.map((s, i) => `
-        <tr>
-          <td><span class="rank">#${(i + 1).toString().padStart(2, '0')}</span></td>
-          <td><strong>${s.name}</strong></td>
-          <td>${s.score}</td>
-          <td><span class="mode-tag">${s.mode}</span></td>
-        </tr>
-      `).join('');
+      tbody.innerHTML = '';
+      scores.forEach((s, i) => {
+        const tr = document.createElement('tr');
+        const rankTd = document.createElement('td');
+        rankTd.innerHTML = `<span class="rank">#${(i + 1).toString().padStart(2, '0')}</span>`;
+        const nameTd = document.createElement('td');
+        const strong = document.createElement('strong');
+        strong.textContent = s.name;
+        nameTd.appendChild(strong);
+        const scoreTd = document.createElement('td');
+        scoreTd.textContent = s.score.toString();
+        const modeTd = document.createElement('td');
+        modeTd.innerHTML = `<span class="mode-tag">${s.mode}</span>`;
+        tr.append(rankTd, nameTd, scoreTd, modeTd);
+        tbody.appendChild(tr);
+      });
     }
 
     // Simpan skor lalu mulai ronde baru hanya setelah aksi eksplisit user.

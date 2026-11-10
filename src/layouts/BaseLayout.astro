@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import ContactDialog from '../components/ContactDialog.astro';
+import PixelPreloader from '../components/PixelPreloader.astro';
 import '../styles/global.css';
 
 export interface Props {
@@ -44,19 +45,31 @@ const {
   </script>
 </head>
 <body>
+  <PixelPreloader />
   <Header />
   <slot />
   <ContactDialog />
   
+  <!-- CRT Scanlines Overlay (retro TV effect) -->
+  <div class="crt-scanlines" aria-hidden="true"></div>
+  
   <script>
     // Initialize sparkle effect on all pages
     import { initSparkleEffect } from '../utils/sparkleEffect.ts';
-    
+
+    let disposeSparkle: (() => void) | undefined;
+    const startSparkles = () => {
+      disposeSparkle?.();
+      disposeSparkle = initSparkleEffect();
+    };
+
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => initSparkleEffect());
+      document.addEventListener('DOMContentLoaded', startSparkles, { once: true });
     } else {
-      initSparkleEffect();
+      startSparkles();
     }
+
+    window.addEventListener('pagehide', () => disposeSparkle?.(), { once: true });
   </script>
 </body>
 </html>

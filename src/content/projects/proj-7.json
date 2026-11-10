@@ -1,0 +1,12 @@
+{
+  "id": "proj-7",
+  "title": "API Gateway \"PIXEL-GATE\"",
+  "year": 2023,
+  "client": "Enterprise Fintech",
+  "role": "System Analysis",
+  "techStack": ["Go", "gRPC", "Kubernetes", "Prometheus", "OpenTelemetry"],
+  "description": "Arsitektur API Gateway high-throughput (50k RPS) dengan rate-limiting adaptive, circuit breaker, dan distributed tracing. Migrasi dari monolith ke microservices tanpa downtime.",
+  "posterSVG": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\"><rect width=\"64\" height=\"64\" fill=\"#141820\"/><rect x=\"8\" y=\"8\" width=\"48\" height=\"48\" fill=\"#0b0d10\" stroke=\"#00ff66\" stroke-width=\"2\"/><rect x=\"18\" y=\"18\" width=\"10\" height=\"28\" fill=\"#00ff66\"/><rect x=\"36\" y=\"18\" width=\"10\" height=\"28\" fill=\"#00ff66\"/><rect x=\"28\" y=\"12\" width=\"8\" height=\"10\" fill=\"#38bdf8\"/><line x1=\"23\" y1=\"30\" x2=\"41\" y2=\"30\" stroke=\"#ff4d00\" stroke-width=\"2\"/><line x1=\"23\" y1=\"38\" x2=\"41\" y2=\"38\" stroke=\"#ff4d00\" stroke-width=\"2\"/><circle cx=\"32\" cy=\"50\" r=\"4\" fill=\"#ff4d00\"/></svg>",
+  "featured": false,
+  "repoUrl": "https://github.com/hzb/pixel-gate"
+}

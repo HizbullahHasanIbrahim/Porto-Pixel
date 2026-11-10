@@ -1,0 +1,12 @@
+{
+  "id": "proj-8",
+  "title": "Game Jam Entry \"RETRO-RUNNER\"",
+  "year": 2024,
+  "client": "Global Game Jam 2024",
+  "role": "Development",
+  "techStack": ["Godot 4", "GDScript", "Aseprite", "itch.io"],
+  "description": "Endless runner 2D buatan 72 jam dengan estetik Game Boy. Procedural generation level, 3 power-up unik, dan leaderboard online. Diunduh 5.000+ kali di itch.io minggu pertama.",
+  "posterSVG": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\" shape-rendering=\"crispEdges\"><rect width=\"64\" height=\"64\" fill=\"#141820\"/><rect x=\"8\" y=\"8\" width=\"48\" height=\"48\" fill=\"#0b0d10\" stroke=\"#ff4d00\" stroke-width=\"2\"/><rect x=\"20\" y=\"20\" width=\"12\" height=\"20\" fill=\"#7c3aed\"/><rect x=\"16\" y=\"24\" width=\"4\" height=\"8\" fill=\"#ff4d00\"/><rect x=\"32\" y=\"24\" width=\"4\" height=\"8\" fill=\"#ff4d00\"/><rect x=\"20\" y=\"44\" width=\"5\" height=\"5\" fill=\"#ff4d00\"/><rect x=\"31\" y=\"44\" width=\"5\" height=\"5\" fill=\"#ff4d00\"/><polyline points=\"12,52 20,44 32,44 40,52\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"2\"/><text x=\"32\" y=\"16\" font-family=\"monospace\" font-size=\"5\" fill=\"#ff4d00\" text-anchor=\"middle\">🎮</text></svg>",
+  "featured": false,
+  "repoUrl": "https://github.com/hzb/retro-runner"
+}

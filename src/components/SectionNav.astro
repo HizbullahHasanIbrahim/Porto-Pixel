@@ -1,0 +1,179 @@
+---
+export interface NavSection {
+  id: string;
+  label: string;
+}
+
+export interface Props {
+  sections?: NavSection[];
+}
+
+const { sections = [
+  { id: 'hero', label: 'HERO' },
+  { id: 'creator', label: 'CREATOR' },
+  { id: 'pixels', label: 'PIXELS' },
+  { id: 'brain', label: 'BRAIN' },
+  { id: 'windows', label: 'WINDOWS' },
+  { id: 'tetris', label: 'ARCADE' },
+  { id: 'contact', label: 'CONTACT' },
+] } = Astro.props;
+---
+
+<nav class="section-nav" aria-label="Section navigation">
+  <ul class="nav-dots">
+    {sections.map((section: NavSection) => (
+      <li>
+        <a href={`#${section.id}`} class="nav-dot" data-target={section.id} aria-label={section.label}>
+          <span class="dot"></span>
+          <span class="dot-label">{section.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  let frame: number | null = null;
+
+  function updateActiveSection() {
+    frame = null;
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
+    const marker = window.innerHeight / 2;
+    const current = sections.find((section) => {
+      const bounds = section.getBoundingClientRect();
+      return bounds.top <= marker && bounds.bottom > marker;
+    }) ?? sections.reduce<HTMLElement | null>((closest, section) => {
+      if (!closest) return section;
+      const distance = Math.abs(section.getBoundingClientRect().top - marker);
+      return distance < Math.abs(closest.getBoundingClientRect().top - marker) ? section : closest;
+    }, null);
+
+    document.querySelectorAll<HTMLElement>('.nav-dot').forEach((dot) => {
+      const active = dot.dataset.target === current?.id;
+      dot.classList.toggle('active', active);
+      dot.setAttribute('aria-current', active ? 'location' : 'false');
+    });
+  }
+
+  function scheduleActiveUpdate() {
+    if (frame === null) frame = requestAnimationFrame(updateActiveSection);
+  }
+
+  function initNav() {
+    updateActiveSection();
+    window.addEventListener('scroll', scheduleActiveUpdate, { passive: true });
+    window.addEventListener('resize', scheduleActiveUpdate);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNav, { once: true });
+  } else {
+    initNav();
+  }
+
+  window.addEventListener('pagehide', () => {
+    window.removeEventListener('scroll', scheduleActiveUpdate);
+    window.removeEventListener('resize', scheduleActiveUpdate);
+    if (frame !== null) cancelAnimationFrame(frame);
+  }, { once: true });
+</script>
+
+<style>
+  .section-nav {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .nav-dots {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-end;
+    position: relative;
+  }
+  
+  .nav-dot {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    padding: 4px;
+    transition: all 0.15s;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    background: var(--text-muted);
+    border: 2px solid var(--border-color);
+    box-shadow: 2px 2px 0px var(--border-color);
+    border-radius: 2px; /* Square pixel dot */
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .nav-dot:hover .dot {
+    background: var(--accent-primary);
+    transform: scale(1.4);
+  }
+  
+  .nav-dot.active .dot {
+    background: var(--accent-primary);
+    transform: scale(1.45);
+    animation: dot-pulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-primary) 25%, transparent), 2px 2px 0 var(--border-color);
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { transform: scale(1.45); }
+    50% { transform: scale(1.55); }
+  }
+
+  .dot-label {
+    opacity: 0;
+    transform: translateX(4px);
+    transition: opacity 0.2s, transform 0.25s;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: 0.45rem;
+  }
+  
+  .nav-dot:hover .dot-label,
+  .nav-dot.active .dot-label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  @media (max-width: 768px) {
+    .section-nav {
+      right: 0.4rem;
+    }
+    .nav-dots {
+      gap: 0.5rem;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      box-shadow: 1px 1px 0px var(--border-color);
+    }
+    .dot-label {
+      display: none; /* Hide labels on mobile to avoid covering screen content */
+    }
+  }
+</style>

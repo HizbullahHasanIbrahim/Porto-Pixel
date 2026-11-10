@@ -1,0 +1,123 @@
+---
+export interface Props {
+  title?: string;
+  type?: 'exe' | 'sys' | 'alert';
+  class?: string;
+  id?: string;
+}
+
+const { title = 'Window', type = 'exe', class: className = '', id } = Astro.props;
+---
+
+<div class={`retro-window retro-window-${type} ${className}`} id={id}>
+  <div class="window-titlebar">
+    <div class="window-titlebar-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <h3 class="window-title">{title}</h3>
+    <button class="window-close" aria-label="Close window" onclick="this.closest('.retro-window')?.remove()">×</button>
+  </div>
+  <div class="window-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .retro-window {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .retro-window-exe {
+    border-color: var(--accent-primary);
+  }
+  
+  .retro-window-sys {
+    border-color: var(--accent-secondary);
+  }
+  
+  .retro-window-alert {
+    border-color: #ff4d00;
+  }
+  
+  .window-titlebar {
+    background: var(--bg-primary);
+    border-bottom: 2px solid var(--border-color);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    user-select: none;
+  }
+  
+  .window-titlebar-dots {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-color);
+  }
+  
+  .window-title {
+    font-family: 'Press Start 2P', 'Silkscreen', monospace;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .window-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    transition: color 0.1s;
+  }
+  
+  .window-close:hover {
+    color: #ff4d00;
+  }
+  
+  .window-content {
+    padding: 1rem;
+    flex: 1;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  @media (max-width: 768px) {
+    .retro-window {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .window-title {
+      font-size: 0.6rem;
+    }
+    .window-content {
+      padding: 0.75rem;
+    }
+  }
+</style>

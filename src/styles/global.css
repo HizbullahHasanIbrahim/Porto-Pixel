@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+
+:root {
+  /* Developer Mode (default - dark terminal) */
+  --bg-primary: #0b0d10;
+  --bg-elevated: #141820;
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent-primary: #00ff66;
+  --accent-secondary: #38bdf8;
+  --border-color: #00ff66;
+  --pixel-shadow: 4px 4px 0px #00ff66;
+  
+  --font-heading: 'Syne', 'Space Grotesk', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-pixel: 'Press Start 2P', 'Silkscreen', monospace;
+}
+
+html[data-mode="creative"] {
+  /* Creative Mode (light retro OS) */
+  --bg-primary: #f4f1ea;
+  --bg-elevated: #ffffff;
+  --text-primary: #18181b;
+  --text-muted: #52525b;
+  --accent-primary: #ff4d00;
+  --accent-secondary: #7c3aed;
+  --border-color: #18181b;
+  --pixel-shadow: 4px 4px 0px #18181b;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  image-rendering: pixelated;
+}
+
+img, svg, canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+}
+
+.pixel-text {
+  font-family: var(--font-pixel);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Retro window base styles */
+.retro-window {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-color);
+  box-shadow: var(--pixel-shadow);
+}
+
+/* Utility: no blur shadows */
+* {
+  text-shadow: none;
+}
+
+/* 8-Bit Glitch Text Effect (jld2nd.dev style) */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: var(--accent-primary);
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0 0 0 0);
+}
+
+.glitch-text::before {
+  left: -2px;
+  text-shadow: 2px 0 #ff4d00;
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: 2px;
+  text-shadow: -2px 0 #38bdf8;
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(20% 0 60% 0); }
+  20% { clip-path: inset(80% 0 5% 0); }
+  40% { clip-path: inset(40% 0 40% 0); }
+  60% { clip-path: inset(10% 0 80% 0); }
+  80% { clip-path: inset(50% 0 10% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(10% 0 70% 0); }
+  25% { clip-path: inset(60% 0 10% 0); }
+  50% { clip-path: inset(30% 0 50% 0); }
+  75% { clip-path: inset(70% 0 20% 0); }
+  100% { clip-path: inset(5% 0 85% 0); }
+}
+
+/* 8-Bit Character Idle Animation */
+.pixel-character {
+  animation: pixel-bob 1.6s steps(2) infinite;
+}
+
+@keyframes pixel-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Floating Pixel Elements Animation */
+.floating-pixel-art {
+  position: absolute;
+  pointer-events: none;
+  animation: float-drift 4s ease-in-out infinite alternate;
+}
+
+@keyframes float-drift {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-12px) rotate(4deg); }
+}
+
+/* Window Entrance Bounce Class */
+.retro-window {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+.retro-window:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 6px 6px 0px var(--border-color);
+}
+
+/* Mouse Sparkle Trail Effect */
+.pixel-sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 2px 2px 0px #0b0d10;
+  opacity: 0.95;
+  animation: sparkle-fade 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: scale(0.4) translateY(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2) translateY(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-left: 2px solid var(--border-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border: 2px solid var(--bg-primary);
+}

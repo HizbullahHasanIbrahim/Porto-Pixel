@@ -1,0 +1,267 @@
+---
+import PixelIcons from './PixelIcons.astro';
+
+export interface Props {
+  title?: string;
+}
+
+const {} = Astro.props;
+const pathname = Astro.url.pathname;
+const isCurrent = (path: string) => pathname === path || pathname === `${path}/`;
+---
+
+<header class="side-nav-container" aria-label="Main floating navigation">
+  <!-- Brand / Home Box -->
+  <div class={`logo-box ${isCurrent('/') ? 'active' : ''}`}>
+    <a href="/" class="logo-link" title="HOME // HZB.DEV">
+      <svg viewBox="0 0 32 32" class="logo-svg" shape-rendering="crispEdges">
+        <rect width="32" height="32" fill="#0b0d10"/>
+        <rect x="4" y="4" width="24" height="24" fill="#00ff66"/>
+        <rect x="8" y="8" width="16" height="16" fill="#0b0d10"/>
+        <rect x="10" y="10" width="4" height="4" fill="#38bdf8"/>
+        <rect x="18" y="10" width="4" height="4" fill="#38bdf8"/>
+        <rect x="10" y="18" width="12" height="4" fill="#38bdf8"/>
+        <rect x="14" y="24" width="4" height="4" fill="#00ff66"/>
+      </svg>
+      <span class="tooltip">HOME</span>
+    </a>
+  </div>
+
+  <!-- Icon Navigation Dock -->
+  <nav class="side-nav" aria-label="Site navigation">
+    <ul class="nav-list">
+      <li>
+        <a href="/projects" class={`nav-icon-link ${isCurrent('/projects') ? 'active' : ''}`} title="PROJECTS">
+          <PixelIcons name="claw" size={20} />
+          <span class="tooltip">PROJECTS</span>
+        </a>
+      </li>
+      <li>
+        <a href="/game" class={`nav-icon-link ${isCurrent('/game') ? 'active' : ''}`} title="GAME">
+          <PixelIcons name="pacman" size={20} />
+          <span class="tooltip">GAME</span>
+        </a>
+      </li>
+      <li>
+        <a href="#contact" class="nav-icon-link contact-trigger" title="CONTACT">
+          <PixelIcons name="terminal" size={20} />
+          <span class="tooltip">CONTACT</span>
+        </a>
+      </li>
+      <li>
+        <button 
+          id="side-mode-toggle"
+          class="nav-icon-link mode-btn"
+          aria-label="Toggle Theme Mode"
+          title="Toggle Mode"
+          type="button"
+        >
+          <span class="mode-icon">🎨</span>
+          <span class="tooltip mode-text">CREATIVE</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  function initSideNav() {
+    // 1. Theme Toggle
+    const toggleBtn = document.getElementById('side-mode-toggle');
+    const updateThemeUI = (mode: string) => {
+      const icon = toggleBtn?.querySelector('.mode-icon');
+      const text = toggleBtn?.querySelector('.mode-text');
+      if (icon) icon.textContent = mode === 'creative' ? '💻' : '🎨';
+      if (text) text.textContent = mode === 'creative' ? 'DEV' : 'CREATIVE';
+    };
+
+    const currentMode = document.documentElement.getAttribute('data-mode') || 
+      (typeof localStorage !== 'undefined' ? localStorage.getItem('hzb-theme-mode') : 'developer') || 'developer';
+    updateThemeUI(currentMode);
+
+    toggleBtn?.addEventListener('click', () => {
+      const active = document.documentElement.getAttribute('data-mode') || 'developer';
+      const nextMode = active === 'developer' ? 'creative' : 'developer';
+      document.documentElement.setAttribute('data-mode', nextMode);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('hzb-theme-mode', nextMode);
+      }
+      updateThemeUI(nextMode);
+      window.dispatchEvent(new CustomEvent('hzb-theme-change', { detail: { mode: nextMode } }));
+    });
+
+    // 2. Contact Trigger
+    document.querySelectorAll('.contact-trigger').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        const dialog = document.getElementById('contact-dialog') as HTMLDialogElement | null;
+        if (dialog) {
+          e.preventDefault();
+          dialog.showModal();
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSideNav);
+  } else {
+    initSideNav();
+  }
+</script>
+
+<style>
+  .side-nav-container {
+    position: fixed;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    pointer-events: auto;
+  }
+
+  .logo-box {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    padding: 6px;
+    box-shadow: 4px 4px 0 var(--border-color);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .logo-box:hover,
+  .logo-box.active {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .logo-svg {
+    width: 28px;
+    height: 28px;
+    image-rendering: pixelated;
+  }
+
+  .side-nav {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0 var(--border-color);
+    padding: 0.5rem;
+  }
+
+  .nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .nav-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    color: var(--text-muted);
+    border: 2px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    padding: 0;
+  }
+
+  .nav-icon-link:hover,
+  .nav-icon-link.active {
+    color: var(--accent-primary);
+    border-color: var(--border-color);
+    background: var(--bg-primary);
+    transform: translate(-2px, -2px);
+    box-shadow: 2px 2px 0 var(--border-color);
+  }
+
+  .nav-icon-link.active {
+    border-color: var(--accent-primary);
+    box-shadow: 2px 2px 0 var(--accent-primary);
+  }
+
+  .mode-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  /* Retro Tooltip */
+  .tooltip {
+    position: absolute;
+    left: 100%;
+    margin-left: 0.85rem;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    padding: 0.35rem 0.65rem;
+    color: var(--text-primary);
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.15s ease-out;
+    pointer-events: none;
+    box-shadow: 3px 3px 0 var(--border-color);
+  }
+
+  .logo-box:hover .tooltip,
+  .nav-icon-link:hover .tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 768px) {
+    .side-nav-container {
+      left: 0.75rem;
+      bottom: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .logo-box {
+      width: 36px;
+      height: 36px;
+      padding: 4px;
+    }
+
+    .logo-svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .side-nav {
+      padding: 0.35rem;
+    }
+
+    .nav-icon-link {
+      width: 34px;
+      height: 34px;
+    }
+
+    .tooltip {
+      display: none;
+    }
+  }
+</style>

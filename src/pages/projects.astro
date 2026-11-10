@@ -1,0 +1,863 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RetroWindow from '../components/RetroWindow.astro';
+import { projects } from '../data/projects';
+---
+
+<BaseLayout title="PROJECTS // ARCADE CLAW MACHINE | HZB Portfolio">
+  <main class="projects-main">
+    <section class="projects-header">
+      <div class="header-left">
+        <h1 class="page-title">PROJECTS.EXE</h1>
+        <p class="page-subtitle">EXPLORE PORTFOLIO MANUALLY OR GRAB WITH THE ARCADE CLAW</p>
+      </div>
+      <div class="header-right">
+        <span class="status-badge">[ONLINE: {projects.length} PROJECTS LOADED]</span>
+      </div>
+    </section>
+
+    <div class="projects-layout">
+      <!-- Sidebar -->
+      <aside class="projects-sidebar">
+        <RetroWindow 
+          title="CREATOR PROFILE" 
+          type="exe"
+          class="creator-window"
+        >
+          <div class="creator-profile">
+            <div class="creator-avatar">
+              <svg viewBox="0 0 32 32" class="pixel-avatar" shape-rendering="crispEdges">
+                <rect width="32" height="32" fill="#0b0d10"/>
+                <rect x="8" y="4" width="16" height="16" fill="#00ff66"/>
+                <rect x="10" y="6" width="4" height="4" fill="#0b0d10"/>
+                <rect x="18" y="6" width="4" height="4" fill="#0b0d10"/>
+                <rect x="10" y="14" width="12" height="4" fill="#38bdf8"/>
+              </svg>
+            </div>
+            <h2 class="creator-name">HZB</h2>
+            <p class="creator-role">Sistem Informasi & Creative Web Developer</p>
+            <div class="creator-stats">
+              <div class="stat">
+                <span class="stat-value">{projects.length}</span>
+                <span class="stat-label">Projects</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">4+</span>
+                <span class="stat-label">Years Exp</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">100%</span>
+                <span class="stat-label">Coffee</span>
+              </div>
+            </div>
+          </div>
+        </RetroWindow>
+      </aside>
+
+      <!-- Main Content -->
+      <section class="projects-content">
+        <!-- Claw Machine Section -->
+        <RetroWindow title="ARCADE CLAW MACHINE" type="exe" class="claw-window">
+          <div class="claw-machine-container">
+            <div class="canvas-box">
+              <canvas 
+                id="claw-canvas" 
+                width="480" 
+                height="320"
+                class="claw-canvas"
+                aria-label="Claw Machine Game"
+              ></canvas>
+            </div>
+            
+            <!-- On-Screen Arcade Touch Controls for Claw Machine -->
+            <div class="claw-controls" id="claw-touch-controls">
+              <div class="control-row">
+                <button id="claw-left" class="control-btn arcade-touch" aria-label="Move Left">
+                  <span class="btn-sub">◀ [A]</span>
+                  <span class="btn-main">LEFT</span>
+                </button>
+                <button id="claw-drop" class="control-btn primary arcade-touch" aria-label="Drop Claw">
+                  <span class="btn-sub">[SPACE]</span>
+                  <span class="btn-main">DROP CLAW!</span>
+                </button>
+                <button id="claw-right" class="control-btn arcade-touch" aria-label="Move Right">
+                  <span class="btn-sub">[D] ▶</span>
+                  <span class="btn-main">RIGHT</span>
+                </button>
+              </div>
+              <p class="control-hint">Desktop: ← / → or A / D to move, Space to drop. Mobile: Tap/Hold arcade buttons!</p>
+            </div>
+            
+            <div class="claw-status" id="claw-status">
+              <span class="status-text">Posisi: X=240</span>
+              <span class="status-text">Status: 🎮 READY</span>
+              <span class="status-text">Tersedia: {projects.length}</span>
+            </div>
+          </div>
+        </RetroWindow>
+
+        <!-- Projects Grid -->
+        <RetroWindow title="PROJECT GALLERY" type="sys" class="gallery-window">
+          <div class="projects-grid" id="projects-grid">
+            {projects.map((project) => (
+              <article class="project-card" data-project-id={project.id} tabindex="0">
+                <div class="project-poster">
+                  <div class="poster-svg" set:html={project.posterSVG} />
+                  <div class="project-overlay">
+                    <span class="overlay-role">{project.role}</span>
+                    <span class="overlay-year">{project.year}</span>
+                  </div>
+                </div>
+                <div class="project-info">
+                  <h3 class="project-title">{project.title}</h3>
+                  <p class="project-client">{project.client}</p>
+                  <div class="project-tech">
+                    {project.techStack.slice(0, 3).map((tech) => (
+                      <span class="tech-tag">{tech}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </RetroWindow>
+      </section>
+    </div>
+
+    <!-- Project Detail Dialog -->
+    <dialog id="project-dialog" class="project-dialog">
+      <div class="dialog-content">
+        <button class="dialog-close" id="dialog-close" aria-label="Close dialog">×</button>
+        <div class="dialog-body" id="dialog-body">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </dialog>
+  </main>
+</BaseLayout>
+
+<script>
+  import { projects, type Project } from '../data/projects';
+
+  function initClawMachine() {
+    const canvas = document.getElementById('claw-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const statusEl = document.getElementById('claw-status');
+    const projectsGrid = document.getElementById('projects-grid');
+    const dialog = document.getElementById('project-dialog') as HTMLDialogElement | null;
+    const dialogBody = document.getElementById('dialog-body');
+    const dialogClose = document.getElementById('dialog-close');
+
+    // State
+    let clawX = 240;
+    let clawY = 40;
+    let isDropping = false;
+    let grabbedProjectId: string | null = null;
+    let moveLeftInterval: number | null = null;
+    let moveRightInterval: number | null = null;
+
+    const CLAW_SPEED = 7;
+    const DROP_SPEED = 5;
+    const CLAW_MIN_X = 40;
+    const CLAW_MAX_X = 440;
+    const GROUND_Y = 250;
+    const GRAB_Y = 230;
+
+    function drawBackground() {
+      if (!ctx || !canvas) return;
+      ctx.fillStyle = '#0b0d10';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(0, 255, 102, 0.1)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 16) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 16) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Ground conveyor area
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.08)';
+      ctx.fillRect(20, GROUND_Y - 20, canvas.width - 40, 60);
+
+      // Ground border
+      ctx.strokeStyle = '#00ff66';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(20, GROUND_Y + 40);
+      ctx.lineTo(canvas.width - 20, GROUND_Y + 40);
+      ctx.stroke();
+    }
+
+    function drawClawCable() {
+      if (!ctx) return;
+      ctx.strokeStyle = '#00ff66';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(clawX, 10);
+      ctx.lineTo(clawX, clawY);
+      ctx.stroke();
+    }
+
+    function drawClawHead() {
+      if (!ctx) return;
+      ctx.fillStyle = '#00ff66';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+
+      // Top housing
+      ctx.fillRect(clawX - 18, clawY - 8, 36, 16);
+
+      // Claw arms
+      const spread = isDropping ? 6 : 12;
+      ctx.fillRect(clawX - 16 - spread, clawY + 8, 8, 26);
+      ctx.fillRect(clawX + 8 + spread, clawY + 8, 8, 26);
+
+      // Inward fingers
+      ctx.fillRect(clawX - 12 - spread, clawY + 30, 8, 6);
+      ctx.fillRect(clawX + 4 + spread, clawY + 30, 8, 6);
+
+      // Eyes
+      ctx.fillStyle = '#0b0d10';
+      ctx.fillRect(clawX - 8, clawY - 2, 4, 4);
+      ctx.fillRect(clawX + 4, clawY - 2, 4, 4);
+    }
+
+    function drawGrabbedItem() {
+      if (!ctx || !grabbedProjectId) return;
+      const proj = projects.find((p) => p.id === grabbedProjectId);
+      if (!proj) return;
+
+      const size = 36;
+      const x = clawX - size / 2;
+      const y = clawY + 32;
+
+      ctx.fillStyle = '#141820';
+      ctx.fillRect(x - 2, y - 2, size + 4, size + 4);
+      ctx.strokeStyle = '#00ff66';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, size, size);
+
+      ctx.fillStyle = '#00ff66';
+      ctx.font = '8px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(proj.title.slice(0, 7), clawX, y + 20);
+    }
+
+    function updateStatus() {
+      if (!statusEl) return;
+      const statusText = isDropping ? '🎯 DROPPING...' : (clawY < 40 ? '🎮 RETURNING...' : '🎮 READY');
+      statusEl.innerHTML = `
+        <span class="status-text">X: ${Math.round(clawX)}px</span>
+        <span class="status-text">${statusText}</span>
+        <span class="status-text">ITEMS: ${projects.length}</span>
+      `;
+    }
+
+    function animate() {
+      if (!ctx || !canvas) return;
+
+      drawBackground();
+      drawClawCable();
+      drawClawHead();
+      drawGrabbedItem();
+
+      if (isDropping) {
+        clawY += DROP_SPEED;
+        if (clawY >= GRAB_Y && !grabbedProjectId) {
+          // Grab probability or pick nearest
+          const rand = Math.random();
+          if (rand < 0.6) {
+            const index = Math.floor(Math.random() * projects.length);
+            grabbedProjectId = projects[index].id;
+          }
+        }
+        if (clawY >= GROUND_Y) {
+          isDropping = false;
+        }
+      } else if (clawY > 40) {
+        clawY -= DROP_SPEED * 1.4;
+        if (clawY <= 40) {
+          clawY = 40;
+          if (grabbedProjectId) {
+            const wonId = grabbedProjectId;
+            setTimeout(() => {
+              openProjectDialog(wonId);
+            }, 300);
+            grabbedProjectId = null;
+          }
+        }
+      }
+
+      updateStatus();
+      requestAnimationFrame(animate);
+    }
+
+    function moveLeft() {
+      if (!isDropping && clawX > CLAW_MIN_X) {
+        clawX -= CLAW_SPEED;
+      }
+    }
+
+    function moveRight() {
+      if (!isDropping && clawX < CLAW_MAX_X) {
+        clawX += CLAW_SPEED;
+      }
+    }
+
+    function dropClaw() {
+      if (!isDropping && clawY <= 40) {
+        isDropping = true;
+      }
+    }
+
+    // Touch and mouse button bindings with continuous movement
+    const leftBtn = document.getElementById('claw-left');
+    const rightBtn = document.getElementById('claw-right');
+    const dropBtn = document.getElementById('claw-drop');
+
+    const startLeft = (e: Event) => {
+      e.preventDefault();
+      moveLeft();
+      if (!moveLeftInterval) moveLeftInterval = window.setInterval(moveLeft, 50);
+    };
+    const stopLeft = () => {
+      if (moveLeftInterval) {
+        clearInterval(moveLeftInterval);
+        moveLeftInterval = null;
+      }
+    };
+
+    const startRight = (e: Event) => {
+      e.preventDefault();
+      moveRight();
+      if (!moveRightInterval) moveRightInterval = window.setInterval(moveRight, 50);
+    };
+    const stopRight = () => {
+      if (moveRightInterval) {
+        clearInterval(moveRightInterval);
+        moveRightInterval = null;
+      }
+    };
+
+    leftBtn?.addEventListener('pointerdown', startLeft);
+    leftBtn?.addEventListener('pointerup', stopLeft);
+    leftBtn?.addEventListener('pointerleave', stopLeft);
+
+    rightBtn?.addEventListener('pointerdown', startRight);
+    rightBtn?.addEventListener('pointerup', stopRight);
+    rightBtn?.addEventListener('pointerleave', stopRight);
+
+    dropBtn?.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      dropClaw();
+    });
+
+    // Keyboard support
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        moveLeft();
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        moveRight();
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        dropClaw();
+      }
+    });
+
+    // Dialog logic
+    function openProjectDialog(id: string) {
+      const proj = projects.find((p: Project) => p.id === id);
+      if (!proj || !dialog || !dialogBody) return;
+
+      dialogBody.innerHTML = `
+        <div class="dialog-header-inner">
+          <div class="dialog-poster-view">
+            ${proj.posterSVG}
+          </div>
+          <div class="dialog-meta-info">
+            <h2 class="dialog-proj-title">${proj.title}</h2>
+            <div class="dialog-tag-row">
+              <span class="dialog-tag role">${proj.role}</span>
+              <span class="dialog-tag year">${proj.year}</span>
+              <span class="dialog-tag client">${proj.client}</span>
+            </div>
+          </div>
+        </div>
+        <div class="dialog-proj-desc">
+          <p>${proj.description}</p>
+        </div>
+        <div class="dialog-proj-tech">
+          <h4>TECH STACK:</h4>
+          <div class="dialog-tech-chips">
+            ${proj.techStack.map((t: string) => `<span class="tech-chip">${t}</span>`).join('')}
+          </div>
+        </div>
+      `;
+
+      dialog.showModal();
+    }
+
+    dialogClose?.addEventListener('click', () => dialog?.close());
+    dialog?.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    // Card click
+    projectsGrid?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null;
+      const card = target?.closest('.project-card') as HTMLElement | null;
+      if (card && card.dataset.projectId) {
+        openProjectDialog(card.dataset.projectId);
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initClawMachine);
+  } else {
+    initClawMachine();
+  }
+</script>
+
+<style>
+  .projects-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+  }
+
+  .page-title {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--accent-primary);
+    margin-bottom: 0.3rem;
+  }
+
+  .page-subtitle {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .status-badge {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.65rem;
+    color: var(--accent-secondary);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.8rem;
+  }
+
+  .projects-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Sidebar */
+  .creator-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+  .pixel-avatar {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 1rem;
+    border: 3px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+  }
+
+  .creator-name {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .creator-role {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .creator-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem;
+  }
+
+  .stat-value {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    color: var(--accent-primary);
+    font-size: 0.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    margin-top: 0.2rem;
+  }
+
+  /* Claw Machine */
+  .claw-window {
+    margin-bottom: 1.5rem;
+  }
+
+  .claw-machine-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .canvas-box {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .claw-canvas {
+    border: 3px solid var(--border-color);
+    background: var(--bg-primary);
+    box-shadow: var(--pixel-shadow);
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    aspect-ratio: 480 / 320;
+    image-rendering: pixelated;
+  }
+
+  .claw-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .control-row {
+    display: flex;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .control-btn {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 0.6rem;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    cursor: pointer;
+    box-shadow: var(--pixel-shadow);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    user-select: none;
+    min-height: 48px;
+  }
+
+  .control-btn.primary {
+    background: var(--accent-primary);
+    color: #0b0d10;
+    flex: 1.4;
+  }
+
+  .control-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  .btn-sub {
+    font-size: 0.5rem;
+    color: inherit;
+    opacity: 0.8;
+    margin-bottom: 2px;
+  }
+
+  .btn-main {
+    font-size: 0.65rem;
+  }
+
+  .control-hint {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+
+  .claw-status {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 480px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem;
+  }
+
+  /* Gallery */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+
+  .project-card:hover,
+  .project-card:focus {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--accent-primary);
+  }
+
+  .project-poster {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--bg-elevated);
+    border-bottom: 2px solid var(--border-color);
+    overflow: hidden;
+  }
+
+  .poster-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .project-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .overlay-role, .overlay-year {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.55rem;
+    color: var(--accent-primary);
+  }
+
+  .project-info {
+    padding: 0.85rem;
+  }
+
+  .project-title {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.75rem;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+  }
+
+  .project-client {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tech-tag {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.4rem;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.65rem;
+    color: var(--accent-secondary);
+  }
+
+  /* Dialog */
+  .project-dialog {
+    background: var(--bg-elevated);
+    border: 3px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    padding: 0;
+    max-width: 650px;
+    width: 90%;
+    color: var(--text-primary);
+    margin: auto;
+  }
+
+  .project-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .dialog-content {
+    position: relative;
+    padding: 1.5rem;
+  }
+
+  .dialog-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.75rem;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  .dialog-close:hover {
+    color: #ff4d00;
+  }
+
+  :global(.dialog-header-inner) {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+  }
+
+  :global(.dialog-poster-view) {
+    width: 140px;
+    height: 140px;
+    border: 2px solid var(--border-color);
+    flex-shrink: 0;
+  }
+
+  :global(.dialog-proj-title) {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 1rem;
+    color: var(--accent-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.dialog-tag-row) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  :global(.dialog-tag) {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border-color);
+  }
+
+  :global(.dialog-tag.role) { color: var(--accent-primary); }
+  :global(.dialog-tag.year) { color: var(--accent-secondary); }
+  :global(.dialog-tag.client) { color: var(--text-muted); }
+
+  :global(.dialog-proj-desc) {
+    font-family: var(--font-body, 'Space Grotesk', sans-serif);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    border-top: 1px solid rgba(0, 255, 102, 0.2);
+    padding-top: 1rem;
+  }
+
+  :global(.dialog-proj-tech h4) {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+
+  :global(.dialog-tech-chips) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  :global(.tech-chip) {
+    background: var(--bg-primary);
+    border: 1px solid var(--accent-secondary);
+    color: var(--accent-secondary);
+    padding: 0.25rem 0.6rem;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 992px) {
+    .projects-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .control-row {
+      gap: 0.4rem;
+    }
+    .control-btn {
+      padding: 0.5rem 0.4rem;
+      min-height: 44px;
+    }
+    .btn-main {
+      font-size: 0.55rem;
+    }
+    :global(.dialog-header-inner) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

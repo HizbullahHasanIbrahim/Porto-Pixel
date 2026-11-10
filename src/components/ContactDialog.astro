@@ -1,0 +1,162 @@
+---
+// ContactDialog.astro
+---
+
+<dialog id="contact-dialog" class="retro-dialog">
+  <div class="dialog-header">
+    <div class="dialog-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <h3 class="dialog-title">C:/HZB.DEV/CONTACT.EXE</h3>
+    <button class="dialog-close" id="contact-dialog-close" aria-label="Close dialog">×</button>
+  </div>
+  <div class="dialog-body">
+    <pre class="terminal-output">
+C:\HZB.DEV\> contact --details
+==========================================
+  HIZBULLAH HASAN IBRAHIM (HZB)
+  Sistem Informasi & Creative Web Developer
+==========================================
+  
+  [✉] Email:    hzb@example.com
+  [💼] LinkedIn: linkedin.com/in/hzb
+  [🐙] GitHub:   github.com/hzb
+  [🌐] Portfolio: hzb.dev
+  [📍] Location: Jakarta, Indonesia
+  
+==========================================
+  Press ESC or click × / outside to close
+==========================================
+    </pre>
+    <div class="dialog-actions">
+      <button class="dialog-btn" id="contact-dialog-btn">CLOSE</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function initContactDialog() {
+    const dialog = document.getElementById('contact-dialog') as HTMLDialogElement | null;
+    const closeBtn = document.getElementById('contact-dialog-close');
+    const actionBtn = document.getElementById('contact-dialog-btn');
+
+    const close = () => dialog?.close();
+
+    closeBtn?.addEventListener('click', close);
+    actionBtn?.addEventListener('click', close);
+    dialog?.addEventListener('click', (e) => {
+      if (e.target === dialog) close();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContactDialog);
+  } else {
+    initContactDialog();
+  }
+</script>
+
+<style>
+  .retro-dialog {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    color: var(--text-primary);
+    padding: 0;
+    max-width: 520px;
+    width: 90%;
+    margin: auto;
+  }
+  
+  .retro-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(2px);
+  }
+  
+  .dialog-header {
+    background: var(--bg-primary);
+    border-bottom: 2px solid var(--border-color);
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .dialog-dots {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .dialog-dots span {
+    width: 8px;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 50%;
+  }
+  
+  .dialog-title {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.65rem;
+    margin: 0;
+    color: var(--accent-primary);
+  }
+  
+  .dialog-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  .dialog-close:hover {
+    color: #ff4d00;
+  }
+  
+  .dialog-body {
+    padding: 1.25rem;
+  }
+  
+  .terminal-output {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: var(--text-primary);
+    margin: 0 0 1.25rem 0;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+  }
+  
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .dialog-btn {
+    background: var(--accent-primary);
+    color: #0b0d10;
+    border: 2px solid var(--border-color);
+    padding: 0.5rem 1.25rem;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.65rem;
+    cursor: pointer;
+    box-shadow: var(--pixel-shadow);
+  }
+
+  .dialog-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--border-color);
+  }
+
+  @media (max-width: 480px) {
+    .terminal-output {
+      font-size: 0.7rem;
+      padding: 0.75rem;
+    }
+  }
+</style>

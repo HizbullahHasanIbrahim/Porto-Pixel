@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404: SYSTEM_ERROR | HZB Portfolio">
+  <main class="error-main">
+    <div class="error-header">
+      <h1 class="error-code">404</h1>
+      <p class="error-message">SYSTEM_ERROR: PAGE_NOT_FOUND.SYS</p>
+      <p class="error-desc">Alien invaders corrupted this route! Clear them or return to base.</p>
+    </div>
+
+    <div class="arcade-screen">
+      <canvas id="invaders-canvas" width="400" height="300"></canvas>
+      
+      <!-- On-screen arcade controls for mobile & desktop -->
+      <div class="invaders-controls">
+        <button id="btn-invader-left" class="arcade-ctrl-btn" aria-label="Move Left">◀ LEFT</button>
+        <button id="btn-invader-fire" class="arcade-ctrl-btn fire" aria-label="Fire Bullet">⚡ FIRE</button>
+        <button id="btn-invader-right" class="arcade-ctrl-btn" aria-label="Move Right">RIGHT ▶</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="/" class="home-btn">RETURN TO BASE.EXE</a>
+      <a href="/projects" class="home-btn alt">BROWSE PROJECTS</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  interface Invader {
+    x: number;
+    y: number;
+    alive: boolean;
+    type: number;
+  }
+
+  interface Bullet {
+    x: number;
+    y: number;
+  }
+
+  function initInvaders() {
+    const canvas = document.getElementById('invaders-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let frame = 0;
+    let playerX = 185;
+    const invaders: Invader[] = [];
+    const bullets: Bullet[] = [];
+
+    // Initialize enemies
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 8; c++) {
+        invaders.push({
+          x: 40 + c * 42,
+          y: 35 + r * 28,
+          alive: true,
+          type: r,
+        });
+      }
+    }
+
+    const fireBullet = () => {
+      if (bullets.length < 5) {
+        bullets.push({ x: playerX + 14, y: 260 });
+      }
+    };
+
+    const moveLeft = () => {
+      if (playerX > 10) playerX -= 15;
+    };
+
+    const moveRight = () => {
+      if (canvas && playerX < canvas.width - 40) playerX += 15;
+    };
+
+    // Attach button controls
+    document.getElementById('btn-invader-left')?.addEventListener('click', moveLeft);
+    document.getElementById('btn-invader-right')?.addEventListener('click', moveRight);
+    document.getElementById('btn-invader-fire')?.addEventListener('click', fireBullet);
+
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        moveLeft();
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        moveRight();
+      } else if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        fireBullet();
+      }
+    });
+
+    function gameLoop() {
+      if (!ctx || !canvas) return;
+
+      ctx.fillStyle = '#0b0d10';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Blinking stars
+      ctx.fillStyle = '#38bdf8';
+      for (let i = 0; i < 20; i++) {
+        const bx = (i * 37) % canvas.width;
+        const by = (i * 113) % canvas.height;
+        const size = (frame + i) % 30 < 5 ? 2 : 1;
+        ctx.fillRect(bx, by, size, size);
+      }
+
+      // Render Invaders
+      let allDead = true;
+      invaders.forEach((inv) => {
+        if (!inv.alive) return;
+        allDead = false;
+
+        inv.y += 0.04;
+
+        ctx.fillStyle = inv.type === 0 ? '#ff4d00' : inv.type === 1 ? '#7c3aed' : '#00ff66';
+
+        const offset = Math.sin(frame * 0.08) * 6;
+        ctx.fillRect(inv.x + offset, inv.y, 22, 14);
+        ctx.fillStyle = '#0b0d10';
+        ctx.fillRect(inv.x + offset + 4, inv.y + 4, 4, 4);
+        ctx.fillRect(inv.x + offset + 14, inv.y + 4, 4, 4);
+      });
+
+      if (allDead) {
+        ctx.fillStyle = '#00ff66';
+        ctx.font = '10px "Press Start 2P", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('WINNER! THREAT ELIMINATED', canvas.width / 2, 140);
+      }
+
+      // Render Player Cannon
+      ctx.fillStyle = '#00ff66';
+      ctx.fillRect(playerX, 270, 30, 15);
+      ctx.fillRect(playerX + 11, 260, 8, 10);
+
+      // Render & Update Bullets
+      for (let bi = bullets.length - 1; bi >= 0; bi--) {
+        const b = bullets[bi];
+        b.y -= 6;
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(b.x, b.y, 3, 8);
+
+        // Check collision
+        for (let ii = 0; ii < invaders.length; ii++) {
+          const inv = invaders[ii];
+          if (inv.alive && b.x >= inv.x - 4 && b.x <= inv.x + 24 && b.y >= inv.y && b.y <= inv.y + 16) {
+            inv.alive = false;
+            bullets.splice(bi, 1);
+            break;
+          }
+        }
+
+        if (b && b.y < 0) {
+          bullets.splice(bi, 1);
+        }
+      }
+
+      frame++;
+      requestAnimationFrame(gameLoop);
+    }
+
+    requestAnimationFrame(gameLoop);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInvaders);
+  } else {
+    initInvaders();
+  }
+</script>
+
+<style>
+  .error-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 2rem 1rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .error-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .error-code {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: clamp(3rem, 8vw, 5rem);
+    color: #ff4d00;
+    margin-bottom: 0.5rem;
+    text-shadow: 4px 4px 0px rgba(255, 77, 0, 0.3);
+  }
+
+  .error-message {
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .error-desc {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .arcade-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  #invaders-canvas {
+    background: var(--bg-elevated);
+    border: 3px solid var(--border-color);
+    box-shadow: var(--pixel-shadow);
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 400 / 300;
+    image-rendering: pixelated;
+  }
+
+  .invaders-controls {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .arcade-ctrl-btn {
+    background: var(--bg-elevated);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.65rem;
+    padding: 0.6rem 0.8rem;
+    cursor: pointer;
+    box-shadow: var(--pixel-shadow);
+    flex: 1;
+    touch-action: manipulation;
+  }
+
+  .arcade-ctrl-btn:hover,
+  .arcade-ctrl-btn:active {
+    background: var(--accent-secondary);
+    color: #0b0d10;
+    transform: translate(-1px, -1px);
+  }
+
+  .arcade-ctrl-btn.fire {
+    background: var(--accent-primary);
+    color: #0b0d10;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .home-btn {
+    background: var(--accent-primary);
+    border: 2px solid var(--border-color);
+    color: #0b0d10;
+    font-family: var(--font-pixel, 'Press Start 2P', monospace);
+    font-size: 0.7rem;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
+    box-shadow: var(--pixel-shadow);
+    transition: transform 0.1s;
+    display: inline-block;
+  }
+
+  .home-btn.alt {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+  }
+
+  .home-btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--border-color);
+  }
+</style>
